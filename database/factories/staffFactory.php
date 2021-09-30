@@ -11,6 +11,6 @@ $factory->define(staff::class, function (Faker $faker) {
         'nama' => $faker->name,
         'no_hp' => $faker->phoneNumber,
         'alamat' => $faker->address,
-        'url' =>$faker->imageUrl($width = 200, $height = 200)
+        'url' => $faker->imageUrl($width = 300, $height = 300)
     ];
 });

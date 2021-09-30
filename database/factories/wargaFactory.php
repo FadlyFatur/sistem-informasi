@@ -8,18 +8,18 @@ use Faker\Generator as Faker;
 $factory->define(warga::class, function (Faker $faker) {
     return [
         'nik' => $faker->unique()->numerify('################'),
-        'nama_lengkap' => $faker->name,
-        'jenis_kelamin' => 'L',
+        'nama' => $faker->name,
+        'jk' => 'L',
         'tempat_lahir' => $faker->city,
         'tanggal_lahir' => $faker->dateTimeThisCentury->format('Y-m-d'),
         'alamat' => $faker->address,
-        'kelurahan' => 'sukapada',
-        'kecamatan' => 'cibeunying',
+        'kel' => 'sukapada',
+        'kec' => 'cibeunying',
         'kota' => 'bandung',
-        'rw' => '2',
-        'rt' => $faker->numberBetween($min = 1, $max = 6),
-        'agama_id' => 'islam',
-        'kerja' => 'belum bekeja',
-        'perkawinan' => 'belum menikah'
+        'rw' => '0' . $faker->numberBetween($min = 1, $max = 2),
+        'rt' => '0' . $faker->numberBetween($min = 1, $max = 9),
+        'agama' => 'Islam',
+        'kerja_id' => $faker->numberBetween($min = 0, $max = 10),
+        'kawin' => 'Belum menikah'
     ];
 });

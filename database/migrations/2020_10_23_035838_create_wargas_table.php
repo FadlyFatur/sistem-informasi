@@ -15,21 +15,21 @@ class CreateWargasTable extends Migration
     {
         Schema::create('wargas', function (Blueprint $table) {
             $table->id();
-            $table->string('nik',16);
-            $table->string('nama_lengkap');
-            $table->string('jenis_kelamin',1);
-            $table->string('tempat_lahir');
+            $table->string('nik', 16);
+            $table->string('nama');
+            $table->string('jk', 1);
+            $table->string('tempat_lahir', 100);
             $table->date('tanggal_lahir');
-            $table->string('alamat');
-            $table->string('kelurahan');
-            $table->string('kecamatan');
-            $table->string('kota');
+            $table->string('alamat', 500);
+            $table->string('kel', 100);
+            $table->string('kec', 100);
+            $table->string('kota', 100);
             $table->boolean('status')->default(true);
-            $table->string('rw',2)->default('2');
-            $table->string('rt',2)->nullable();
-            $table->string('agama_id')->nullable();
-            $table->string('kerja')->nullable();
-            $table->string('perkawinan')->nullable();
+            $table->string('rw', 3)->nullable();
+            $table->string('rt', 3)->nullable();
+            $table->string('agama')->nullable();
+            $table->string('kawin')->nullable();
+            $table->foreignId('kerja_id')->nullable();
             $table->timestamps();
         });
     }

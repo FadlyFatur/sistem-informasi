@@ -15,15 +15,15 @@ class CreateStaffsTable extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->id();
-            $table->string('no_pegawai')->nullable();
-            $table->string('nama');
-            $table->string('no_hp')->nullable();
-            $table->string('alamat')->nullable();
+            $table->int('id_pegawai', 20);
+            $table->foreignId('jabatan_id')->nullable();
+            $table->string('nama', 100);
+            $table->string('no_hp', 14)->nullable();
+            $table->string('alamat', 200)->nullable();
             $table->boolean('status')->default(true);
             $table->string('foto')->nullable();
             $table->string('url')->nullable();
-            $table->unsignedInteger('jabatan_id');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

@@ -8,7 +8,9 @@ use Faker\Generator as Faker;
 $factory->define(beranda::class, function (Faker $faker) {
     return [
         'kontak' => $faker->tollFreePhoneNumber,
-        'email'=> $faker->email,
-        'alamat'=> $faker->address,
+        'email' => $faker->email,
+        'alamat' => $faker->address,
+        'visi' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+        'misi' => $faker->sentence($nbWords = 12, $variableNbWords = true),
     ];
 });

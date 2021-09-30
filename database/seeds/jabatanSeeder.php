@@ -14,74 +14,73 @@ class jabatanSeeder extends Seeder
     {
         $data = [
             [
-                'njabatan' => 'Kepala Desa'
+                'nama' => 'Kepala Desa'
             ],
             [
-                'njabatan' => 'Ketua RW 02'
+                'nama' => 'Ketua RW 02'
             ],
             [
-                'njabatan' => 'Sekretaris'
+                'nama' => 'Sekretaris'
             ],
             [
-                'njabatan' => 'Sekretaris 2'
+                'nama' => 'Sekretaris 2'
             ],
             [
-                'njabatan' => 'Bendahara'
+                'nama' => 'Bendahara'
             ],
             [
-                'njabatan' => 'Ketua PKK RW 02'
+                'nama' => 'Ketua PKK RW 02'
             ],
             [
-                'njabatan' => 'Ketua RT 01'
+                'nama' => 'Ketua RT 01'
             ],
             [
-                'njabatan' => 'Ketua RT 02'
+                'nama' => 'Ketua RT 02'
             ],
             [
-                'njabatan' => 'Ketua RT 03'
+                'nama' => 'Ketua RT 03'
             ],
             [
-                'njabatan' => 'Ketua RT 04'
+                'nama' => 'Ketua RT 04'
             ],
             [
-                'njabatan' => 'Ketua RT 05'
+                'nama' => 'Ketua RT 05'
             ],
             [
-                'njabatan' => 'Ketua RT 06'
+                'nama' => 'Ketua RT 06'
             ],
             [
-                'njabatan' => 'Ketua RT 07'
+                'nama' => 'Ketua RT 07'
             ],
             [
-                'njabatan' => 'Ketua RT 08'
+                'nama' => 'Ketua RT 08'
             ],
             [
-                'njabatan' => 'Ketua RT 09'
+                'nama' => 'Ketua RT 09'
             ],
             [
-                'njabatan' => 'Ketua RT 10'
+                'nama' => 'Ketua RT 10'
             ],
             [
-                'njabatan' => 'Ketua RT 11'
+                'nama' => 'Ketua RT 11'
             ],
             [
-                'njabatan' => 'Ketua RT 12'
+                'nama' => 'Ketua RT 12'
             ],
             [
-                'njabatan' => 'Staff'
+                'nama' => 'Staff'
             ],
             [
-                'njabatan' => 'Karyawan'
+                'nama' => 'Karyawan'
             ],
             [
-                'njabatan' => 'Linmas'
+                'nama' => 'Linmas'
             ],
             [
-                'njabatan' => 'Keamanan'
+                'nama' => 'Keamanan'
             ],
         ];
 
         \DB::table('jabatans')->insert($data);
-        
     }
 }

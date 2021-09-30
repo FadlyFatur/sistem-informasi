@@ -15,11 +15,12 @@ class CreateBerandasTable extends Migration
     {
         Schema::create('berandas', function (Blueprint $table) {
             $table->id();
-            $table->string('kontak')->nullable();
-            $table->string('email')->nullable();
-            $table->string('alamat')->nullable();
-            $table->string('misi')->nullable();
-            $table->string('visi')->nullable();
+            $table->string('kontak', 200)->nullable();
+            $table->string('email', 100)->nullable();
+            $table->string('alamat', 500)->nullable();
+            $table->string('kordinat')->nullable();
+            $table->string('misi', 2000)->nullable();
+            $table->string('visi', 1000)->nullable();
             $table->boolean('status')->default(true);
         });
     }
