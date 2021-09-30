@@ -22,6 +22,7 @@ class CreateAcarasTable extends Migration
             $table->string('foto')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -33,5 +34,6 @@ class CreateAcarasTable extends Migration
     public function down()
     {
         Schema::dropIfExists('acaras');
+        // $table->dropSoftDeletes();
     }
 }

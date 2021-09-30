@@ -3,12 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\warga;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class warga extends Model
 {
-    protected $fillable = [
-      'nik', 'nama_lengkap', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'alamat','kelurahan','kecamatan','kota','rw',
-      'rt','agama','kerja','perkawinan',
-    ];
+  use SoftDeletes;
+
+  protected $dates = ['deleted_at'];
+
+  protected $fillable = [
+    'nik', 'nama', 'jk', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'kel', 'kec', 'kota', 'rw',
+    'rt', 'agama', 'kerja_id', 'kawin'
+  ];
 }

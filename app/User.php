@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password','status','verified_at'
+        'username', 'password', 'status', 'verified_at', 'role', 'status'
     ];
 
     /**
@@ -37,8 +38,12 @@ class User extends Authenticatable
         'verified_at' => 'datetime',
     ];
 
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     public function staff()
     {
-    	return $this->hasOne('App\staff');
+        return $this->hasOne('App\staff');
     }
 }

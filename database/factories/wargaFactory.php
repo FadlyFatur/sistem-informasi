@@ -19,7 +19,7 @@ $factory->define(warga::class, function (Faker $faker) {
         'rw' => '0' . $faker->numberBetween($min = 1, $max = 2),
         'rt' => '0' . $faker->numberBetween($min = 1, $max = 9),
         'agama' => 'Islam',
-        'kerja_id' => $faker->numberBetween($min = 0, $max = 10),
+        'kerja_id' => $faker->numberBetween($min = 1, $max = 10),
         'kawin' => 'Belum menikah'
     ];
 });

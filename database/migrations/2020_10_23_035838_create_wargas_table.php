@@ -31,6 +31,7 @@ class CreateWargasTable extends Migration
             $table->string('kawin')->nullable();
             $table->foreignId('kerja_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

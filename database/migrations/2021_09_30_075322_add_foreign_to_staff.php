@@ -35,8 +35,8 @@ class AddForeignToStaff extends Migration
     public function down()
     {
         Schema::table('staffs', function (Blueprint $table) {
-            $table->column('jabatan_id');
-            $table->column('user_id');
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['jabatan_id']);
         });
     }
 }

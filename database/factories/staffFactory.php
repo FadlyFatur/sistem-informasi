@@ -7,9 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(staff::class, function (Faker $faker) {
     return [
-        'no_pegawai' => $faker->unique()->numerify('################'),
+        'id_pegawai' => $faker->unique()->numerify('################'),
         'nama' => $faker->name,
-        'no_hp' => $faker->phoneNumber,
+        'no_hp' => '085xxxxxxxx',
         'alamat' => $faker->address,
         'url' => $faker->imageUrl($width = 300, $height = 300)
     ];

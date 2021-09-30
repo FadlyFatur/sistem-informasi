@@ -19,68 +19,77 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     // any route here will only be accessible for logged in users
-    //route crud warga
-    Route::get('manajemen/data-warga', 'crudWargaController@index')->name('crudWarga');
-    Route::post('manajemen/tambahWarga/Post', 'crudWargaController@tambah')->name('tambahWarga');
-    Route::get('manajemen/crudwarga/delete/{id}', 'crudWargaController@delete')->name('deleteWarga');
-    Route::post('manajemen/crudwarga/update/{id}', 'crudWargaController@update')->name('updateWarga');
-    Route::get('manajemen/crudwarga/aktif/{id}', 'crudWargaController@aktif')->name('aktifWarga');
-    Route::get('manajemen/crudwarga/export-warga', 'crudWargaController@export')->name('exportWarga');
 
-    // route beranda
-    Route::get('manajemen/Edit-beranda', 'berandaController@Index')->name('editBeranda');
-    Route::post('manajemen/Edit-beranda/Post', 'berandaController@update')->name('updateBeranda');
-    Route::post('manajemen/Edit-beranda/addKerja', 'berandaController@addKerja')->name('addKerja');
-    Route::get('manajemen/Edit-beranda/deleteKerja/{id}', 'berandaController@deleteKerja')->name('deleteKerja');
-    Route::post('manajemen/Edit-beranda/visi-misi', 'berandaController@updateMs')->name('updateMs');
+    Route::prefix('admin')->group(function () {
+        Route::prefix('/data-warga')->group(function () {
+            //route crud warga
+            Route::post('/add', 'crudWargaController@tambah')->name('tambahWarga');
+            Route::post('/update/{id}', 'crudWargaController@update')->name('updateWarga');
+            Route::get('/', 'crudWargaController@index')->name('crudWarga');
+            Route::get('/delete/{id}', 'crudWargaController@delete')->name('deleteWarga');
+            Route::get('/aktif/{id}', 'crudWargaController@aktif')->name('aktifWarga');
+            Route::get('/export-warga', 'crudWargaController@export')->name('exportWarga');
+        });
 
-    //route acara/kegiatan
-    Route::get('manajemen/kegiatan', 'beritaController@adminIndex')->name('editAcara');
-    Route::get('berita/{slug}', 'beritaController@show')->name('showAcara');
-    Route::post('manajemen/kegiatan/post-kegiatan', 'beritaController@post')->name('post');
-    Route::get('manajemen/kegiatan/delete/{id}', 'beritaController@destroy')->name('deleteAcara');
-    Route::post('manajemen/kegiatan/update/{id}', 'beritaController@update')->name('updateAcara');
-    Route::get('manajemen/kegiatan/aktif/{id}', 'beritaController@aktif')->name('aktifAcara');
+        Route::prefix('/data-staff')->group(function () {
+            //route crud staff
+            Route::post('/add', 'crudStaffController@tambah')->name('tambahStaff');
+            Route::post('/update/{id}', 'crudStaffController@update')->name('updateStaff');
+            Route::get('/', 'crudStaffController@adminIndex')->name('staff');
+            Route::get('/delete/{id}', 'crudStaffController@destroy')->name('deleteStaff');
+            Route::get('/aktif/{id}', 'crudStaffController@aktif')->name('aktifStaff');
+        });
 
-    //route crud staff
-    Route::get('manajemen/staff', 'crudStaffController@adminIndex')->name('staff');
-    Route::post('manajemen/staff/tambah', 'crudStaffController@tambah')->name('tambahStaff');
-    Route::get('manajemen/staff/delete/{id}', 'crudStaffController@destroy')->name('deleteStaff');
-    Route::post('manajemen/staff/update/{id}', 'crudStaffController@update')->name('updateStaff');
-    Route::get('manajemen/staff/aktif/{id}', 'crudStaffController@aktif')->name('aktifStaff');
+        Route::prefix('/data-acara')->group(function () {
+            //route acara/kegiatan
+            Route::post('/add', 'beritaController@post')->name('post');
+            Route::post('/update/{id}', 'beritaController@update')->name('updateAcara');
+            Route::get('/', 'beritaController@adminIndex')->name('editAcara');
+            Route::get('/delete/{id}', 'beritaController@destroy')->name('deleteAcara');
+            Route::get('/aktif/{id}', 'beritaController@aktif')->name('aktifAcara');
+        });
 
-    //route crud user
-    Route::get('manajemen/user', 'userController@Index')->name('user');
-    Route::get('manajemen/user/update-level/{id}', 'userController@level')->name('levelUser');
-    Route::get('manajemen/user/verified/{id}', 'userController@verified')->name('verifiedUser');
-    Route::get('manajemen/user/delete/{id}', 'userController@delete')->name('deleteUser');
-    Route::get('manajemen/user/reset/{id}', 'userController@reset')->name('resetUser');
+        Route::prefix('/data-beranda')->group(function () {
+            // route beranda
+            Route::post('/update', 'berandaController@update')->name('updateBeranda');
+            Route::post('/addKerja', 'berandaController@addKerja')->name('addKerja');
+            Route::post('/update-visi-misi', 'berandaController@updateMs')->name('updateMs');
+            Route::get('/', 'berandaController@index')->name('editBeranda');
+            Route::get('/deleteKerja/{id}', 'berandaController@deleteKerja')->name('deleteKerja');
+        });
 
-    //editprofil
-    Route::get('profil', 'userController@profil')->name('profil');
-    Route::post('profil/update/{id}', 'userController@passUpdate')->name('updatePass');
-    Route::post('profil/taut', 'userController@tautkan')->name('tautkan');
+        Route::prefix('/data-user')->group(function () {
+            //route crud user
+            Route::get('/', 'userController@Index')->name('user');
+            Route::get('/update-level/{id}', 'userController@level')->name('levelUser');
+            Route::get('/verified/{id}', 'userController@verified')->name('verifiedUser');
+            Route::get('/delete/{id}', 'userController@delete')->name('deleteUser');
+            Route::get('/reset/{id}', 'userController@reset')->name('resetUser');
+        });
 
-    //editGaleri
-    Route::get('manajemen/galeri', 'dropzoneController@index')->name('galeriAdmin');    
-    Route::post('manajemen/galeri/upload', 'dropzoneController@upload')->name('dz.upload');
-    Route::get('manajemen/galeri/fetch', 'DropzoneController@fetch')->name('dropzone.fetch');
-    Route::get('galeri/fetch', 'DropzoneController@fetchGaleri')->name('dz.fetch');
-    Route::get('manajemen/galeri/delete', 'DropzoneController@delete')->name('dropzone.delete');
+        Route::prefix('/profil')->group(function () {
+            //editprofil
+            Route::post('/update/{id}', 'userController@passUpdate')->name('updatePass');
+            Route::post('/taut', 'userController@tautkan')->name('tautkan');
+            Route::get('/', 'userController@profil')->name('profil');
+        });
 
- });
+        Route::prefix('/galeri')->group(function () {
+            //editGaleri
+            Route::post('/upload', 'dropzoneController@upload')->name('dz.upload');
+            Route::get('/', 'dropzoneController@index')->name('galeriAdmin');
+            Route::get('/fetch', 'dropzoneController@fetch')->name('dropzone.fetch');
+            Route::get('/delete', 'dropzoneController@delete')->name('dropzone.delete');
+        });
+    });
+});
 
 Route::get('staff', 'crudStaffController@index')->name('lihatStaff');
-Route::get('berita', 'beritaController@Index')->name('Acara');
+Route::get('acara', 'beritaController@Index')->name('Acara');
 
 //pencarian warga
 Route::get('pencarian/warga', 'wargaController@index')->name('cariWarga');
 Route::get('pencarian/warga/fetch', 'wargaController@fetch');
 
 Route::get('galeri', 'dropzoneController@galeri')->name('galeri');
-
- 
-
-
-
-
+Route::get('berita/{slug}', 'beritaController@show')->name('showAcara');

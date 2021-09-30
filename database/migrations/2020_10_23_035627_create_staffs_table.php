@@ -15,7 +15,8 @@ class CreateStaffsTable extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->id();
-            $table->int('id_pegawai', 20);
+            $table->string('id_pegawai', 20);
+            $table->foreignId('user_id')->nullable();
             $table->foreignId('jabatan_id')->nullable();
             $table->string('nama', 100);
             $table->string('no_hp', 14)->nullable();
@@ -23,8 +24,8 @@ class CreateStaffsTable extends Migration
             $table->boolean('status')->default(true);
             $table->string('foto')->nullable();
             $table->string('url')->nullable();
-            $table->foreignId('user_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

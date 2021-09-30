@@ -5,21 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\beranda;
 use App\kerjas;
+use Dotenv\Validator;
+use Exception;
 use Illuminate\Support\Facades\Redirect;
 
 class berandaController extends Controller
 {
-    public function Index()
+    public function index()
     {
         $data = beranda::first();
         $kerjas = kerjas::all();
-        return view('manajemen.editBeranda',compact('data','kerjas'));
+        return view('manajemen.editBeranda', compact('data', 'kerjas'));
     }
 
     public function update(Request $request)
-    {   
+    {
         $data = beranda::all();
-        if($data->count() > 0){
+        if ($data->count() > 0) {
             try {
                 $data = beranda::first();
                 $data->kontak = $request->kontak;
@@ -30,8 +32,7 @@ class berandaController extends Controller
             } catch (Exception $e) {
                 return Redirect::back()->with(['gagal' => 'Gagal menambah acara']);
             }
-        
-        }else {
+        } else {
             try {
                 $data = new beranda();
                 $data->kontak = $request->kontak;
@@ -49,7 +50,7 @@ class berandaController extends Controller
     function updateMs(Request $request)
     {
         $data = beranda::all();
-        if($data->count() > 0){
+        if ($data->count() > 0) {
             try {
                 $data = beranda::first();
                 $data->misi = $request->misi;
@@ -59,8 +60,7 @@ class berandaController extends Controller
             } catch (Exception $e) {
                 return Redirect::back()->with(['gagal' => 'Gagal menambah acara']);
             }
-        
-        }else {
+        } else {
             try {
                 $data = new beranda();
                 $data->misi = $request->misi;
@@ -82,24 +82,23 @@ class berandaController extends Controller
                 $validator = Validator::make($request->all(), [
                     'gambar' => 'required|mimes:jpeg,png|max:5120',
                 ]);
-            
-            if ($validator->fails()) {
-                return Redirect::back()
-                            ->withErrors($validator)
-                            ->withInput();
-            }
 
-            $name = date("Ymd_"). $request->gambar->getClientOriginalName();
-            $url = $request->gambar->storeAs('public', $name);
-            
-            $data->foto = $name;
-            $data->url = $url;
-            $data->update();
-            return Redirect::back()->with(['sukses-update' => 'Data berhasil diupdate!']);
+                if ($validator->fails()) {
+                    return Redirect::back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+
+                $name = date("Ymd_") . $request->gambar->getClientOriginalName();
+                $url = $request->gambar->storeAs('public', $name);
+
+                $data->foto = $name;
+                $data->url = $url;
+                $data->update();
+                return Redirect::back()->with(['sukses-update' => 'Data berhasil diupdate!']);
             }
         }
         return Redirect::back()->with(['gagal-update' => 'Data berhasil diupdate!']);
-
     }
 
     public function deleteKerja($id)
@@ -107,22 +106,21 @@ class berandaController extends Controller
         $data = kerjas::find($id);
         try {
             $data->delete();
-            return Redirect::back()->with('sukses','Berhasil menghapus data!');
+            return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
         } catch (\Exception $e) {
-            return Redirect::back()->with('gagal','Berhasil menghapus data!');
+            return Redirect::back()->with('gagal', 'Berhasil menghapus data!');
         }
     }
 
     public function addKerja(Request $request)
     {
-        if ($request->nama != ""){
+        if ($request->nama != "") {
             $data = new kerjas();
             $data->nama = $request->nama;
             $data->save();
-            return Redirect::back()->with('sukses','Berhasil menghapus data!');;
-        }else{
-            return Redirect::back()->with('gagal','Berhasil menghapus data!');
+            return Redirect::back()->with('sukses', 'Berhasil menghapus data!');;
+        } else {
+            return Redirect::back()->with('gagal', 'Berhasil menghapus data!');
         }
-        
     }
 }

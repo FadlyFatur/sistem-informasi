@@ -30,7 +30,7 @@ class AddForeignToAcara extends Migration
     public function down()
     {
         Schema::table('acaras', function (Blueprint $table) {
-            $table->column('penulis_id');
+            $table->dropForeign(['penulis_id']);
         });
     }
 }

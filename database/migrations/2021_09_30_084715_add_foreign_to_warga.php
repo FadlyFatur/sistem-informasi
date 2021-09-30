@@ -30,7 +30,7 @@ class AddForeignToWarga extends Migration
     public function down()
     {
         Schema::table('wargas', function (Blueprint $table) {
-            $table->column('kerja_id');
+            $table->dropForeign(['kerja_id']);
         });
     }
 }
