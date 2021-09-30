@@ -1,0 +1,67 @@
+.card label,.acara-size {
+  font-size: 1.2rem;
+}
+
+.table{
+  color:black;
+}
+
+.button-submit button{
+  width: 300px;
+  height: 50px;
+  font-size: 1rem;
+}
+ h6{
+   color: red;
+ }
+
+ .form-control-borderless {
+  border: none;
+}
+
+.form-control-borderless:active, .form-control-borderless:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown input{
+  padding: 10px;
+}
+.form-control-borderless:hover{
+  border: 1px solid black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 100%;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  color: white;
+  background-color: #6777ef
+}
+
+.show {
+  display:block;
+}
+
+.modal {
+  color: black;
+}
