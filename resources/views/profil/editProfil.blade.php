@@ -56,7 +56,7 @@
                     <div class="col-sm-6">
                         <p class="m-b-10 f-w-600">Nomer Pegawai</p>
                         @if(isset(Auth::user()->staff['no_pegawai']))
-                        <h6 class="text-muted f-w-400">{{ isset(Auth::user()->staff["no_pegawai"]) ? Auth::user()->staff["no_pegawai"] : Null }}</h6>
+                        <h6 class="text-muted f-w-400">{{ isset(Auth::user()->staff["id_pegawai"]) ? Auth::user()->staff["id_pegawai"] : Null }}</h6>
                         @endif
                     </div>
                 </div>
@@ -72,10 +72,12 @@
                     </div>
                     <div class="col-sm-6">
                         <p class="m-b-10 f-w-600">Status</p>
-                        @if ( Auth::user()->status == '1' )
-                        <h6 class="text-muted f-w-400">Level User</h6>
-                        @else
+                        @if ( Auth::user()->role == '1' )
+                        <h6 class="text-muted f-w-400">Level Staff</h6>
+                        @elseif (Auth::user()->role == '2')
                         <h6 class="text-muted f-w-400">Level Admin</h6>
+                        @else
+                        <h6 class="text-muted f-w-400">Level SuperAdmin</h6>
                         @endif
                     </div>
                 </div>

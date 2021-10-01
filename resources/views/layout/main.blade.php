@@ -51,7 +51,9 @@
             <h1>@yield('halaman')</h1>
           </div>
           <div class="section-body">
-            @yield('content')
+            <main>
+              @yield('content')
+            </main>
           </div>
         </section>
       </div>

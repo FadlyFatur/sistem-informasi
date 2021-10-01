@@ -148,7 +148,7 @@
                   @endif
                   <!-- <td></td> -->
                   <td class="text-center">
-                    <a href="{{route('showAcara',['slug' => $a->slug])}}" target="_blank" class="btn btn-sm btn-outline-danger"><i class="fas fa-eye"></i></a>
+                    <a href="{{route('show-kegiatan',['slug' => $a->slug])}}" target="_blank" class="btn btn-sm btn-outline-danger"><i class="fas fa-eye"></i></a>
                     <button data-toggle="modal" data-target="#edit-{{$a['id']}}" class="btn btn-sm btn-outline-danger" id="tag{{$a['id']}}"><i class="fa fa-edit"></i></button>
                     <a href="{{route('deleteAcara',['id' => $a->id])}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
                   </td>

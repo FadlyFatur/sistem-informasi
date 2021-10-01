@@ -121,7 +121,7 @@
   
   <div class="card p-3">
       <div class="card-header">
-        <h4>Staff RW 02</h4>
+        <h4>Daftar Staff/Pengurus</h4>
 
           <!-- pencarian  -->
           <form class="card-header-form" action="{{ route('staff') }}" name="cari" method="GET">
@@ -153,9 +153,13 @@
         <tbody class="text-center">
       @foreach($data as $a)
           <tr>
-            <td>{{ $a['no_pegawai'] }}</td>
+            <td>{{ $a['id_pegawai'] }}</td>
             <td>{{ $a['nama'] }}</td>
-            <td>{{ $a->jabatan->njabatan }}</td>
+            @if ($a->jabatan['nama'])
+              <td>{{ $a->jabatan['nama'] }}</td>
+            @else
+              <td>-</td>
+            @endif
             <td>{{ $a['no_hp'] }}</td>
             <td>{{ $a['alamat'] }}</td>
             @if ($a['status'] != 0)

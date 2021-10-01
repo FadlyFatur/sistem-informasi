@@ -9,7 +9,7 @@
 @section('content')
   <div class="card">
     <div class="card-header">
-      <h4>Upload Foto Galeri</h4>
+      <h4>Upload Foto\</h4>
       <hr>
     </div>
     <div class="card-body">
@@ -25,7 +25,7 @@
 
   <div class="card">
     <div class="card-header">
-      <h4>Foto Galeri</h4>
+      <h4>Galeri Foto</h4>
       <hr>
     </div>
     <div class="card-body" id="uploaded-image">

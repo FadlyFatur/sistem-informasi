@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title','Berita')
-@section('halaman','Staff/Pengurus RW 2')
+@section('halaman','Staff/Pengurus')
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/staff.css') }}">
 @endsection
@@ -34,7 +34,7 @@
             <div class="author-box-name">
               <h3 class="text-primary">{{$d->nama}}</h3>
             </div>
-            <h5 class="text-info">{{$d->jabatan->njabatan}}</h5>
+            <h5 class="text-info">{{$d->jabatan['nama ']}}</h5>
             <div class="author-box-job">No. Pegawai : {{isset($d->no_pegawai) ? $d->no_pegawai : Null}}</div>
             <p style="color:black;">Alamat : {{$d->alamat}}</p>
             <hr>

@@ -12,7 +12,7 @@
 <div class="container-fluid jumbo">
   <div class="jumbotron" style="background-image: url(&quot;img/Register-photo.jpg&quot;) ">
   <div class="container teks">
-      <h1 class="display-4  align-text-bottom">Sistem Informasi Kependudukan RW 02</h1>
+      <h1 class="display-4  align-text-bottom">Sistem Informasi Kependudukan</h1>
       <p class="lead align-text-bottom"></p>
     </div>
   </div>
@@ -109,10 +109,10 @@
 </div>
 <hr>
 
-<!-- news section -->
+<!-- acara section -->
 <div class="container-fluid">
   <div class="d-flex justify-content-between">
-      <a href="{{ route('Acara') }}"><h2 class="section-title">Acara/Kegiatan Masyarakat <i class="fas fa-chevron-right"></i></h2></a>
+      <a href="{{ route('list-kegiatan') }}"><h2 class="section-title">Acara/Kegiatan Masyarakat <i class="fas fa-chevron-right"></i></h2></a>
   </div>
   @if ($data->count() == 0)
     <div class="row d-flex justify-content-center">
@@ -137,7 +137,7 @@
               <h5 class="mb-4">{{$r['judul']}}</h5>
             </div>
             <div class="article-cta">
-              <a href="{{route('showAcara',['slug' => $r->slug])}}">Baca Selengkapnya <i class="fas fa-chevron-right"></i></a>
+              <a href="{{route('show-kegiatan',['slug' => $r->slug])}}">Baca Selengkapnya <i class="fas fa-chevron-right"></i></a>
             </div>
           </div>
         </article>
@@ -151,7 +151,7 @@
 <!-- staff -->  
 <div class="container-fluid">
   <div class="d-flex justify-content-between">
-      <a href="{{ route('lihatStaff') }}"><h2 class="section-title">Staf/Pengurus RW <i class="fas fa-chevron-right"></i></h2></a>
+      <a href="{{ route('list-Staff') }}"><h2 class="section-title">Staf/Pengurus<i class="fas fa-chevron-right"></i></h2></a>
   </div>
   @if ($staff->count() == 0)
   <div class="row d-flex justify-content-center">
@@ -176,7 +176,7 @@
           <!-- <img alt="image" src="{{Storage::url($s['url'])}}" class="img-fluid"> -->
           <div class="user-details mt-3">
             <h5 class="user-name">{{$s['nama']}}</h5>
-            <div class="text-job text-muted">{{ $s->jabatan->njabatan }}</div>
+            <div class="text-job text-muted">{{ $s->jabatan['nama'] }}</div>
           </div>  
         </div>
       </div>

@@ -1,21 +1,21 @@
 Dropzone.options.mydropzone = {
-  paramName:"file",
-  maxFilesize:5,//mb
-  acceptedFiles : ".png,.jpg,.jpeg,.gif",
-  autoProcessQueue : false,
-  parallelUploads : 5,
+  paramName: "file",
+  maxFilesize: 5,//mb
+  acceptedFiles: ".png,.jpg,.jpeg,.gif",
+  autoProcessQueue: false,
+  parallelUploads: 5,
   addRemoveLinks: true,
 
 
-  init:function(){
+  init: function () {
     var submitButton = document.querySelector("#submit-all");
     myDropzone = this;
 
-    submitButton.addEventListener('click', function(){
+    submitButton.addEventListener('click', function () {
       myDropzone.processQueue();
     });
 
-    this.on('error', function(file, errorMessage) {
+    this.on('error', function (file, errorMessage) {
       if (file.accepted) {
         var mypreview = document.getElementsByClassName('dz-error');
         mypreview = mypreview[mypreview.length - 1];
@@ -24,9 +24,8 @@ Dropzone.options.mydropzone = {
       }
     });
 
-    this.on("complete", function(){
-      if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0)
-      {
+    this.on("complete", function () {
+      if (this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
         var _this = this;
         _this.removeAllFiles();
       }
@@ -37,25 +36,23 @@ Dropzone.options.mydropzone = {
 
 load_images();
 
-  function load_images()
-  {
-    $.ajax({
-      tyoe:'get',
-      url:"/manajemen/galeri/fetch",
-      success:function(data)
-      {
-        $('#uploaded-image').html(data);
-      }
-    })
-  }
+function load_images() {
+  $.ajax({
+    tyoe: 'get',
+    url: "/admin/galeri/fetch",
+    success: function (data) {
+      $('#uploaded-image').html(data);
+    }
+  })
+}
 
-  $(document).on('click', '.remove_image', function(){
-    var name = $(this).attr('id');
-    $.ajax({
-      url:"/manajemen/galeri/delete",
-      data:{name : name},
-      success:function(data){
-        load_images();
-      }
-    })
-  });
+$(document).on('click', '.remove_image', function () {
+  var name = $(this).attr('id');
+  $.ajax({
+    url: "/admin/galeri/delete",
+    data: { name: name },
+    success: function (data) {
+      load_images();
+    }
+  })
+});
