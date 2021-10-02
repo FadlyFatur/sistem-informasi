@@ -10,5 +10,10 @@ class kerjas extends Model
         'nama'
     ];
 
-    public $timestamps = false; 
+    public $timestamps = false;
+
+    public function warga()
+    {
+        return $this->belongsTo('App\warga');
+    }
 }

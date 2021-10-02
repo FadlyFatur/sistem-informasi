@@ -14,4 +14,9 @@ class acara extends Model
   protected $fillable = [
     'slug', 'judul', 'deskripsi', 'foto', 'status', 'penulis_id',
   ];
+
+  public function penulis()
+  {
+    return $this->belongsTo('App\User');
+  }
 }

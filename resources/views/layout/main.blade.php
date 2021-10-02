@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{config('app.name')}} - @yield('title')</title>
-
-  <!-- General CSS Files -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
-
   <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
   <link href="{{ asset('fontawesome-free-5.15.1-web\css\all.css')}}" rel="stylesheet">
 
@@ -74,7 +70,6 @@
   <script src="{{asset('js/bootstrap.min.js')}}"></script>
   <script src="{{asset('jquery.nicescroll.min.js')}}"></script>
   <script src="{{asset('moment.min.js')}}"></script>
-  
   <!-- JS Libraies -->
   <script src="{{asset('assets/js/stisla.js')}}"></script>
   <!-- Template JS File -->
@@ -85,6 +80,13 @@
   <script src="{{ asset('jquery.dataTables.min.js') }}"></script>
   <!-- Page Specific JS File -->
   @yield('js')
+  <script> 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  </script>
  
 </body>
 </html>

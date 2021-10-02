@@ -75,6 +75,7 @@ class beritaController extends Controller
                     'deskripsi' => $request->input('deskripsi'),
                     'foto' => $name,
                     'url' => $url,
+                    'penulis' => Auth::user()->id,
                     'status' => 1
                 ]);
                 return Redirect::back()->with(['sukses' => 'Berhasil menyimpan data']);
@@ -82,8 +83,6 @@ class beritaController extends Controller
         }
         abort(500, 'Gagal upload!');
     }
-
-
 
     public function destroy($id)
     {
@@ -164,5 +163,12 @@ class beritaController extends Controller
     public function galeri()
     {
         return view('pencarian.galeri');
+    }
+
+    public function updateIndex($id)
+    {
+        $data = acara::where('id', $id)->first();
+        // dd($data);
+        return view('manajemen.update.acara-update', compact('data'));
     }
 }

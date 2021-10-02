@@ -46,4 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne('App\staff');
     }
+
+    public function acara()
+    {
+        return $this->hasMany('App\acara');
+    }
 }

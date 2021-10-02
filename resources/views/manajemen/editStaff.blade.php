@@ -165,11 +165,12 @@
             @if ($a['status'] != 0)
               <td><a href="{{route('aktifStaff',['id' => $a->id])}}"> <div class="badge badge-success">Aktif</div> </a> </td>
             @else
-            <td><a href="{{route('aktifStaff',['id' => $a->id])}}"> <div class="badge badge-success">Non-Aktif</div> </a> </td>
+              <td><a href="{{route('aktifStaff',['id' => $a->id])}}"> <div class="badge badge-danger">Non-Aktif</div> </a> </td>
             @endif
             <td>
-              <button data-toggle="modal" data-target="#edit-{{$a['id']}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-edit"></i></button>
+              {{-- <button data-toggle="modal" data-target="#edit-{{$a['id']}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-edit"></i></button> --}}
               <a href="{{route('deleteStaff',['id' => $a->id])}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+              <a href="{{route('upStaff',['id' => $a->id])}}" class="btn btn-sm btn-outline-info"><i class="fa fa-edit"></i></a>
             </td>
           </tr>
         @endforeach
@@ -201,52 +202,52 @@
             @csrf
             <div class="modal-body">
   
-            <div class="form-group row mb-4">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Pegawai</label>
-              <div class="col-sm-12 col-md-7">
-                <input type="number" name="no" id="no" class="form-control" placeholder="Masukan Nomer Pegawai" value="{{ $a['no_pegawai'] }}" autocomplete="off">
+              <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Pegawai</label>
+                <div class="col-sm-12 col-md-7">
+                  <input type="number" name="no" id="no" class="form-control" placeholder="Masukan Nomer Pegawai" value="{{ $a['no_pegawai'] }}" autocomplete="off">
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row mb-4">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama</label>
-              <div class="col-sm-12 col-md-7">
-                <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukan Nama Lengkap" autocomplete="off" value="{{ $a['nama'] }}" required>
+              <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama</label>
+                <div class="col-sm-12 col-md-7">
+                  <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukan Nama Lengkap" autocomplete="off" value="{{ $a['nama'] }}" required>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row mb-4">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Telefon</label>
-              <div class="col-sm-12 col-md-7">
-                <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor telepon" value="{{ $a['no_hp'] }}" autocomplete="off">
+              <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Telefon</label>
+                <div class="col-sm-12 col-md-7">
+                  <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor telepon" value="{{ $a['no_hp'] }}" autocomplete="off">
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row mb-4">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Alamat</label>
-              <div class="col-sm-12 col-md-7">
-              <textarea class="form-control" name="alamat" id="alamat" placeholder="Masukan Alamat Lengkap" style="height: 50px;" required>{{ $a['alamat'] }}</textarea>
+              <div class="form-group row mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Alamat</label>
+                <div class="col-sm-12 col-md-7">
+                <textarea class="form-control" name="alamat" id="alamat" placeholder="Masukan Alamat Lengkap" style="height: 50px;" required>{{ $a['alamat'] }}</textarea>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row mb-4">
-              <label for="jabatan" class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Jabatan</label>
-              <div class="col-sm-12 col-md-7">
-                <select class="form-control" id="jabatan" name="jabatan" required> 
-                  @foreach ($jabatan as $j)
-                  <option value="{{$j->id}}" {{$a->jabatan_id == $j->id ? ' selected="selected" ' : '' }}>{{$j->njabatan}}</option>
-                  @endforeach
-                </select>
+              <div class="form-group row mb-4">
+                <label for="jabatan" class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Jabatan</label>
+                <div class="col-sm-12 col-md-7">
+                  <select class="form-control" id="jabatan" name="jabatan" required> 
+                    @foreach ($jabatan as $j)
+                    <option value="{{$j->id}}" {{$a->jabatan_id == $j->id ? ' selected="selected" ' : '' }}>{{$j->njabatan}}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="image">Foto pegawai</label>
-              <div class="col-sm-12 col-md-7">
-                <input type="file" class="form-control" name="imageUpdate">
+              <div class="form-group row">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="image">Foto pegawai</label>
+                <div class="col-sm-12 col-md-7">
+                  <input type="file" class="form-control" name="imageUpdate">
+                </div>
+                <h6 class="p-2 mx-auto">*Max ukuran image/foto : 5 MB</h6>
               </div>
-              <h6 class="p-2 mx-auto">*Max ukuran image/foto : 5 MB</h6>
-            </div>
         
             </div>
 

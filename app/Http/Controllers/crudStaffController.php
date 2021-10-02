@@ -89,6 +89,7 @@ class crudStaffController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $data = staff::find($id);
         try {
             if ($request->hasFile('imageUpdate')) {
@@ -121,7 +122,7 @@ class crudStaffController extends Controller
             }
 
             $data->nama = $request->input('nama');
-            $data->no_pegawai = $request->input('no');
+            $data->id_pegawai = $request->input('no');
             $data->no_hp = $request->input('no_hp');
             $data->alamat = $request->input('alamat');
             $data->jabatan_id = $request->jabatan;
@@ -160,5 +161,12 @@ class crudStaffController extends Controller
         } catch (\Exception $e) {
             return Redirect::back()->with('gagal', 'Data berhasil dihapus!');
         }
+    }
+
+    public function updateIndex($id)
+    {
+        $jabatan = jabatan::all();
+        $a = staff::where('id', $id)->first();
+        return view('manajemen.update.staff-update', compact('jabatan', 'a'));
     }
 }

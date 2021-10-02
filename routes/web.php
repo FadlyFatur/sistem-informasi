@@ -23,8 +23,9 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
         Route::prefix('/data-warga')->group(function () {
             //route crud warga
             Route::post('/add', 'crudWargaController@tambah')->name('tambahWarga');
-            Route::post('/update/{id}', 'crudWargaController@update')->name('updateWarga');
+            Route::post('/update/{id}/post', 'crudWargaController@update')->name('updateWarga');
             Route::get('/', 'crudWargaController@index')->name('crudWarga')->middleware('akunVerified');
+            Route::get('/update/{id}', 'crudWargaController@updateIndex')->name('upWarga')->middleware('akunVerified');
             Route::get('/delete/{id}', 'crudWargaController@delete')->name('deleteWarga');
             Route::get('/aktif/{id}', 'crudWargaController@aktif')->name('aktifWarga');
             Route::get('/export-warga', 'crudWargaController@export')->name('exportWarga');
@@ -33,8 +34,9 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
         Route::prefix('/data-staff')->group(function () {
             //route crud staff
             Route::post('/add', 'crudStaffController@tambah')->name('tambahStaff');
-            Route::post('/update/{id}', 'crudStaffController@update')->name('updateStaff');
+            Route::post('/update/{id}/post', 'crudStaffController@update')->name('updateStaff');
             Route::get('/', 'crudStaffController@adminIndex')->name('staff')->middleware('akunVerified');
+            Route::get('/update/{id}', 'crudStaffController@updateIndex')->name('upStaff')->middleware('akunVerified');
             Route::get('/delete/{id}', 'crudStaffController@destroy')->name('deleteStaff');
             Route::get('/aktif/{id}', 'crudStaffController@aktif')->name('aktifStaff');
         });
@@ -42,8 +44,9 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
         Route::prefix('/data-acara')->group(function () {
             //route acara/kegiatan
             Route::post('/add', 'beritaController@post')->name('post');
-            Route::post('/update/{id}', 'beritaController@update')->name('updateAcara');
+            Route::post('/update/{id}/post', 'beritaController@update')->name('updateAcara');
             Route::get('/', 'beritaController@adminIndex')->name('editAcara')->middleware('akunVerified');
+            Route::get('/update/{id}', 'beritaController@updateIndex')->name('upAcara')->middleware('akunVerified');
             Route::get('/delete/{id}', 'beritaController@destroy')->name('deleteAcara');
             Route::get('/aktif/{id}', 'beritaController@aktif')->name('aktifAcara');
         });

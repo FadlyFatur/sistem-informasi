@@ -15,4 +15,9 @@ class warga extends Model
     'nik', 'nama', 'jk', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'kel', 'kec', 'kota', 'rw',
     'rt', 'agama', 'kerja_id', 'kawin'
   ];
+
+  public function kerja()
+  {
+    return $this->belongsTo('App\kerjas');
+  }
 }
