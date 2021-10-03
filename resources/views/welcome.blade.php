@@ -13,6 +13,7 @@
   <div class="jumbotron" style="background-image: url(&quot;img/Register-photo.jpg&quot;) ">
   <div class="container teks">
       <h1 class="display-4  align-text-bottom">Sistem Informasi Kependudukan</h1>
+      <h2 class="align-text-bottom">Nama_intansi</h2>
       <p class="lead align-text-bottom"></p>
     </div>
   </div>
@@ -25,7 +26,7 @@
 
   <div class="row d-flex justify-content-center">
       
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="col-md-4 col-sm-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-primary">
           <i class="fas fa-users"></i>
@@ -41,7 +42,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="col-md-4 col-sm-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-danger">
         <i class="fas fa-user-tie"></i>
@@ -57,7 +58,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="col-md-4 col-sm-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-warning">
         <i class="far fa-calendar-check"></i>
@@ -73,8 +74,6 @@
       </div>
     </div>
   </div>
-
-
 </div>
 <hr>  
 
@@ -85,13 +84,14 @@
   </div>
   @if(isset($beranda->visi) || isset($beranda->misi))
   <div class="row text-center">
-    <div class="col p-2" id="visi">
-    <h3>Visi</h3>
-    <p>{!! $beranda->visi !!}</p>
+    <div class="col-md-6 col-sm-12 p-2" id="visi">
+      <h3>Visi</h3>
+      <p>{!! $beranda->visi !!}</p>
     </div>
-    <div class="col p-2" id="misi">
-    <h3>Misi</h3>
-    <p>{!! $beranda->misi !!}</p>
+
+    <div class="col-md-6 col-sm-12 p-2" id="misi">
+      <h3>Misi</h3>
+      <p>{!! $beranda->misi !!}</p>
     </div>
   </div>
   @else
@@ -114,6 +114,7 @@
   <div class="d-flex justify-content-between">
       <a href="{{ route('list-kegiatan') }}"><h2 class="section-title">Acara/Kegiatan Masyarakat <i class="fas fa-chevron-right"></i></h2></a>
   </div>
+
   @if ($data->count() == 0)
     <div class="row d-flex justify-content-center">
       <div class="col">
@@ -123,9 +124,10 @@
       </div>
     </div>
   @else
+
   <div class="row">
     @foreach($data as $r)
-      <div class="col-12 col-md-4 col-lg-4">
+      <div class="col-lg-3 col-md-4 col-sm-12">
         <article class="article article-style-c">
           <div class="article-header">
             <div class="article-image" data-background="{{$r['url']}}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
@@ -166,17 +168,16 @@
   <div class="row pb-2">
     @foreach ($staff as $s)
       <div class="col-md-3 col-sm-6 p-5">
-        <div class="user-item text-center">
+        <div class="user-item">
           @if (isset($s->foto))
-          <div class="company-header-avatar" style="background-image: url({{Storage::url($s['url'])}})"></div>
+            <img src="{{Storage::url($s['url'])}}" alt="staff-foto">
           @else
-          <div class="company-header-avatar" style="background-image: url(&quot;assets/img/avatar/avatar-5.png&quot;)">
-          </div>
+            <div class="company-header-avatar" style="background-image: url(&quot;assets/img/avatar/avatar-5.png&quot;)">
+            </div>
           @endif
-          <!-- <img alt="image" src="{{Storage::url($s['url'])}}" class="img-fluid"> -->
-          <div class="user-details mt-3">
+          <div class="user-details mt-3 text-center">
             <h5 class="user-name">{{$s['nama']}}</h5>
-            <div class="text-job text-muted">{{ $s->jabatan['nama'] }}</div>
+            <div class="text-job text-muted">{{ $s->jabatan['nama']}}</div>
           </div>  
         </div>
       </div>
@@ -200,8 +201,7 @@
     </div>
   @else
   <div class="row d-flex justify-content-center text-center">
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-5">
-      <div class="col-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 mb-5">
         <div class="hero bg-primary text-white">
           <i class="fas fa-phone-square"></i>
           <div class="hero-inner">
@@ -210,11 +210,9 @@
             <p class="lead">{{$beranda['kontak']}}</p>
           </div>
         </div>
-      </div>
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-5">
-      <div class="col-12">
         <div class="hero bg-primary text-white">
         <i class="fas fa-at"></i>
         <div class="hero-inner">
@@ -223,11 +221,9 @@
             <p class="lead">{{$beranda['email']}}</p>
           </div>
         </div>
-      </div>
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-5">
-      <div class="col-12">
         <div class="hero bg-primary text-white">
           <i class="fas fa-map-marked-alt" style="margin-bottom:0px;"></i>
           <div class="hero-inner">
@@ -236,7 +232,6 @@
             <p class="lead p-alamat">{{$beranda['alamat']}}</p>
           </div>
         </div>
-      </div>
     </div>
 
   </div>

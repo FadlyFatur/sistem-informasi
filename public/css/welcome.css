@@ -2,14 +2,14 @@
   color: #34395e;
 }
 
-.jumbo{
+.jumbo {
   height: 500px;
   width: 100%;
 }
 
-.jumbotron{
+.jumbotron {
   background-size: cover;
-  height: 100%;  
+  height: 100%;
   min-height: 300px;
   background-attachment: fixed;
   background-position: center bottom;
@@ -20,30 +20,32 @@
 .teks {
   position: relative;
   top: 100%;
-  transform: translateY(-100%); 
+  transform: translateY(-100%);
   background-color: rgba(0, 0, 0, 0.3);
   padding: 10px;
 }
 
-  .teks p,h1{
-    font-size: 1rem;
-  }
+.teks p,
+h1 {
+  font-size: 1rem;
+}
 
-  .hero{
-    width:300px;
-    height: 250px;
-  }
+.hero {
+  width: auto;
+  height: 250px;
+  padding: 15px;
+}
 
-  .hero i{
-    font-size: 50px;
-    margin-bottom: 12px;
-  }
+.hero i {
+  font-size: 50px;
+  margin-bottom: 12px;
+}
 
-  .hr-4{
-    border: 1.5px solid white;
-  }
+.hr-4 {
+  border: 1.5px solid white;
+}
 
-.company-header-avatar{
+.company-header-avatar {
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -52,14 +54,25 @@
   background-position: center center;
 }
 
-#visi,#misi{
-  background-color:lightcyan;
+#visi,
+#misi {
+  background-color: lightcyan;
 }
 
-.image-staff{
+.image-staff {
   object-fit: cover;
   object-position: 10% 0%;
   width: 200px;
   height: 200px;
   color: white;
+}
+
+@media only screen and (max-width: 800px) {
+  .container.teks h1 {
+    font-size: 1.5rem;
+  }
+
+  .container.teks h2 {
+    font-size: 1rem;
+  }
 }

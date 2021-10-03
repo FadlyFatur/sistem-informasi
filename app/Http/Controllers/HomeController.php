@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function __construct()
     {
         // $this->middleware('guest');
-        
+
     }
 
     /**
@@ -28,15 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = acara::all()->sortByDesc('created_at')->take(3);
+        $data = acara::all()->sortByDesc('created_at')->take(4);
         $jmlacara = acara::all()->count();
         $staff = staff::all()->sortBy('jabatan_id')->take(4);
         $jmlstaff = staff::all()->count();
         $jmlwarga = warga::all()->count();
         $beranda = beranda::all()->first();
         $jmlberanda = beranda::all()->count();
-        return view('welcome',compact('data', 'beranda', 'staff','jmlstaff', 'jmlwarga', 'jmlacara','jmlberanda'));
+        return view('welcome', compact('data', 'beranda', 'staff', 'jmlstaff', 'jmlwarga', 'jmlacara', 'jmlberanda'));
     }
-
-
 }

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/chocolat.css')}}" type="text/css" media="screen" >
   <link rel="stylesheet" href="{{asset('dropzone/min/dropzone.min.css')}}" type="text/css" media="screen" >
   <link rel="stylesheet" href="{{asset('jquery.dataTables.min.css')}}" type="text/css" media="screen" >
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   @yield('css')
   
   <style>

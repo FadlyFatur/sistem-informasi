@@ -20,13 +20,13 @@
         
       <div class="row">
         @foreach ($data as $d)
-        <div class="col-md-6 p-5 text-dark">
+        <div class="col-md-6 col-sm-12 p-5 text-dark">
           <div class="author-box-left">
             <div class="avatar-item mr-5">
             @if (isset($d->foto))
               <img alt="image" src="{{ Storage::url($d['url']) }}" class="" data-toggle="tooltip" title="" data-original-title="{{$d->nama}}">
             @else
-            <img alt="image" src="{{ URL::asset('assets/img/avatar/avatar-1.png') }}" class="" data-toggle="tooltip" title="" data-original-title="{{$d->nama}}">
+              <img alt="image" src="{{ URL::asset('assets/img/avatar/avatar-1.png') }}" class="" data-toggle="tooltip" title="" data-original-title="{{$d->nama}}">
             @endif
             </div>
           </div>
@@ -34,8 +34,8 @@
             <div class="author-box-name">
               <h3 class="text-primary">{{$d->nama}}</h3>
             </div>
-            <h5 class="text-info">{{$d->jabatan['nama ']}}</h5>
-            <div class="author-box-job">No. Pegawai : {{isset($d->no_pegawai) ? $d->no_pegawai : Null}}</div>
+            <h5 class="text-info">{{$d->jabatan['nama']}}</h5>
+            {{-- <div class="author-box-job">No. Pegawai : {{isset($d->no_pegawai) ? $d->no_pegawai : Null}}</div> --}}
             <p style="color:black;">Alamat : {{$d->alamat}}</p>
             <hr>
             <span class="badge badge-info">Nomer Hp : {{$d->no_hp}}</span>

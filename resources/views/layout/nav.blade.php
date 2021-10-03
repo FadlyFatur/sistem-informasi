@@ -8,7 +8,7 @@
     </ul>
   </form>
 
-  <ul class="navbar-nav navbar-right">
+  <ul class="navbar-nav navbar-right hide-mobile">
      <!-- Authentication Links -->
      @guest
         <li class="nav-item">
