@@ -1,6 +1,6 @@
 @extends('layout.main')
-@section('title','Data Warga RW 02')
-@section('halaman','Data Warga RW02')
+@section('title','Data Warga')
+@section('halaman','Data Warga')
 
 
 @section('css')
@@ -105,7 +105,7 @@
 @section('modal')
   <!-- Modal Tambah-->
   <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
@@ -117,121 +117,129 @@
           
           <form action="{{route('tambahWarga')}}" method="post">
           @csrf
-          <div class="form-group">
-            <label for="exampleFormControlInput2">Nomer Induk Kependudukan</label>
-            <input type="nik" name="nik" class="form-control" id="exampleFormControlInput2" placeholder="NIK" required>
+
+          <div class="form-row">
+            <div class="form-group col">
+                <label for="nik">Nomer Induk Kependudukan</label>
+                <input type="text" name="nik" id="nik" class="form-control" autocomplete="off" autofocus required>
+            </div>
+
+            <div class="form-group col">
+                <label for="nama">Nama Lengkap</label> 
+                <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" autofocus autocomplete="off" required>
+            </div>
           </div>
 
-          <div class="form-group">
-              <label for="exampleFormControlInput3">Nama</label> 
-              <input type="nama_lengkap" name="nama_lengkap" class="form-control" id="exampleFormControlInput3"  placeholder="Nama Lengkap" required>
-          </div>
-          
-     
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                <select class="form-control" name="jenis_kelamin" id="exampleFormControlSelect1" required>
-                  <option>P</option>
-                  <option>L</option>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="jenis_kelamin">Jenis Kelamin</label>
+                <select class="form-control" name="jenis_kelamin"  id="jk" required>
+                    <option>P</option>
+                    <option>L</option>
                 </select>
-              </div> 
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="exampleFormControlInput4">Tempat Lahir</label> 
-                <input type="tempat_lahir" name="tempat_lahir" class="form-control" id="exampleFormControlInput4" placeholder="tempat lahir" required>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="exampleFormControlInput5">Tanggal Lahir</label> 
-                <input type="date" class="form-control" name="tanggal_lahir" id="exampleFormControlInput5"  placeholder="tanggal lahir" required>
-              </div>
-            </div>
-          </div>
+            </div> 
 
-          <div class="form-group">
+            <div class="form-group col-md-5">
+                <label for="tempat_lahir">Tempat Lahir</label> 
+                <input type="text"  name="tempat_lahir" class="form-control" id="tempat_lahir" autocomplete="on" required>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="tanggal_lahir">Tanggal Lahir</label> 
+                <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" required>
+            </div>
+        </div>
+        <hr><br>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="kelurahan">Kelurahan</label> 
+                <input type="text" name="kelurahan" id="kelurahan" class="form-control" autocomplete="on" autofocus required>
+            </div>
+
+            <div class="form-group col">
+                <label for="kecamatan">Kecamatan</label> 
+                <input type="text" name="kecamatan" id="kecamatan" class="form-control" autocomplete="on" autofocus required>
+            </div>
+
+            <div class="form-group col">
+                <label for="kota">Kota</label> 
+                <input type="text" name="kota" id="kota" class="form-control" autocomplete="on" autofocus required>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label>Alamat</label>
-            <textarea name="alamat" class="form-control" required></textarea>
-          </div>
+            <textarea class="form-control" name="alamat" id="alamat" style="height: 50px;" required></textarea>
+        </div>
+        <hr><br>
 
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="exampleFormControlInput6">Kelurahan</label> 
-                <input type="kelurahan" name="kelurahan" class="form-control" id="exampleFormControlInput6"  placeholder="kelurahan" required>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="exampleFormControlInput7">Kecamatan</label> 
-                <input type="kecamatan" name="kecamatan" class="form-control" id="exampleFormControlInput7"  placeholder="kecamatan" required>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="exampleFormControlInput7">Kota</label> 
-                <input type="kota" name="kota" class="form-control" id="exampleFormControlInput7"  placeholder="kota" required>
-              </div>
-            </div>
-          </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect2">RT</label>
-                <select class="form-control" id="exampleFormControlSelect2" name="rt" required>
-                  <option>1</option>
-                  <option>2</option> 
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option> 
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
+        <div class="form-row">
+            <div class="form-group col-md-1">
+                <label for="rt">RT</label>
+                <select class="form-control" id="rt" name="rt">
+                    <option>1</option>
+                    <option>2</option> 
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option> 
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
                 </select>
             </div>
 
+            <div class="form-group col-md-1">
+                <label for="rw">RW</label>
+                <select class="form-control" id="rw" name="rw">
+                    <option>1</option>
+                    <option>2</option> 
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option> 
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                </select>
+            </div>
 
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect3">Agama</label>
-                  <select class="form-control" id="exampleFormControlSelect3" name="agama" required>
+            <div class="form-group col-md-3">
+                <label for="agama">Agama</label>
+                <select class="form-control" id="agama" name="agama">
                     <option>Islam</option>
                     <option>Khatolik</option> 
                     <option>Protestan</option> 
-                    <option>Hindu</option>
-                    <option>Buddha</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect3">Status Perwinan</label>
-                  <select class="form-control" id="exampleFormControlSelect3" name="perkawinan" required>
+                    <option>Hindu</option> 
+                    <option>Budhha</option> 
+                    <option>Khonghucu</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="kawin">Status Perkawinan</label>
+                <select class="form-control" id="kawin" name="kawin">
                     <option>Menikah</option>
                     <option>Belum Menikah</option> 
-                  </select>
-                </div>
-              </div>
-            </div>
-            
-
-            <div class="form-group">
-              <label for="exampleFormControlSelect4">Pekerjaan</label>
-              <select class="form-control" id="exampleFormControlSelect4" name="kerja" required> 
-                @foreach ($kerja as $k)
-                <option>{{$k->nama}}</option>
-                @endforeach
-              </select>
+                </select>
             </div>
 
-            
+            <div class="form-group col-md-4">
+                <label for="kerja">Pekerjaan</label>
+                <select class="form-control" id="kerja" name="kerja">
+                    @foreach ($kerja as $k)
+                    <option value={{ $k->id }}>{{$k->nama}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
         </div>
         <div class="modal-footer">

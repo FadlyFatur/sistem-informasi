@@ -15,7 +15,7 @@ class CreateWargasTable extends Migration
     {
         Schema::create('wargas', function (Blueprint $table) {
             $table->id();
-            $table->string('nik', 16);
+            $table->string('nik', 500);
             $table->string('nama');
             $table->string('jk', 1);
             $table->string('tempat_lahir', 100);

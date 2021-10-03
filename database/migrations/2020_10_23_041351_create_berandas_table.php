@@ -18,7 +18,8 @@ class CreateBerandasTable extends Migration
             $table->string('kontak', 200)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('alamat', 500)->nullable();
-            $table->string('kordinat')->nullable();
+            $table->string('nama_intansi', 150)->nullable();
+            // $table->string('kordinat')->nullable();
             $table->string('misi', 2000)->nullable();
             $table->string('visi', 1000)->nullable();
             $table->boolean('status')->default(true);
