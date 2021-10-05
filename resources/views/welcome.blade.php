@@ -3,6 +3,7 @@
 @section('halaman','Beranda')
 @section('css')
 <link rel="stylesheet" href="{{asset('css/welcome.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
 @endsection
 
 @section('content')
@@ -125,26 +126,30 @@
     </div>
   @else
 
-  <div class="row">
-    @foreach($data as $r)
-      <div class="col-lg-3 col-md-4 col-sm-12">
-        <article class="article article-style-c">
-          <div class="article-header">
-            <div class="article-image" data-background="{{$r['url']}}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
-            </div>
+  <div class="splide">
+    <div class="splide__track">
+      <div class="splide__list">
+        @foreach($data as $r)
+          <div class="splide__slide">
+            <article class="article article-style-c">
+              <div class="article-header">
+                <div class="article-image" data-background="{{$r['url']}}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
+                </div>
+              </div>
+              <div class="article-details">
+                <div class="article-category"><a href="#">Acara/Kegiatan</a> <div class="bullet"></div> <a href="#">{{ date('m/d/Y',strtotime($r['created_at'])) }}</a></div>
+                <div class="article-title">
+                  <h5 class="mb-4">{{$r['judul']}}</h5>
+                </div>
+                <div class="article-cta">
+                  <a href="{{route('show-kegiatan',['slug' => $r->slug])}}">Baca Selengkapnya <i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="article-details">
-            <div class="article-category"><a href="#">Acara/Kegiatan</a> <div class="bullet"></div> <a href="#">{{ date('m/d/Y',strtotime($r['created_at'])) }}</a></div>
-            <div class="article-title">
-              <h5 class="mb-4">{{$r['judul']}}</h5>
-            </div>
-            <div class="article-cta">
-              <a href="{{route('show-kegiatan',['slug' => $r->slug])}}">Baca Selengkapnya <i class="fas fa-chevron-right"></i></a>
-            </div>
-          </div>
-        </article>
+        @endforeach
       </div>
-    @endforeach
+    </div>
   </div>  
   @endif
 </div>
@@ -183,6 +188,51 @@
       </div>
     @endforeach
   </div>
+  @endif
+</div>
+<hr>
+
+<!-- Berita section -->
+<div class="container-fluid">
+  <div class="d-flex justify-content-between">
+      <a href="{{ route('list-kegiatan') }}"><h2 class="section-title">Berita Terbaru <i class="fas fa-chevron-right"></i></h2></a>
+  </div>
+
+  @if (empty($berita))
+    <div class="row d-flex justify-content-center">
+      <div class="col">
+        <div class="alert alert-danger text-center">
+          <div class="alert-title">Belum ada berita/offline.</div>
+        </div>
+      </div>
+    </div>
+  @else
+
+  <div class="splide">
+    <div class="splide__track">
+      <div class="splide__list">
+        @foreach($berita as $b)
+          <div class="splide__slide">
+            <article class="article article-style-c">
+              <div class="article-header">
+                <div class="article-image" data-background="{{$b['img']}}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
+                </div>
+              </div>
+              <div class="article-details">
+                <div class="article-category"><a href="#">Berita</a> <div class="bullet"></div> <a href="#">{{ date('m/d/Y',strtotime($b['date'])) }}</a></div>
+                <div class="article-title">
+                  <h5 class="mb-4">{{$b['judul']}}</h5>
+                </div>
+                <div class="article-cta">
+                  <a target="_blank" href="{{ $b['url'] }}">Baca Selengkapnya <i class="fas fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </article>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </div>  
   @endif
 </div>
 <hr>
@@ -238,4 +288,45 @@
   @endif
 </div>
   
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+<script>
+  document.querySelectorAll('.splide').forEach(carousel => new Splide( carousel, {
+    perPage: 3,
+    rewind : true,
+    perMove: 1,
+    autoplay: true,
+    breakpoints: {
+      '640': {
+        perPage: 2,
+        gap    : '1rem',
+      },
+      '480': {
+        perPage: 1,
+        gap    : '1rem',
+      },
+    }
+  }).mount());
+
+
+	// new Splide( '.splide', {
+  //   perPage: 3,
+  //   rewind : true,
+  //   perMove: 1,
+  //   autoplay: true,
+  //   breakpoints: {
+  //     '640': {
+  //       perPage: 2,
+  //       gap    : '1rem',
+  //     },
+  //     '480': {
+  //       perPage: 1,
+  //       gap    : '1rem',
+  //     },
+  //   }
+  // }).mount();
+
+</script>
 @endsection

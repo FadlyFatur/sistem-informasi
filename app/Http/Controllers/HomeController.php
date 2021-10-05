@@ -7,6 +7,7 @@ use App\acara;
 use App\beranda;
 use App\staff;
 use App\warga;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -28,13 +29,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = acara::all()->sortByDesc('created_at')->take(4);
+        $data = acara::all()->sortByDesc('created_at')->take(10);
         $jmlacara = acara::all()->count();
         $staff = staff::all()->sortBy('jabatan_id')->take(4);
         $jmlstaff = staff::all()->count();
         $jmlwarga = warga::all()->count();
         $beranda = beranda::all()->first();
         $jmlberanda = beranda::all()->count();
-        return view('welcome', compact('data', 'beranda', 'staff', 'jmlstaff', 'jmlwarga', 'jmlacara', 'jmlberanda'));
+        $berita = $this->beritaApi();
+        return view('welcome', compact('data', 'beranda', 'staff', 'jmlstaff', 'jmlwarga', 'jmlacara', 'jmlberanda', 'berita'));
+    }
+
+    public function beritaApi()
+    {
+        $data = Http::get("https://berita-indo-api.vercel.app/v1/cnn-news")->json();
+        $data_berita = [];
+        foreach ($data['data'] as $d) {
+            $data_berita[] = [
+                'judul' => $d['title'],
+                'url' => $d['link'],
+                'img' => $d['image']['small'],
+                'date' => $d['isoDate'],
+            ];
+        }
+        $data_berita = array_slice($data_berita, 0, 25);
+        // dd($data_berita);
+        return $data_berita;
     }
 }
