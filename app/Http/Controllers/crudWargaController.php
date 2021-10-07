@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Exports\WargaExport;
 use Illuminate\Support\Facades\Crypt;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class crudWargaController extends Controller
 {
@@ -80,31 +81,6 @@ class crudWargaController extends Controller
                 'kawin' => $request->kawin,
             ]);
 
-        // $warga = Warga::find($id);
-
-        // if ($request->status == "Aktif") {
-        //     $status = 1;
-        // } else {
-        //     $status = 0;
-        // }
-
-        // $warga->nik = $request->nik;
-        // $warga->nama_lengkap = $request->nama_lengkap;
-        // $warga->jenis_kelamin = $request->jenis_kelamin;
-        // $warga->tempat_lahir = $request->tempat_lahir;
-        // $warga->tanggal_lahir = $request->tanggal_lahir;
-        // $warga->alamat = $request->alamat;
-        // $warga->kelurahan = $request->kelurahan;
-        // $warga->kecamatan = $request->kecamatan;
-        // $warga->kota = $request->kota;
-        // $warga->status = $status;
-        // $warga->rt = $request->rt;
-        // $warga->agama_id = $request->agama;
-        // $warga->kerja = $request->kerja;
-        // $warga->perkawinan = $request->kawin;
-
-        // $warga->update();
-
         return Redirect::back()->with(['sukses' => 'Data warga berhasil diupdate']);
     }
 
@@ -133,5 +109,35 @@ class crudWargaController extends Controller
         $kerja = kerjas::all();
         // dd($kerja);
         return view('manajemen.update.warga-update', compact('data', 'kerja'));
+    }
+
+    public function getData()
+    {
+        $warga = warga::all();
+
+        return DataTables::of($warga)
+            ->addColumn('action', function ($user) {
+                return '<a href="' . route('upWarga', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info fa fa-edit"> </a> <a href="' . route('deleteWarga', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger fa fa-trash"></a>';
+            })
+            ->addColumn('TTL', function ($user) {
+                return $user->tempat_lahir . ' ' . $user->tanggal_lahir;
+            })
+            ->addColumn('alamat_lengkap', function ($user) {
+                return $user->alamat . ', ' . $user->kel . ', ' . $user->kec . ', ' . $user->kota;
+            })
+            ->addColumn('rt/rw', function ($user) {
+                return $user->rt . '/' . $user->rw;
+            })
+            ->editColumn('kerja_id', function ($user) {
+                return $user->kerja->nama;
+            })
+            ->addColumn('status_edit', function ($user) {
+                if ($user->status != 0) {
+                    return '<a href="' . route('aktifWarga', ['id' => $user->id]) . '"> <div class="badge badge-success">Aktif</div></a>';
+                } else {
+                    return '<a href="' . route('aktifWarga', ['id' => $user->id]) . '"> <div class="badge badge-danger">Non-Aktif</div></a>';
+                }
+            })->rawColumns(['status_edit', 'action'])
+            ->make(true);
     }
 }

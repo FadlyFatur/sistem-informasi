@@ -2,7 +2,6 @@
 @section('title','Data Warga')
 @section('halaman','Data Warga')
 
-
 @section('css')
   <link rel="stylesheet" href="{{ URL::asset('css/crudWarga.css') }}">
 @endsection
@@ -16,7 +15,6 @@
           <div class="row">
             <div class="card-header">
               <h4>Daftar Warga</h4>
-
                 <form class="card-header-form" action="{{ route('crudWarga') }}" name="cari" method="GET">
                   <div class="input-group">
                     <input type="text" name="cari" id="cari" class="form-control" placeholder="cari...">
@@ -28,6 +26,7 @@
                 
             </div>
           </div>
+
           @if ($message = Session::get('sukses'))
           <div class="alert alert-success alert-dismissible show fade">
             <div class="alert-body">
@@ -49,54 +48,28 @@
             </div>
           </div>
           @endif
+
             <!-- table -->
-            <table class="table table-md table-bordered table-striped table-hover">
+            <table class="table table-md table-bordered table-striped table-hover" id="warga-tbl" cellSpacing="0" width="100%">
             <a href="{{ route('exportWarga') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL <i class='far fa-file-excel'></i></a>
               <thead>
                 <tr style="color:black; text-align:center; font-size:13px;"> 
                   <th>NIK</th>
-                  <th>Nama Lengkap</th>
+                  <th>Nama</th>
                   <th>Tempat/Tanggal Lahir</th>
                   <th>Jenis Kelamin</th>
                   <th>Alamat</th>
                   <th>RT/RW</th>
                   <th>Agama</th>
-                  <th>Status Perkawinan</th>
+                  <th>Perkawinan</th>
                   <th>Pekerjaan</th>
                   <th>Aktivasi</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
-              <tbody>
-              @foreach($wargas as $a)
-                <tr class="text-center">
-                  <td>{{ $a['nik'] }}</td>
-                  <td>{{ $a['nama'] }}</td>
-                  <td>{{ $a['tempat_lahir'] }}-{{ $a['tanggal_lahir'] }}</td>
-                  <td class=>{{ $a['jk'] }}</td>
-                  <td>{{ $a['alamat'] }}, {{ $a['kel'] }}, {{ $a['kec'] }}, {{ $a['kota'] }}</td>
-                  <td>{{ $a['rt'] }}/{{ $a['rw'] }}</td>
-                  <td>{{ $a['agama'] }}</td>
-                  <td>{{ $a['kawin'] }}</td>
-                  <td>{{ $a['kerja']['nama'] }}</td>
-                  @if ($a['status'] != 0)
-                  <td><a href="{{route('aktifWarga',['id' => $a->id])}}"> <div class="badge badge-success">Aktif</div> </a> </td>
-                  @else
-                  <td><a href="{{route('aktifWarga',['id' => $a->id])}}"> <div class="badge badge-success">Non-Aktif</div> </a> </td>
-                  @endif
-                  <td>
-                    <a href="{{route('upWarga',['id'=>$a->id])}}" class="btn btn-sm btn-outline-info fa fa-edit"></a>
-                    {{-- <a href="#" type="button" class="btn btn-sm btn-outline-primary fa fa-edit" data-toggle="modal" data-target="#edit-{{$a['id']}}"></a> --}}
-                    <a href="{{route('deleteWarga',['id'=>$a->id])}}" class="btn btn-sm btn-outline-danger fa fa-trash"></a>
-                  </td>
-                </tr>
-              @endforeach
-              </tbody>
+              <tbody class="text-center"></tbody>
             </table>
       </div>
-    </div>
-    <div class="d-flex justify-content-center pag">
-      {{ $wargas->links() }}
     </div>
   </div>
          
@@ -249,4 +222,27 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('js')
+  <script>
+    $('#warga-tbl').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route("getWarga") }}',
+      columns: [
+          {data: 'nik', name: 'NIK'},
+          {data: 'nama', name: 'nama'},
+          {data: 'TTL', name: 'Tempat/Tanggal Lahir'},
+          {data: 'jk', name: 'Jenis Kelamin '},
+          {data: 'alamat_lengkap', name: 'Alamat'},
+          {data: 'rt/rw', name: 'RT/RW'},
+          {data: 'agama', name: 'Agama'},
+          {data: 'kerja_id', name: 'Kerja'},
+          {data: 'kawin', name: 'Perkawinan'},
+          {data: 'status_edit', name: 'Status', orderable: false, searchable: false},
+          {data: 'action', name: 'action', orderable: false, searchable: false}
+      ]
+    });
+  </script>
 @endsection

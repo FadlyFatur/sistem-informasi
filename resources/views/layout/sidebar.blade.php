@@ -1,7 +1,7 @@
 <div class="main-sidebar"> 
   <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-      <a href="#"> Sistem Informasi</a>
+      <a href="{{ route('beranda') }}"> Sistem Informasi</a>
     </div>
 
     <ul class="sidebar-menu">
@@ -17,46 +17,40 @@
           </ul>
         </li>
         <hr>  
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"></i><span>Pengelolaan Data</span></a>
-          <ul class="dropdown-menu">
-          <li><a class="nav-link" href="{{ route('crudWarga') }}">Data Warga</a></li>
-            <li><a class="nav-link" href="{{ route('staff') }}">Data Staff</a></li>
-            <li><a class="nav-link" href="{{ route('editAcara') }}">Data Acara</a></li>
-            <li><a class="nav-link" href="{{ route('galeriAdmin') }}">Data Galeri</a></li>
-          </ul>
-        </li>
-        <hr>
-        @if (Auth::check())
-          @if (Auth::user()->role != '1')
+      @if (Auth::check())
+        @if (Auth::user()->role != '1')
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"></i><span>Pengelolaan Data</span></a>
+            <ul class="dropdown-menu">
+            <li><a class="nav-link" href="{{ route('crudWarga') }}">Data Warga</a></li>
+              <li><a class="nav-link" href="{{ route('staff') }}">Data Staff</a></li>
+              <li><a class="nav-link" href="{{ route('editAcara') }}">Data Acara</a></li>
+              <li><a class="nav-link" href="{{ route('galeriAdmin') }}">Data Galeri</a></li>
+            </ul>
+          </li>
+          <hr>
+
           <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Pengelolaan Website</span></a>
             <ul class="dropdown-menu">
-            <li><a class="nav-link" href="{{ route('editBeranda') }}">Pengelolaan Beranda</a></li>
-            <li><a class="nav-link" href="{{ route('user') }}">Pengelolaan User</a></li>
-          </ul>
+              <li><a class="nav-link" href="{{ route('editBeranda') }}">Pengelolaan Beranda</a></li>
+              <li><a class="nav-link" href="{{ route('user') }}">Pengelolaan User</a></li>
+            </ul>
           </li>
           <hr>
-          @endif
         @endif
-        @if (Auth::check())
+
         <li class="nav-item dropdown">
           <a href="#" class="nav-link has-dropdown"><i class="far fa-address-card"></i> <span>Profil</span></a>
           <ul class="dropdown-menu">
             <li><a class="nav-link" href="{{ route('profil') }}">Sunting Profil</a></li>
           </ul>
         </li>
-
-      <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-        <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split"
-        onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">
-        <i class="fas fa-sign-out-alt"></i></i>Logout/Keluar
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-              @csrf
-          </form>
-      </div>
-      @endif
+        {{-- logout --}}
+        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+          <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Logout/Keluar</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+        </div>
+    @endif
   </aside>
 </div>

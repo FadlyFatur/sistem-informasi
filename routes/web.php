@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::get('/delete/{id}', 'crudWargaController@delete')->name('deleteWarga');
             Route::get('/aktif/{id}', 'crudWargaController@aktif')->name('aktifWarga');
             Route::get('/export-warga', 'crudWargaController@export')->name('exportWarga');
+            Route::get('/get-data-warga', 'crudWargaController@getData')->name('getWarga');
         });
 
         Route::prefix('/data-staff')->group(function () {

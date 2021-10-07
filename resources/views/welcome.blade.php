@@ -195,7 +195,7 @@
 <!-- Berita section -->
 <div class="container-fluid">
   <div class="d-flex justify-content-between">
-      <a href="{{ route('list-kegiatan') }}"><h2 class="section-title">Berita Terbaru <i class="fas fa-chevron-right"></i></h2></a>
+      <a href="#berita"><h2 class="section-title">Berita Terbaru <i class="fas fa-chevron-right"></i></h2></a>
   </div>
 
   @if (empty($berita))

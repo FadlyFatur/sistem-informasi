@@ -3,7 +3,6 @@
 @section('halaman','Pencarian Data Warga')
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/cari.css') }}">
-<!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
 @endsection
 
 @section('content')
