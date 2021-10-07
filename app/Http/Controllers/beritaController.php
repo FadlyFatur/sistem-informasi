@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use DataTables;
 
 class beritaController extends Controller
 {
@@ -170,5 +171,30 @@ class beritaController extends Controller
         $data = acara::where('id', $id)->first();
         // dd($data);
         return view('manajemen.update.acara-update', compact('data'));
+    }
+
+    public function getData()
+    {
+        $data = acara::select(['id', 'slug', 'judul', 'penulis_id', 'status', 'created_at']);
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($user) {
+                return '<a href="' . route('show-kegiatan', ['slug' => $user->slug]) . '" target="_blank" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></a> <a href="' . route('upAcara', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info fa fa-edit"> </a> <a href="' . route('deleteAcara', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger fa fa-trash"></a>';
+            })
+            ->addColumn('status_edit', function ($user) {
+                if ($user->status != 0) {
+                    return '<a href="' . route('aktifAcara', ['id' => $user->id]) . '"> <div class="badge badge-success">Aktif</div></a>';
+                } else {
+                    return '<a href="' . route('aktifAcara', ['id' => $user->id]) . '"> <div class="badge badge-danger">Non-Aktif</div></a>';
+                }
+            })
+            ->editColumn('penulis_id', function ($user) {
+                return $user->penulis->username;
+            })
+            ->editColumn('created_at', function ($user) {
+                return date('m/d/Y', strtotime($user->created_at));
+            })
+            ->rawColumns(['status_edit', 'action'])
+            ->make(true);
     }
 }

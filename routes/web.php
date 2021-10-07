@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::get('/update/{id}', 'crudStaffController@updateIndex')->name('upStaff')->middleware('akunVerified');
             Route::get('/delete/{id}', 'crudStaffController@destroy')->name('deleteStaff');
             Route::get('/aktif/{id}', 'crudStaffController@aktif')->name('aktifStaff');
+            Route::get('/get-data-staff', 'crudStaffController@getData')->name('getStaff');
         });
 
         Route::prefix('/data-acara')->group(function () {
@@ -50,6 +51,7 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::get('/update/{id}', 'beritaController@updateIndex')->name('upAcara')->middleware('akunVerified');
             Route::get('/delete/{id}', 'beritaController@destroy')->name('deleteAcara');
             Route::get('/aktif/{id}', 'beritaController@aktif')->name('aktifAcara');
+            Route::get('/get-data-acara', 'beritaController@getData')->name('getAcara');
         });
 
         Route::prefix('/data-beranda')->group(function () {

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use DataTables;
 
 class crudStaffController extends Controller
 {
@@ -168,5 +169,28 @@ class crudStaffController extends Controller
         $jabatan = jabatan::all();
         $a = staff::where('id', $id)->first();
         return view('manajemen.update.staff-update', compact('jabatan', 'a'));
+    }
+
+    public function getData()
+    {
+        $data = staff::all();
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($user) {
+                return '<a href="' . route('deleteStaff', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+                <a href="' . route('upStaff', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info"><i class="fa fa-edit"></i></a>';
+            })
+            ->addColumn('status_edit', function ($user) {
+                if ($user->status != 0) {
+                    return '<a href="' . route('aktifStaff', ['id' => $user->id]) . '"> <div class="badge badge-success">Aktif</div></a>';
+                } else {
+                    return '<a href="' . route('aktifStaff', ['id' => $user->id]) . '"> <div class="badge badge-danger">Non-Aktif</div></a>';
+                }
+            })
+            ->editColumn('jabatan_id', function ($user) {
+                return $user->jabatan->nama;
+            })
+            ->rawColumns(['status_edit', 'action'])
+            ->make(true);
     }
 }

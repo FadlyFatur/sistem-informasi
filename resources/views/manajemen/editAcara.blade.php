@@ -103,65 +103,21 @@
       <div class="card-body">
 
         <div class="container p-3" style="color:black;">
-          <div class="row justify-content-center">
-              <div class="col-12 col-md-10 col-lg-8">
-                  <form class="card card-sm" action="{{route('editAcara')}}" method="get">
-                      <div class="card-body row no-gutters align-items-center">
-                          <div class="col-auto">
-                              <i class="fas fa-search h4 text-body"></i>
-                          </div>
-                          <!--end of col-->
-                          <div class="col">
-                              <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Cari berdasarkan judul..." name="cari">
-                          </div>
-                          <!--end of col-->
-                          <div class="col-auto">
-                              <button class="btn btn-lg btn-primary" type="submit">Search</button>
-                          </div>
-                          <!--end of col-->
-                      </div>
-                  </form>
-              </div>
-              <!--end of col-->
-          </div>
-
           <div class="table-responsive">
-          <p class="text-center" >Total Data Acara : <span id="total-record">{{$total_data}}</span></p>
-            <table class="table table-sm">
-              <thead>
+            <p class="text-center" >Total Data Acara : <span id="total-record">{{$total_data}}</span></p>
+            <table class="table" id="acr-tbl">
+              <thead class="text-left">
                 <tr>
                   <th>Judul</th>
                   <th>Penulis</th>
-                  <th class="text-center">Tanggal</th>
-                  <th class="text-center">Publikasi</th>
-                  <th class="text-center">Aksi</th>
+                  <th>Tanggal Ditulis</th>
+                  <th>Publikasi</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
-              <tbody>
-              @foreach($data as $a)
-                <tr>
-                  <td>{{ $a['judul'] }}</td>
-                  <td>{{ $a['penulis']['username'] }}</td>
-                  <td class="text-center">{{ date('m/d/Y',strtotime($a['created_at'])) }}</td>
-                  @if ($a['status'] != 0)
-                    <td class="text-center"><a href="{{route('aktifAcara',['id' => $a->id])}}"> <div class="badge badge-success">Aktif</div> </a> </td>
-                  @else
-                    <td class="text-center"><a href="{{route('aktifAcara',['id' => $a->id])}}"> <div class="badge badge-danger">Non-Aktif</div> </a> </td>
-                  @endif
-                  <!-- <td></td> -->
-                  <td class="text-center">
-                    <a href="{{route('show-kegiatan',['slug' => $a->slug])}}" target="_blank" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></a>
-                    <a href="{{route('upAcara',['id' => $a->id])}}" class="btn btn-sm btn-outline-info"><i class="fa fa-edit"></i></a>
-                    <a href="{{route('deleteAcara',['id' => $a->id])}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
-                  </td>
-                </tr>
-              @endforeach
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
-        </div>
-        <div class="d-flex justify-content-center pag">
-          {{ $data->links() }}
         </div>
     </div>
 @endsection
@@ -174,6 +130,19 @@
     CKEDITOR.replace('deskripsi');
     $('.editors').each(function () {
           CKEDITOR.replace($(this).prop('id'));
-      });
+    });
+
+    $('#acr-tbl').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route("getAcara") }}',
+      columns: [
+          {data: 'judul', name: 'judul'},
+          {data: 'penulis_id', name: 'penulis', orderable: false, searchable: false},
+          {data: 'created_at', name: 'tanggal', searchable: false},
+          {data: 'status_edit', name: 'status'},
+          {data: 'action', name: 'action', orderable: false, searchable: false}
+      ]
+    });
     </script>
 @endsection
