@@ -6,20 +6,16 @@
 @endsection
 
 @section('content')
-  @if ($errors->any())
-    <div class="alert alert-danger alert-dismissible show fade">
-    <div class="alert-body">
-      <button class="close" data-dismiss="alert">
-        <span>×</span>
-      </button>
-      <ul>
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-      </ul>
-    </div>
-    </div>
-  @endif
+@if($errors->any())
+<div class="alert alert-danger alert-dismissible show fade">
+  <div class="alert-body">
+    <button class="close" data-dismiss="alert">
+      <span>x</span>
+    </button>
+    {!! implode('', $errors->all('<div>:message</div>')) !!}
+  </div>
+</div>
+@endif
 
   @if ($message = Session::get('sukses'))
     <div class="alert alert-success alert-dismissible show fade">
@@ -61,23 +57,23 @@
             <div class="form-group row mb-4">
               <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Judul Kegiatan</label>
               <div class="col-sm-12 col-md-7">
-                <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukan Judul Acara/Kegiatan" autocomplete="off" required>
+                <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukan Judul Acara/Kegiatan" autocomplete="off" required value="{{ old('judul') }}">
               </div>
             </div>
 
             <div class="form-group row mb-4">
               <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Deskripsi/Berita</label>
               <div class="col-sm-12 col-md-7">
-              <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukan Deskripsi kegiatan atau acara" style="height: 300px;" required></textarea>
+              <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukan Deskripsi kegiatan atau acara" style="height: 300px;" required>value="{{ old('deskripsi') }}"</textarea>
               </div>
             </div>
 
             <div class="form-group row">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="image">Pilih Image</label>
+              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="image">Pilih Image/Foto</label>
               <div class="col-sm-12 col-md-7">
                 <input type="file" class="form-control" name="image">
               </div>
-              <h6 class="p-2 mx-auto">*Max ukuran image/foto : 5 MB</h6>
+              <h6 class="p-2 mx-auto">*Max ukuran image/foto : 10 MB</h6>
             </div>
             
             

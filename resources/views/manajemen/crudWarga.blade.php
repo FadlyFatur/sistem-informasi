@@ -15,15 +15,6 @@
           <div class="row">
             <div class="card-header">
               <h4>Daftar Warga</h4>
-                <form class="card-header-form" action="{{ route('crudWarga') }}" name="cari" method="GET">
-                  <div class="input-group">
-                    <input type="text" name="cari" id="cari" class="form-control" placeholder="cari...">
-                    <div class="input-group-btn">
-                    <button class="btn btn-primary btn-icon"><i class="fas fa-search"></i></button>
-                    </div>
-                  </div>
-                </form>
-                
             </div>
           </div>
 
@@ -39,7 +30,7 @@
           @endif
 
           @if ($message = Session::get('gagal'))
-          <div class="alert alert-success alert-dismissible show fade">
+          <div class="alert alert-danger alert-dismissible show fade">
             <div class="alert-body">
               <button class="close" data-dismiss="alert">
                 <span>x</span>
@@ -47,6 +38,17 @@
               {{ Session::get('gagal') }}
             </div>
           </div>
+          @endif
+
+          @if($errors->any())
+            <div class="alert alert-danger alert-dismissible show fade">
+              <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                  <span>x</span>
+                </button>
+                {!! implode('', $errors->all('<div>:message</div>')) !!}
+              </div>
+            </div>
           @endif
 
             <!-- table -->
@@ -94,19 +96,19 @@
           <div class="form-row">
             <div class="form-group col">
                 <label for="nik">Nomer Induk Kependudukan</label>
-                <input type="text" name="nik" id="nik" class="form-control" autocomplete="off" autofocus required>
+                <input type="text" name="nik" id="nik" class="form-control" autocomplete="off" value="{{ old('nik') }}" autofocus required>
             </div>
 
             <div class="form-group col">
                 <label for="nama">Nama Lengkap</label> 
-                <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" autofocus autocomplete="off" required>
+                <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" value="{{ old('nama_lengkap') }}" autofocus autocomplete="off" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-2">
                 <label for="jenis_kelamin">Jenis Kelamin</label>
-                <select class="form-control" name="jenis_kelamin"  id="jk" required>
+                <select class="form-control" name="jenis_kelamin" id="jk" required>
                     <option>P</option>
                     <option>L</option>
                 </select>
@@ -114,12 +116,12 @@
 
             <div class="form-group col-md-5">
                 <label for="tempat_lahir">Tempat Lahir</label> 
-                <input type="text"  name="tempat_lahir" class="form-control" id="tempat_lahir" autocomplete="on" required>
+                <input type="text"  name="tempat_lahir" class="form-control" id="tempat_lahir" autocomplete="on" value="{{ old('tempat_lahir') }}" required>
             </div>
 
             <div class="form-group col-md-5">
                 <label for="tanggal_lahir">Tanggal Lahir</label> 
-                <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" required>
+                <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" required value="{{ old('tanggal_lahir') }}">
             </div>
         </div>
         <hr><br>
@@ -127,28 +129,28 @@
         <div class="form-row">
             <div class="form-group col">
                 <label for="kelurahan">Kelurahan</label> 
-                <input type="text" name="kelurahan" id="kelurahan" class="form-control" autocomplete="on" autofocus required>
+                <input type="text" name="kelurahan" id="kelurahan" class="form-control" autocomplete="on" autofocus value="{{ old('kelurahan') }}" required>
             </div>
 
             <div class="form-group col">
                 <label for="kecamatan">Kecamatan</label> 
-                <input type="text" name="kecamatan" id="kecamatan" class="form-control" autocomplete="on" autofocus required>
+                <input type="text" name="kecamatan"  id="kecamatan" class="form-control" autocomplete="on" autofocus value="{{ old('kecamatan') }}" required>
             </div>
 
             <div class="form-group col">
                 <label for="kota">Kota</label> 
-                <input type="text" name="kota" id="kota" class="form-control" autocomplete="on" autofocus required>
+                <input type="text" name="kota" id="kota" class="form-control" autocomplete="on" autofocus value="{{ old('kota') }}" required>
             </div>
         </div>
 
         <div class="form-group">
             <label>Alamat</label>
-            <textarea class="form-control" name="alamat" id="alamat" style="height: 50px;" required></textarea>
+            <textarea class="form-control" name="alamat" id="alamat" style="height: 50px;" required>{{ old('alamat') }}</textarea>
         </div>
         <hr><br>
 
         <div class="form-row">
-            <div class="form-group col-md-1">
+            <div class="form-group col-md-2">
                 <label for="rt">RT</label>
                 <select class="form-control" id="rt" name="rt">
                     <option>1</option>
@@ -166,7 +168,7 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-1">
+            <div class="form-group col-md-2">
                 <label for="rw">RW</label>
                 <select class="form-control" id="rw" name="rw">
                     <option>1</option>
@@ -184,7 +186,7 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <label for="agama">Agama</label>
                 <select class="form-control" id="agama" name="agama">
                     <option>Islam</option>
@@ -204,7 +206,7 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="kerja">Pekerjaan</label>
                 <select class="form-control" id="kerja" name="kerja">
                     @foreach ($kerja as $k)

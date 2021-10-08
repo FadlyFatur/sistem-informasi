@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\beranda;
 use App\kerjas;
+use App\jabatan;
 use Dotenv\Validator;
 use Exception;
 use Illuminate\Support\Facades\Redirect;
+use DataTables;
 
 class berandaController extends Controller
 {
     public function index()
     {
         $data = beranda::first();
-        $kerjas = kerjas::all();
-        return view('manajemen.editBeranda', compact('data', 'kerjas'));
+        return view('manajemen.editBeranda', compact('data'));
     }
 
     public function update(Request $request)
@@ -108,7 +109,7 @@ class berandaController extends Controller
             $data->delete();
             return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
         } catch (\Exception $e) {
-            return Redirect::back()->with('gagal', 'Berhasil menghapus data!');
+            return Redirect::back()->with('gagal', $e);
         }
     }
 
@@ -116,6 +117,58 @@ class berandaController extends Controller
     {
         if ($request->nama != "") {
             $data = new kerjas();
+            $data->nama = $request->nama;
+            $data->save();
+            return Redirect::back()->with('sukses', 'Berhasil menghapus data!');;
+        } else {
+            return Redirect::back()->with('gagal', 'Berhasil menghapus data!');
+        }
+    }
+
+    public function indexPilihan()
+    {
+        return view('manajemen.pilihan');
+    }
+
+    public function getData()
+    {
+        $data = kerjas::all();
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($d) {
+                return '<a href="' . route('deleteKerja', ['id' => $d->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function getDataJabatan()
+    {
+        $data = jabatan::all();
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($d) {
+                return '<a href="' . route('deleteJabatan', ['id' => $d->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function deleteJabatan($id)
+    {
+        $data = jabatan::find($id);
+        try {
+            $data->delete();
+            return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
+        } catch (\Exception $e) {
+            return Redirect::back()->with('gagal', $e);
+        }
+    }
+
+    public function addJabatan(Request $request)
+    {
+        if ($request->nama != "") {
+            $data = new jabatan();
             $data->nama = $request->nama;
             $data->save();
             return Redirect::back()->with('sukses', 'Berhasil menghapus data!');;

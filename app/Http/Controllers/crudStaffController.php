@@ -46,7 +46,22 @@ class crudStaffController extends Controller
 
     public function tambah(Request $request)
     {
-        // return $request->jabatan;
+
+        $validator = Validator::make($request->all(), [
+            'no' => 'required|integer|max:20',
+            'nama' => 'required|string|max:150',
+            'no_hp' => 'required|integer|max:13',
+            'alamat' => 'required|string|max:200',
+            'image' => 'image|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
                 $validator = Validator::make($request->all(), [

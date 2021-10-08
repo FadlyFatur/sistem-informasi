@@ -57,10 +57,10 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
         Route::prefix('/data-beranda')->group(function () {
             // route beranda
             Route::post('/update', 'berandaController@update')->name('updateBeranda');
-            Route::post('/addKerja', 'berandaController@addKerja')->name('addKerja');
+            // Route::post('/addKerja', 'berandaController@addKerja')->name('addKerja');
             Route::post('/update-visi-misi', 'berandaController@updateMs')->name('updateMs');
             Route::get('/', 'berandaController@index')->name('editBeranda')->middleware('akunVerified');
-            Route::get('/deleteKerja/{id}', 'berandaController@deleteKerja')->name('deleteKerja');
+            // Route::get('/deleteKerja/{id}', 'berandaController@deleteKerja')->name('deleteKerja');
         });
 
         Route::prefix('/data-user')->group(function () {
@@ -78,6 +78,17 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::get('/', 'dropzoneController@index')->name('galeriAdmin')->middleware('akunVerified');
             Route::get('/fetch', 'dropzoneController@fetch')->name('dropzone.fetch');
             Route::get('/delete', 'dropzoneController@delete')->name('dropzone.delete');
+        });
+
+        Route::prefix('/data-pilihan')->group(function () {
+            // route beranda
+            Route::post('/add-Kerja', 'berandaController@addKerja')->name('addKerja');
+            Route::post('/add-Jabatan', 'berandaController@addJabatan')->name('addJabatan');
+            Route::get('/', 'berandaController@indexPilihan')->name('pilihan')->middleware('akunVerified');
+            Route::get('/delete-Kerja/{id}', 'berandaController@deleteKerja')->name('deleteKerja');
+            Route::get('/delete-Jabatan/{id}', 'berandaController@deleteJabatan')->name('deleteJabatan');
+            Route::get('/get-data-kerja', 'berandaController@getData')->name('getKerja');
+            Route::get('/get-data-jabatan', 'berandaController@getDataJabatan')->name('getJabatan');
         });
     });
 });

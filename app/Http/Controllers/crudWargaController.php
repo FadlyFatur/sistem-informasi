@@ -11,11 +11,32 @@ use App\Exports\WargaExport;
 use Illuminate\Support\Facades\Crypt;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class crudWargaController extends Controller
 {
     public function tambah(Request $request)
     {
+        // validate incoming request
+
+        $validator = Validator::make($request->all(), [
+            'nik' => 'required|integer|max:16',
+            'nama_lengkap' => 'required|string|max:150',
+            'kelurahan' => 'required|string|max:150',
+            'kecamatan' => 'required|string|max:150',
+            'kota' => 'required|string|max:150',
+            'tempat_lahir' => 'required|string|max:150',
+            'rt' => 'required|integer|max:3',
+            'rw' => 'required|integer|max:3',
+            'alamat' => 'required|string|max:200',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $warga = new warga;
         $warga->nik = $request->nik;

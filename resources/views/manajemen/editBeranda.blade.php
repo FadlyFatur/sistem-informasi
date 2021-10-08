@@ -69,63 +69,6 @@
       <hr>
 
       <div class="container-fluid">
-        <div id="headingThree">
-            <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              <i class="fas fa-plus"></i> Edit Pilihan Pekerjaan
-            </a>
-        </div>
-
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-
-          <div class="card-body">
-
-            <div class="row">
-
-              <div class="col">
-                <form action="{{route('addKerja')}}" method="post">
-                @csrf 
-                  <div class="form-row align-items-center">
-                    <div class="col-auto">
-                      <label class="sr-only" for="inlineFormInput">Kerja</label>
-                      <input type="text" name="nama" class="form-control mb-2" id="inlineFormInput" placeholder="Kerja">
-                    </div>
-                    <div class="col-auto">
-                      <button type="submit" class="btn btn-primary mb-2">Tambah</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col">
-                <table class="table text-body">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Nama</th>
-                      <th scope="col">Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  @foreach ($kerjas as $k)
-                    <tr>
-                      <td>{{$k->nama}}</td>
-                      <td> <a href="{{route('deleteKerja',['id' => $k->id])}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a></td>
-                    </tr>
-                  @endforeach
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        
-      </div>
-
-      <hr>
-
-      <div class="container-fluid">
         <div id="headingfour">
             <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
               <i class="fas fa-plus"></i> Edit Visi & Misi

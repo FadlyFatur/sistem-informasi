@@ -51,20 +51,20 @@ class beritaController extends Controller
 
     public function post(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'judul' => 'string|max:200',
+            'deskripsi' => 'string|max:10000',
+            'image' => 'required|image|max:10240',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
-                $validator = Validator::make($request->all(), [
-                    'judul' => 'string|max:200',
-                    'deskripsi' => 'string|max:10000',
-                    'image' => 'required|mimes:jpeg,png|max:5120',
-                ]);
-
-                if ($validator->fails()) {
-                    return Redirect::back()
-                        ->withErrors($validator)
-                        ->withInput();
-                }
-
                 //upload file ke local storage
                 $name = date("his_") . $request->image->getClientOriginalName();
                 $url = $request->image->storeAs('acara', $name);

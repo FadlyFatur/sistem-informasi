@@ -9,6 +9,8 @@ class jabatan extends Model
     protected $fillable = [
         'nama'
     ];
+    public $timestamps = false;
+
 
     public function user()
     {

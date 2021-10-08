@@ -33,8 +33,9 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Pengelolaan Website</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ route('editBeranda') }}">Pengelolaan Beranda</a></li>
               <li><a class="nav-link" href="{{ route('user') }}">Pengelolaan User</a></li>
+              <li><a class="nav-link" href="{{ route('editBeranda') }}">Pengelolaan Beranda</a></li>
+              <li><a class="nav-link" href="{{ route('pilihan') }}">Pengelolaan Pilihan</a></li>
             </ul>
           </li>
           <hr>

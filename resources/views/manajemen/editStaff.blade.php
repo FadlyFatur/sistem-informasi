@@ -7,20 +7,6 @@
 
 @section('content')
 <div class="container-fluid mt-5">
-@if ($errors->any())
-  <div class="alert alert-danger alert-dismissible show fade">
-  <div class="alert-body">
-    <button class="close" data-dismiss="alert">
-      <span>×</span>
-    </button>
-    <ul>
-        @foreach ($errors->all() as $error)
-           <li>{{ $error }}</li>
-        @endforeach
-     </ul>
-  </div>
-  </div>
-@endif
 
 @if ($message = Session::get('sukses'))
 <div class="alert alert-success alert-dismissible show fade">
@@ -44,6 +30,17 @@
 </div>
 @endif
 
+@if($errors->any())
+  <div class="alert alert-danger alert-dismissible show fade">
+    <div class="alert-body">
+      <button class="close" data-dismiss="alert">
+        <span>x</span>
+      </button>
+      {!! implode('', $errors->all('<div>:message</div>')) !!}
+    </div>
+  </div>
+@endif
+
   <div class="card">
     <div class="card-header">
       <a class="btn btn-primary m-3 " id="colapse1" data-toggle="collapse" href="#tambah" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -60,28 +57,28 @@
           <div class="form-group row mb-4">
             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Pegawai</label>
             <div class="col-sm-12 col-md-7">
-              <input type="number" name="no" id="no" class="form-control" placeholder="Masukan Nomer Pegawai" autocomplete="off">
+              <input type="number" name="no" id="no" class="form-control" placeholder="Masukan Nomer Pegawai" autocomplete="off" value="{{ old('no') }}">
             </div>
           </div>
 
           <div class="form-group row mb-4">
             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama</label>
             <div class="col-sm-12 col-md-7">
-              <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukan Nama Lengkap" autocomplete="on" required>
+              <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukan Nama Lengkap" autocomplete="on" value="{{ old('nama') }}" required>
             </div>
           </div>
 
           <div class="form-group row mb-4">
             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer HP</label>
             <div class="col-sm-12 col-md-7">
-              <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor telepon" autocomplete="off">
+              <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor telepon" autocomplete="off" value="{{ old('no_hp') }}">
             </div>
           </div>
 
           <div class="form-group row mb-4">
             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Alamat</label>
             <div class="col-sm-12 col-md-7">
-            <textarea class="form-control" name="alamat" id="alamat" placeholder="Masukan Alamat Lengkap" style="height: 150px;" required></textarea>
+            <textarea class="form-control" name="alamat" id="alamat" placeholder="Masukan Alamat Lengkap" style="height: 150px;" required>{{ old('alamat') }}</textarea>
             </div>
           </div>
 
@@ -91,7 +88,7 @@
               <select class="form-control" id="jabatan" name="jabatan" required> 
                 <option value="" selected>Pilih...</option>
                 @foreach ($jabatan as $j)
-                <option value="{{$j->id}}">{{$j->njabatan}}</option>
+                <option value="{{$j->id}}">{{$j->nama}}</option>
                 @endforeach
               </select>
             </div>
