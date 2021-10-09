@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\beranda;
 use App\kerjas;
 use App\jabatan;
-use Dotenv\Validator;
 use Exception;
 use Illuminate\Support\Facades\Redirect;
 use DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class berandaController extends Controller
 {
@@ -76,30 +76,33 @@ class berandaController extends Controller
 
     public function storeGambar(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'thumb' => 'required|image|max:15360|dimensions:min_width=900,min_height=300',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // dd($request->all());
         $data = beranda::first();
+        if ($data) {
+            if ($request->hasFile('thumb')) {
+                $name = date("his_") . $request->thumb->getClientOriginalName();
+                $url = $request->thumb->storeAs('acara', $name);
 
-        if ($request->hasFile('gambar')) {
-            if ($request->gambar->isValid()) {
-                $validator = Validator::make($request->all(), [
-                    'gambar' => 'required|mimes:jpeg,png|max:5120',
-                ]);
+                // $name = date("Ymd") . $request->thumb->getClientOriginalName();
+                // $url = $request->thumb->storeAs('public', $name);
 
-                if ($validator->fails()) {
-                    return Redirect::back()
-                        ->withErrors($validator)
-                        ->withInput();
-                }
-
-                $name = date("Ymd_") . $request->gambar->getClientOriginalName();
-                $url = $request->gambar->storeAs('public', $name);
-
-                $data->foto = $name;
-                $data->url = $url;
+                // $data->foto = $name;
+                $data->foto_thumb = $url;
                 $data->update();
-                return Redirect::back()->with(['sukses-update' => 'Data berhasil diupdate!']);
+                return Redirect::back()->with(['sukses' => 'Data berhasil diupdate!']);
             }
         }
-        return Redirect::back()->with(['gagal-update' => 'Data berhasil diupdate!']);
+        return Redirect::back()->with(['gagal' => 'Data gagal diupdate!']);
     }
 
     public function deleteKerja($id)

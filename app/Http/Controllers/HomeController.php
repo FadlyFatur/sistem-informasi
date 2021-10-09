@@ -7,6 +7,7 @@ use App\acara;
 use App\beranda;
 use App\staff;
 use App\warga;
+use Exception;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
@@ -42,18 +43,22 @@ class HomeController extends Controller
 
     public function beritaApi()
     {
-        $data = Http::get("https://berita-indo-api.vercel.app/v1/cnn-news")->json();
-        $data_berita = [];
-        foreach ($data['data'] as $d) {
-            $data_berita[] = [
-                'judul' => $d['title'],
-                'url' => $d['link'],
-                'img' => $d['image']['small'],
-                'date' => $d['isoDate'],
-            ];
+        try {
+            $data = Http::get("https://berita-indo-api.vercel.app/v1/cnn-news")->json();
+            $data_berita = [];
+            foreach ($data['data'] as $d) {
+                $data_berita[] = [
+                    'judul' => $d['title'],
+                    'url' => $d['link'],
+                    'img' => $d['image']['small'],
+                    'date' => $d['isoDate'],
+                ];
+            }
+            $data_berita = array_slice($data_berita, 0, 25);
+            // dd($data_berita);
+            return $data_berita;
+        } catch (Exception $e) {
+            return ('404');
         }
-        $data_berita = array_slice($data_berita, 0, 25);
-        // dd($data_berita);
-        return $data_berita;
     }
 }

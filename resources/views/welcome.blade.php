@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title','Beranda')
-@section('halaman','Beranda')
+{{-- @section('halaman','Beranda') --}}
 @section('css')
 <link rel="stylesheet" href="{{asset('css/welcome.css')}}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
@@ -11,7 +11,13 @@
 
 <!-- image slider -->
 <div class="container-fluid jumbo">
-  <div class="jumbotron" style="background-image: url(&quot;img/Register-photo.jpg&quot;) ">
+  @if ($beranda->foto_thumb != null )
+  <div class="jumbotron" style="background-image: url('{{ Storage::url($beranda->foto_thumb) }}')">
+      
+  @else
+  <div class="jumbotron" style="background-image: url('img/homepage-thumb.jpg')">
+      
+  @endif
   <div class="container teks">
       <h1 class="display-4  align-text-bottom">Sistem Informasi Kependudukan</h1>
       <h2 class="align-text-bottom">Nama_intansi</h2>
@@ -133,7 +139,7 @@
           <div class="splide__slide">
             <article class="article article-style-c">
               <div class="article-header">
-                <div class="article-image" data-background="{{$r['url']}}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
+                <div class="article-image" data-background="{{$r['url']}}"style="background-image: url(&quot;assets/img/news/img03.jpg&quot;);">
                 </div>
               </div>
               <div class="article-details">
@@ -198,7 +204,7 @@
       <a href="#berita"><h2 class="section-title">Berita Terbaru <i class="fas fa-chevron-right"></i></h2></a>
   </div>
 
-  @if (empty($berita))
+  @if ($berita == '404')
     <div class="row d-flex justify-content-center">
       <div class="col">
         <div class="alert alert-danger text-center">

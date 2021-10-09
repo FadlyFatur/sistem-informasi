@@ -21,9 +21,9 @@
         Data Berhasil Disimpan.
       </div>
     </div>
-    @endif
+  @endif
 
-    @if ($message = Session::get('gagal'))
+  @if ($message = Session::get('gagal'))
     <div class="alert alert-danger alert-dismissible show fade">
       <div class="alert-body">
         <button class="close" data-dismiss="alert">
@@ -32,7 +32,18 @@
         Gagal disimpan.
       </div>
     </div>
-    @endif
+  @endif
+
+  @if($errors->any())
+    <div class="alert alert-danger alert-dismissible show fade">
+      <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+          <span>x</span>
+        </button>
+        {!! implode('', $errors->all('<div>:message</div>')) !!}
+      </div>
+    </div>
+  @endif
 
     <div class="accordion" id="accordionExample">
       <div class="container-fluid">
@@ -65,17 +76,16 @@
         </div>
         </div>
       </div>
-
       <hr>
 
       <div class="container-fluid">
-        <div id="headingfour">
-            <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+        <div id="headingTwo">
+            <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
               <i class="fas fa-plus"></i> Edit Visi & Misi
             </a>
         </div>
 
-        <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#accordionExample">
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 
           <div class="card-body text-body">
           <form action="{{route ('updateMs')}}" method="POST">
@@ -111,10 +121,39 @@
 
         
       </div>
+      <hr>
+
+      <div class="container-fluid">
+        <div id="headingThree">
+            <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              <i class="fas fa-plus"></i> Thumbnail Beranda
+            </a>
+        </div>
+
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+
+          <div class="card-body text-body">
+          <form action="{{route ('updateThumb')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <div class="row">
+
+            <div class="col thumb-input">
+              <h3>Thumbnail</h3>
+              <img id="prev" class="prev-img" src="{{ asset('assets/img/news/img03.jpg') }}" alt="my-image" />
+              <input type='file' name="thumb" onchange="readURL(this);"/>
+            </div>
+          </div>
+              <div class="mx-auto d-flex justify-content-center button-submit">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+          </form>
+          </div>
+
+        </div>  
+      </div>
+      <hr>
 
     </div>
-
-
   </div>
 </div>  
 @endsection
@@ -130,5 +169,18 @@
   <script>
   CKEDITOR.replace('misi');
   CKEDITOR.replace('visi');
+
+  function readURL(input) {
+      if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+              $('#prev')
+                  .attr('src', e.target.result);
+          };
+
+          reader.readAsDataURL(input.files[0]);
+      }
+  }
   </script>
 @endsection

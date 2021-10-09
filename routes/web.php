@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::post('/update', 'berandaController@update')->name('updateBeranda');
             // Route::post('/addKerja', 'berandaController@addKerja')->name('addKerja');
             Route::post('/update-visi-misi', 'berandaController@updateMs')->name('updateMs');
+            Route::post('/update-thumbnail', 'berandaController@storeGambar')->name('updateThumb');
             Route::get('/', 'berandaController@index')->name('editBeranda')->middleware('akunVerified');
             // Route::get('/deleteKerja/{id}', 'berandaController@deleteKerja')->name('deleteKerja');
         });
