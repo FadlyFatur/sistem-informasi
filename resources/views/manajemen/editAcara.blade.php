@@ -54,33 +54,28 @@
         <form class="m-2" method="post" action="{{route('post')}}" enctype="multipart/form-data">
           @csrf
           <div class="card-body">
-            <div class="form-group row mb-4">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Judul Kegiatan</label>
-              <div class="col-sm-12 col-md-7">
+            <div class="row">
+              <div class="form-group col-12 mb-4">
+                <label for="judul">Judul Kegiatan</label>
                 <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukan Judul Acara/Kegiatan" autocomplete="off" required value="{{ old('judul') }}">
               </div>
-            </div>
 
-            <div class="form-group row mb-4">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Deskripsi/Berita</label>
-              <div class="col-sm-12 col-md-7">
-              <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukan Deskripsi kegiatan atau acara" style="height: 300px;" required>value="{{ old('deskripsi') }}"</textarea>
+              <div class="form-group col-12 mb-4">
+                <label for="deskripsi">Deskripsi/Berita</label>
+                <textarea class="form-control" name="deskripsi" id="deskripsi" required>{{ old('deskripsi') }}</textarea>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="image">Pilih Image/Foto</label>
-              <div class="col-sm-12 col-md-7">
+              <div class="form-group col-12">
+                <label for="image">Pilih Thumbnail/Foto Acara</label>
                 <input type="file" class="form-control" name="image">
+                <h6 class="p-2 mx-auto">*Max ukuran image/foto : 10 MB</h6>
               </div>
-              <h6 class="p-2 mx-auto">*Max ukuran image/foto : 10 MB</h6>
-            </div>
-            
-            
-              <div class="form-group row mb-4">
+
+              <div class="form-group col mb-4">
               <div class="mx-auto button-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
+            </div>
             </div>
           </div>
         </form> 
@@ -123,9 +118,10 @@
   <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
     <script>
-    CKEDITOR.replace('deskripsi');
-    $('.editors').each(function () {
-          CKEDITOR.replace($(this).prop('id'));
+    CKEDITOR.replace( 'deskripsi', {
+        language: 'fr',
+        height : 500,
+        
     });
 
     $('#acr-tbl').DataTable({

@@ -19,25 +19,25 @@
           </div>
 
           @if ($message = Session::get('sukses'))
-          <div class="alert alert-success alert-dismissible show fade">
-            <div class="alert-body">
-              <button class="close" data-dismiss="alert">
-                <span>x</span>
-              </button>
-              {{ Session::get('sukses') }}
+            <div class="alert alert-success alert-dismissible show fade">
+              <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                  <span>x</span>
+                </button>
+                {{ Session::get('sukses') }}
+              </div>
             </div>
-          </div>
           @endif
 
           @if ($message = Session::get('gagal'))
-          <div class="alert alert-danger alert-dismissible show fade">
-            <div class="alert-body">
-              <button class="close" data-dismiss="alert">
-                <span>x</span>
-              </button>
-              {{ Session::get('gagal') }}
+            <div class="alert alert-danger alert-dismissible show fade">
+              <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                  <span>x</span>
+                </button>
+                {{ Session::get('gagal') }}
+              </div>
             </div>
-          </div>
           @endif
 
           @if($errors->any())
@@ -53,7 +53,7 @@
 
             <!-- table -->
             <table class="table table-md table-bordered table-striped table-hover" id="warga-tbl" cellSpacing="0" width="100%">
-            <a href="{{ route('exportWarga') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL <i class='far fa-file-excel'></i></a>
+              <a href="{{ route('exportWarga') }}" class="btn btn-success my-3">Export Excel <i class='far fa-file-excel'></i></a>
               <thead>
                 <tr style="color:black; text-align:center; font-size:13px;"> 
                   <th>NIK</th>

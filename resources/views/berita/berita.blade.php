@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title','Berita')
-@section('halaman','Acara/Kegiatan RW 2')
+@section('halaman','Acara/Kegiatan')
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/berita.css')}}">

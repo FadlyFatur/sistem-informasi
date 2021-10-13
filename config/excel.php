@@ -59,7 +59,7 @@ return [
         |
         */
         'properties'             => [
-            'creator'        => '',
+            'creator'        => 'sisfo-web',
             'lastModifiedBy' => '',
             'title'          => '',
             'description'    => '',

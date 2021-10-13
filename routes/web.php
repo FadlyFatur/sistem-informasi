@@ -91,6 +91,15 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::get('/get-data-kerja', 'berandaController@getData')->name('getKerja');
             Route::get('/get-data-jabatan', 'berandaController@getDataJabatan')->name('getJabatan');
         });
+
+        Route::prefix('/data-aspirasi')->group(function () {
+            // route beranda
+            Route::post('/accept', 'beritaController@accAspirasi')->name('accAspirasi');
+            Route::post('/reject', 'beritaController@rejectAspirasi')->name('rejectAspirasi');
+            Route::post('/delete-aspirasi/{id}', 'beritaController@deleteAspirasi')->name('deleteAspirasi');
+            Route::get('/', 'beritaController@indexAspirasiAdmin')->name('aspi-admin')->middleware('akunVerified');
+            Route::get('/get-data-aspirasi', 'beritaController@getDataAspirasi')->name('getAspirasi');
+        });
     });
 });
 
@@ -108,6 +117,9 @@ Route::get('kegiatan/{slug}', 'beritaController@show')->name('show-kegiatan');
 //pencarian warga
 Route::get('pencarian/warga', 'wargaController@index')->name('cariWarga');
 Route::get('pencarian/warga/fetch', 'wargaController@fetch');
+
+Route::get('aspirasi', 'beritaController@indexAspirasi')->name('aspirasi');
+Route::post('aspirasi/post', 'beritaController@postAspirasi')->name('post-aspirasi');
 
 Route::get('galeri', 'dropzoneController@galeri')->name('galeri');
 

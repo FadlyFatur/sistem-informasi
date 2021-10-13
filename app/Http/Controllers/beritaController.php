@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\acara;
+use App\Apirasi;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -11,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use DataTables;
+use Exception;
 
 class beritaController extends Controller
 {
@@ -196,5 +198,59 @@ class beritaController extends Controller
             })
             ->rawColumns(['status_edit', 'action'])
             ->make(true);
+    }
+
+    public function indexAspirasi()
+    {
+        return view('berita.aspirasi');
+    }
+
+    public function postAspirasi(Request $request)
+    {
+        if (Auth::check() && in_array(Auth::user()->role, ['1', '2', '3'])) {
+            return Redirect::back()->with(['gagal' => 'Admin/User, tidak bisa mengirim aspirasi']);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'pengirim' => 'string|max:200',
+            'deskripsi' => 'required|string|max:5000',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if ($request->anonim == '1') {
+            try {
+                apirasi::create([
+                    'aspirasi' => $request->deskripsi
+                ]);
+
+                return Redirect::back()->with(['sukses' => 'Berhasil Mengirim Aspirasi']);
+            } catch (Exception $e) {
+                dd($e);
+                return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
+            }
+        } else {
+            try {
+                apirasi::create([
+                    'aspirasi' => $request->deskripsi,
+                    'pengirim' => $request->pengirim
+                ]);
+
+                return Redirect::back()->with(['sukses' => 'Berhasil Mengirim Aspirasi']);
+            } catch (Exception $e) {
+                dd($e);
+                return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
+            }
+        }
+        dd($request->all());
+    }
+
+    public function indexAspirasiAdmin()
+    {
+        return view('manajemen.aspirasi');
     }
 }

@@ -20,7 +20,7 @@
   @endif
   <div class="container teks">
       <h1 class="display-4  align-text-bottom">Sistem Informasi Kependudukan</h1>
-      <h2 class="align-text-bottom">Nama_intansi</h2>
+      <h2 class="align-text-bottom">{{ $beranda->nama_intansi }}</h2>
       <p class="lead align-text-bottom"></p>
     </div>
   </div>

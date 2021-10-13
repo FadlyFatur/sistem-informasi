@@ -17,6 +17,8 @@
           </ul>
         </li>
         <hr>  
+        <li><a class="nav-link" href="{{ route('aspirasi') }}"><i class="fas fa-edit"></i> <span>Aspirasi</span></a></li>  
+        <hr>
       @if (Auth::check())
         @if (Auth::user()->role != '1')
           <li class="nav-item dropdown">
@@ -26,6 +28,7 @@
               <li><a class="nav-link" href="{{ route('staff') }}">Data Staff</a></li>
               <li><a class="nav-link" href="{{ route('editAcara') }}">Data Acara</a></li>
               <li><a class="nav-link" href="{{ route('galeriAdmin') }}">Data Galeri</a></li>
+              <li><a class="nav-link" href="{{ route('aspi-admin') }}">Data Aspirasi</a></li>
             </ul>
           </li>
           <hr>

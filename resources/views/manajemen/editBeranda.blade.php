@@ -47,6 +47,30 @@
 
     <div class="accordion" id="accordionExample">
       <div class="container-fluid">
+        <div id="headingZero">
+            <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+              <i class="fas fa-plus"></i> Edit Nama Intansi
+            </a>
+        </div>
+
+        <div id="collapseZero" class="collapse" aria-labelledby="headingZero" data-parent="#accordionExample">
+        <div class="container mt-5">
+          <form action="{{ route('updateBeranda') }}" method="POST">
+            @csrf
+            <div class="form-group">
+              <label for="intansi" class="col-sm-3 col-form-label">Nama Intansi</label>
+              <input type="text" class="form-control" name="intansi" placeholder="Masukan Nama Intansi" value="{{isset($data['nama_intansi']) ? $data['nama_intansi'] : Null}}">
+            </div>
+            <div class="card-footer d-flex justify-content-center">       
+              <button type="submit" class="btn btn-primary mr-1">Submit</button>
+            </div>
+          </form>
+        </div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="container-fluid">
         <div id="headingOne">
             <a class="btn btn-primary btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               <i class="fas fa-plus"></i> Edit Kontak

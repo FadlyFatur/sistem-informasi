@@ -21,13 +21,17 @@ class berandaController extends Controller
 
     public function update(Request $request)
     {
-        $data = beranda::all();
+        $data = beranda::first();
         if ($data->count() > 0) {
             try {
-                $data = beranda::first();
-                $data->kontak = $request->kontak;
-                $data->email = $request->email;
-                $data->alamat = $request->alamat;
+                if ($request->has('intansi')) {
+                    $data->nama_intansi = $request->intansi;
+                } else {
+                    $data->kontak = $request->kontak;
+                    $data->email = $request->email;
+                    $data->alamat = $request->alamat;
+                }
+
                 $data->update();
                 return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
             } catch (Exception $e) {
@@ -36,9 +40,14 @@ class berandaController extends Controller
         } else {
             try {
                 $data = new beranda();
-                $data->kontak = $request->kontak;
-                $data->email = $request->email;
-                $data->alamat = $request->alamat;
+                if ($request->has('intansi')) {
+                    $data->nama_intansi = $request->intansi;
+                } else {
+                    $data->kontak = $request->kontak;
+                    $data->email = $request->email;
+                    $data->alamat = $request->alamat;
+                }
+
                 $data->status = 1;
                 $data->save();
                 return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
