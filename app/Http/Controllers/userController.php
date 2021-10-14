@@ -103,7 +103,7 @@ class userController extends Controller
         $id = $request->staff;
         $data = staff::find($id);
 
-        if (empty($data->no_pegawai)) {
+        if (empty($data->id_pegawai)) {
             return Redirect::back()->with('gagal', 'Staff belum memiliki nomer pegawai, Harap diisi!');
         } else {
             if ($data['user_id'] === NULL) {
@@ -130,6 +130,32 @@ class userController extends Controller
             }
         } else {
             return Redirect::back()->with('gagal', 'Tidak bisa mereset data pribadi!');
+        }
+    }
+
+    public function reIntegrasi($id)
+    {
+        try {
+            $user = user::find($id);
+            // dd($user->role);
+            if (Auth::user()->role != 3) {
+                if ($user->role == 3) {
+                    return Redirect::back()->with('gagal', 'Tidak bisa mereset data superadmin!');
+                }
+            }
+
+            if (Auth::user()->role != 3) {
+                if (Auth::id() == $id) {
+                    return Redirect::back()->with('gagal', 'Tidak bisa mereset data pribadi!');
+                }
+            }
+
+            staff::where('user_id', $id)
+                ->update(['user_id' => Null]);
+
+            return Redirect::back()->with('sukses', 'Berhasil melakukan re-integrasi akun!');
+        } catch (\Throwable $th) {
+            return Redirect::back()->with('gagal', 'Gagal melakukan re-integrasi akun!');
         }
     }
 }

@@ -12,6 +12,8 @@ class Apirasi extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'pengirim', 'aspirasi'
+        'pengirim', 'aspirasi', 'status'
     ];
+
+    protected $table = 'aspirasis';
 }

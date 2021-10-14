@@ -54,30 +54,24 @@
                         <h6 class="text-muted f-w-400">{{ Auth::user()->username }}</h6>
                     </div>
                     <div class="col-sm-6">
-                        <p class="m-b-10 f-w-600">Nomer Pegawai</p>
-                        @if(isset(Auth::user()->staff['no_pegawai']))
-                        <h6 class="text-muted f-w-400">{{ isset(Auth::user()->staff["id_pegawai"]) ? Auth::user()->staff["id_pegawai"] : Null }}</h6>
+                        <p class="m-b-10 f-w-600">Level</p>
+                        @if ( Auth::user()->role == '1' )
+                        <h6 class="text-muted f-w-400">Staff</h6>
+                        @elseif (Auth::user()->role == '2')
+                        <h6 class="text-muted f-w-400">Admin</h6>
+                        @else
+                        <h6 class="text-muted f-w-400">Super Admin</h6>
                         @endif
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <p class="m-b-10 f-w-600">Verifikasi</p>
+                    <div class="col-sm-8">
+                        <p class="m-b-10 f-w-600">Verifikasi Akun</p>
                         @if ( empty(Auth::user()->verified_at) )
                         <h6 class="text-muted f-w-400">Belum diverifikasi</h6>
                         @else
-                        <h6 class="text-muted f-w-400">Telah diverifikasi ({{Auth::user()->verified_at}})</h6>
-                        @endif
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="m-b-10 f-w-600">Status</p>
-                        @if ( Auth::user()->role == '1' )
-                        <h6 class="text-muted f-w-400">Level Staff</h6>
-                        @elseif (Auth::user()->role == '2')
-                        <h6 class="text-muted f-w-400">Level Admin</h6>
-                        @else
-                        <h6 class="text-muted f-w-400">Level SuperAdmin</h6>
+                        <h6 class="text-muted f-w-400">Terverifikasi oleh Admin pada {{Auth::user()->verified_at}}</h6>
                         @endif
                     </div>
                 </div>
@@ -85,24 +79,30 @@
         </div>
         <div class="col-sm-6">
             <div class="card-block">
-            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Detail Staff</h6>
-            <div class="row">
-                <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Nama</p>
-                    <h6 class="text-muted f-w-400">{{ isset(Auth::user()->staff["no_pegawai"]) ? Auth::user()->staff["nama"]: Null}}</h6>
+                @if (isset(Auth::user()->staff->id_pegawai))
+                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Detail Staff</h6>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Nama</p>
+                        <h6 class="text-muted f-w-400">{{ Auth::user()->staff["nama"]}}</h6>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Nomer Pegawai</p>
+                        <h6 class="text-muted f-w-400">{{ Auth::user()->staff->id_pegawai }}</h6>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Nomer Hp</p>
-                    <h6 class="text-muted f-w-400">{{ isset(Auth::user()->staff["no_pegawai"]) ? Auth::user()->staff["no_hp"] : Null }}</h6>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Alamat</p>
+                        <h6 class="text-muted f-w-400">{{  Auth::user()->staff["alamat"] }}</h6>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Nomer Hp</p>
+                        <h6 class="text-muted f-w-400">{{ Auth::user()->staff["no_hp"] }}</h6>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-8">
-                    <p class="m-b-10 f-w-600">Alamat</p>
-                    <h6 class="text-muted f-w-400">{{ isset(Auth::user()->staff["no_pegawai"]) ?Auth::user()->staff["alamat"] : Null}}</h6>
-                </div>
-            </div>
+                @endif
             </div>
         </div>
     </div>
@@ -111,10 +111,47 @@
         <button class="btn btn-primary" data-toggle="collapse" href="#resetPassword" role="button" aria-expanded="false" aria-controls="collapseExample">
             <i class="fas fa-edit"></i> Reset Password
         </button>
-        <button class="btn btn-primary" data-toggle="collapse" href="#taut" role="button" aria-expanded="false" aria-controls="collapseExample" {{isset($data['user_id']) ? 'disabled' : '' }}>
-            <i class="fas fa-user"></i> Tautkan Akun
+
+        <button class="btn btn-primary">
+            <i class="fas fa-user-times"></i> Tutup/Hapus Akun
         </button>
 
+        @if (!isset($data['user_id']))
+            <button class="btn btn-primary" data-toggle="collapse" href="#taut" role="button" aria-expanded="false" aria-controls="collapseExample" {{isset($data['user_id']) ? 'disabled' : '' }}>
+                <i class="fas fa-user"></i> Tautkan Akun
+            </button>
+   
+            <div class="collapse" id="taut" data-parent="#profilParent">
+                <div class="card card-body">
+                    Menautkan Akun web dengan staff
+                    <hr>
+                    <form action="{{route('tautkan')}}" method="post">
+                    @csrf
+                    
+                    <div class="form-group row mb-4">
+                        <label for="staff" class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pilih Staff</label>
+                        <div class="col-sm-12 col-md-7">
+                        <select class="form-control" id="staff" name="staff" required> 
+                            <option value="" selected>Pilih...</option>
+                            @foreach ($staff as $s)
+                                <option value="{{$s->id}}">Nama : {{$s->nama}} | No : {{$s->no_pegawai}} | {{ $s['user_id'] === NULL ? 'Belum Terpakai' : 'Terpakai' }}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Tautkan Akun!') }}
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+            </div>
+        @endif
 
         <div class="collapse" id="resetPassword" data-parent="#profilParent">
             <div class="card card-body">
@@ -172,36 +209,6 @@
             </div>
         </div>
 
-        <div class="collapse" id="taut" data-parent="#profilParent">
-            <div class="card card-body">
-                Menautkan Akun web dengan staff
-                <hr>
-                <form action="{{route('tautkan')}}" method="post">
-                @csrf
-                
-                <div class="form-group row mb-4">
-                    <label for="staff" class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pilih Staff</label>
-                    <div class="col-sm-12 col-md-7">
-                    <select class="form-control" id="staff" name="staff" required> 
-                        <option value="" selected>Pilih...</option>
-                        @foreach ($staff as $s)
-                            <option value="{{$s->id}}">Nama : {{$s->nama}} | No : {{$s->no_pegawai}} | {{ $s['user_id'] === NULL ? 'Belum Terpakai' : 'Terpakai' }}</option>
-                        @endforeach
-                    </select>
-                    </div>
-                </div>
-
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Tautkan Akun!') }}
-                        </button>
-                    </div>
-                </div>
-                </form>
-
-            </div>
-        </div>
     </div>
     
 </div>

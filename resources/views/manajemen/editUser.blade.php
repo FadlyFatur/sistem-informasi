@@ -47,13 +47,17 @@
         <tbody>
         @foreach($data as $a)
           <tr class="text-center">
-            <td>{{ isset($a->staff['no_pegawai']) ? $a->staff['no_pegawai'] : '-' }}</td>
+            <td>{{ isset($a->staff['id_pegawai']) ? $a->staff['id_pegawai'] : '-' }}</td>
             <td>{{ isset($a->staff['nama']) ? $a->staff['nama'] : '-' }}</td>
             <td>{{ $a['username'] }}</td>
             @if(empty($a->staff['user_id']))
             <td><a><div class="badge badge-light">Belum Ditautkan<i class="fas fa-times"></i></div></a></td>
             @else
-            <td><div class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="ditautkan dengan staff : {{$a->staff->nama}}">Ditautkan<i class="fas fa-check-square"></i></div> </td>
+            <td class="list">
+              <a class="badge badge-warning" href="{{route('reIntegrasi',['id' => $a->id])}}">
+                Ditautkan <i class="fas fa-check-square"></i>
+              </a> 
+            </td>
             @endif
             @if(empty($a['verified_at']))
             <td><a href="{{route('verifiedUser',['id' => $a->id])}}"><div class="badge badge-light">Belum Terverifikasi <i class="fas fa-times"></i></div></a></td>
@@ -79,27 +83,56 @@
 @endsection
 
 @section('modal')
-@foreach($data as $a)
-  <div class="modal fade text-body" id="reset-{{$a['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Password Reset</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h4>Apakah yakin akan akan mereset Password?</h4>
-          <p>User : {{ $a['username'] }}</p>
-          <p>password akan direset menjadi default yaitu "12345" harap langsung mengganti password setelah direset demi menjaga keamanan website.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <a href="{{route('resetUser',['id' => $a->id])}}" type="button" class="btn btn-primary">Reset</a>
+  @foreach($data as $a)
+    <div class="modal fade text-body" id="reset-{{$a['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Password Reset</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>Apakah yakin akan akan mereset Password?</h4>
+            <p>User : {{ $a['username'] }}</p>
+            <p>password akan direset menjadi default yaitu "12345" harap langsung mengganti password setelah direset demi menjaga keamanan website.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <a href="{{route('resetUser',['id' => $a->id])}}" type="button" class="btn btn-primary">Reset</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-@endforeach
+  @endforeach
+@endsection
+
+@section('js')
+    <script>
+      // $('.rIntg').hover(function () {
+      //   var element = document.getElementById("myDIV");
+      //   $( this ).classList.toogle('badge-warning');
+      //   $( this ).classList.toogle('badge-danger');
+      // })
+      // $( "td.list" ).hover(
+      //   function() {
+      //     $( this ).toggle( "badge-warning" );
+      //     $( this ).toggle( "badge-danger" );
+      //   }
+      // );
+
+      $( "td.list .badge").hover(
+        function() {
+          // $( this ).classList.remove("badge-warning");
+          $( this ).removeClass( "badge-warning" );
+          $( this ).addClass("badge-danger");
+          $( this ).text("Batalkan")
+        }, function() {
+          $( this ).addClass( "badge-warning" );
+          $( this ).removeClass("badge-danger");
+          $( this ).html( 'Ditautkan <i class="fas fa-check-square"></i>' );
+        }
+      );
+    </script>
 @endsection

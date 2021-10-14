@@ -13,11 +13,13 @@ class CreateApirasisTable extends Migration
      */
     public function up()
     {
-        Schema::create('apirasis', function (Blueprint $table) {
+        Schema::create('aspirasis', function (Blueprint $table) {
             $table->id();
             $table->string('pengirim', 150)->nullable();
-            $table->string('aspirasi', 500);
+            $table->string('aspirasi', 1000);
+            $table->string('status', 0)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateApirasisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apirasis');
+        Schema::dropIfExists('aspirasis');
     }
 }

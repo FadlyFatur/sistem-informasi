@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
             Route::get('/verified/{id}', 'userController@verified')->name('verifiedUser');
             Route::get('/delete/{id}', 'userController@delete')->name('deleteUser');
             Route::get('/reset/{id}', 'userController@reset')->name('resetUser');
+            Route::get('/re-integrasi/{id}', 'userController@reIntegrasi')->name('reIntegrasi');
         });
 
         Route::prefix('/galeri')->group(function () {
@@ -94,8 +95,8 @@ Route::group(['middleware' => 'auth', 'admin'], function () {
 
         Route::prefix('/data-aspirasi')->group(function () {
             // route beranda
-            Route::post('/accept', 'beritaController@accAspirasi')->name('accAspirasi');
-            Route::post('/reject', 'beritaController@rejectAspirasi')->name('rejectAspirasi');
+            Route::get('/accept/{id}', 'beritaController@accAspirasi')->name('accAspirasi');
+            Route::get('/reject/{id}', 'beritaController@rejectAspirasi')->name('rejectAspirasi');
             Route::post('/delete-aspirasi/{id}', 'beritaController@deleteAspirasi')->name('deleteAspirasi');
             Route::get('/', 'beritaController@indexAspirasiAdmin')->name('aspi-admin')->middleware('akunVerified');
             Route::get('/get-data-aspirasi', 'beritaController@getDataAspirasi')->name('getAspirasi');

@@ -72,7 +72,9 @@
     $("#anonim").change(function() {
         if(this.checked) {
             $('input[name=pengirim]').attr('disabled','disabled');
+            $('input[name=pengirim]').removeAttr('required');
         }else{
+            $('input[name=pengirim]').attr('required','required');
             $('input[name=pengirim]').removeAttr('disabled');
         }
     });

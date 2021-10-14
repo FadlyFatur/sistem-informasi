@@ -31,19 +31,20 @@
     </div>
 
     <div class="table-responsive" style="color:black;">
-      <p class="text-center" >Total Aspirasi : <span id="total-record">$total_data</span></p>
-      <table class="table table-sm">
+      <p class="text-center" >Total Aspirasi : <span id="total-record">{{ $count }}</span></p>
+
+      <table class="table table-sm" id="asptbl">
         <thead>
           <tr>
             <th class="text-center">Pengirim</th>
-            <th class="text-center">Aspirais</th>
+            <th class="text-center">Aspirai</th>
+            <th class="text-center">Tanggal dibuat</th>
             <th class="text-center">Aksi</th>
           </tr>
         </thead>
-        <tbody>
-        
-        </tbody>
+        <tbody></tbody>
       </table>
+
     </div>
 </div>
 @endsection
@@ -63,9 +64,28 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <a href="#" type="button" class="btn btn-primary">Reset</a>
+          <button type="button" class="btn btn-primary">Reset</button>
         </div>
       </div>
     </div>
   </div>
+@endsection
+
+
+@section('js')
+  <script>
+
+  $('#asptbl').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: '{{ route("getAspirasi") }}',
+    columns: [
+        {data: 'pengirim', name: 'pengirim'},
+        {data: 'aspirasi', name: 'aspirasi', orderable: false, searchable: false},
+        {data: 'created_at', name: 'tanggal', searchable: false},
+        {data: 'action', name: 'action', orderable: false, searchable: false}
+    ]
+  });
+
+  </script>
 @endsection

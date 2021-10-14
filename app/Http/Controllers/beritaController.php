@@ -213,7 +213,7 @@ class beritaController extends Controller
 
         $validator = Validator::make($request->all(), [
             'pengirim' => 'string|max:200',
-            'deskripsi' => 'required|string|max:5000',
+            'deskripsi' => 'required|string|max:1000',
         ]);
 
         if ($validator->fails()) {
@@ -230,7 +230,7 @@ class beritaController extends Controller
 
                 return Redirect::back()->with(['sukses' => 'Berhasil Mengirim Aspirasi']);
             } catch (Exception $e) {
-                dd($e);
+                // dd($e);
                 return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
             }
         } else {
@@ -242,7 +242,7 @@ class beritaController extends Controller
 
                 return Redirect::back()->with(['sukses' => 'Berhasil Mengirim Aspirasi']);
             } catch (Exception $e) {
-                dd($e);
+                // dd($e);
                 return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
             }
         }
@@ -251,6 +251,52 @@ class beritaController extends Controller
 
     public function indexAspirasiAdmin()
     {
-        return view('manajemen.aspirasi');
+        $count = Apirasi::where('status', 0)->get()->count();
+        return view('manajemen.aspirasi', compact('count'));
+    }
+
+    public function getDataAspirasi()
+    {
+        $data = Apirasi::where('status', 0)->get();
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($user) {
+                return '<a href="' . route('accAspirasi', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-success">Terima </a> <a href="' . route('rejectAspirasi', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger">Tolak</a>';
+            })
+            ->editColumn('created_at', function ($user) {
+                return date('m/d/Y', strtotime($user->created_at));
+            })
+            ->editColumn('pengirim', function ($user) {
+                if ($user->pengirim != null) {
+                    return $user->pengirim;
+                } else {
+                    return 'Anonim';
+                }
+                return date('m/d/Y', strtotime($user->created_at));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function accAspirasi($id)
+    {
+        try {
+            Apirasi::where('id', $id)
+                ->update(['status' => 1]);
+            return redirect()->back()->with(['sukses' => 'Berhasil Menerima Aspirasi, Aspirasi akan ditampilkan di halama aspirasi']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
+        }
+    }
+
+    public function rejectAspirasi($id)
+    {
+        try {
+            Apirasi::where('id', $id)
+                ->update(['status' => 2]);
+            return redirect()->back()->with(['sukses' => 'Berhasil Menolak Aspirasi, Aspirasi tidak akan ditampilkan di halama aspirasi']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
+        }
     }
 }

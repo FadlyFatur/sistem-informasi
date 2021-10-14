@@ -34,7 +34,7 @@
 
 </head>
 
-<body oncopy="return false" oncut="return false" onpaste="return false">
+<body oncopy="return false" oncut="return false">
   @yield('modal')
   <div id="app">
     <div class="main-wrapper">
@@ -80,7 +80,6 @@
   <script src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
   <script src="{{ asset('jquery.dataTables.min.js') }}"></script>
   <!-- Page Specific JS File -->
-  @yield('js')
   <script> 
     $.ajaxSetup({
         headers: {
@@ -88,6 +87,7 @@
         }
     });
   </script>
+    @yield('js')
  
 </body>
 </html>

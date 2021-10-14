@@ -96,6 +96,7 @@
         <div class="container p-3" style="color:black;">
           <div class="table-responsive">
             <p class="text-center" >Total Data Acara : <span id="total-record">{{$total_data}}</span></p>
+
             <table class="table" id="acr-tbl">
               <thead class="text-left">
                 <tr>
@@ -108,6 +109,7 @@
               </thead>
               <tbody></tbody>
             </table>
+            
           </div>
         </div>
     </div>
