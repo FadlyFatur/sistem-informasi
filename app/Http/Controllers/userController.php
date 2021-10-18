@@ -158,4 +158,18 @@ class userController extends Controller
             return Redirect::back()->with('gagal', 'Gagal melakukan re-integrasi akun!');
         }
     }
+
+    public function deleteAkun($id, Request $request)
+    {
+        // dd($id);
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        user::where('id', $id)->delete();
+
+        return view('auth.login')->with('sukses', 'Akun berhasil ditutup, anda tidak bisa lagi mengunakanya!');
+    }
 }

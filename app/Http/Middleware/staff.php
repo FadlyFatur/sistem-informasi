@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
-class Admin
+class staff
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        // dd('admin');
-        if (in_array(Auth::user()->role, ['2', '3'])) {
+        if (in_array(Auth::user()->role, ['1', '2', '3'])) {
+            // dd('staff');
             return $next($request);
         } else {
             abort(403, 'Akses Dilarang');

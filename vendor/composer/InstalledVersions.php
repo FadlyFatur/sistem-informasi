@@ -30,11 +30,20 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'f13383b0801b97554be47516333df7670a82f3a7',
+    'reference' => '18de01ea3eea3dbe8bf94d0cf0030b37bb01f08f',
     'name' => 'project/sistem-informasi',
   ),
   'versions' => 
   array (
+    'appslabke/lara-izitoast' => 
+    array (
+      'pretty_version' => 'v1.1.1',
+      'version' => '1.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9636c4c3b28855c5d9c6169a10499f6b59568e0a',
+    ),
     'asm89/stack-cors' => 
     array (
       'pretty_version' => '1.3.0',
@@ -738,7 +747,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'f13383b0801b97554be47516333df7670a82f3a7',
+      'reference' => '18de01ea3eea3dbe8bf94d0cf0030b37bb01f08f',
     ),
     'psr/container' => 
     array (

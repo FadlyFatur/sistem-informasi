@@ -38,6 +38,8 @@ class HomeController extends Controller
         $beranda = beranda::all()->first();
         $jmlberanda = beranda::all()->count();
         $berita = $this->beritaApi();
+        // notify()->success("Success notification test", "Success", "topRight");
+        // notify()->info("Info notification test", "Info", "bottomRight");
         return view('welcome', compact('data', 'beranda', 'staff', 'jmlstaff', 'jmlwarga', 'jmlacara', 'jmlberanda', 'berita'));
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -41,23 +42,24 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|string', 
+            'username' => 'required|string',
             //VALIDASI KOLOM USERNAME // TAPI KOLOM INI BISA BERISI EMAIL ATAU USERNAME
             'password' => 'required|string|min:5',
         ]);
 
 
         $loginType = 'username';
-    
+
         //TAMPUNG INFORMASI LOGINNYA, DIMANA KOLOM TYPE PERTAMA BERSIFAT DINAMIS BERDASARKAN VALUE DARI PENGECEKAN DIATAS
         $login = [
             $loginType => $request->username,
             'password' => $request->password
         ];
-    
+
         //LAKUKAN LOGIN
         if (auth()->attempt($login)) {
             //JIKA BERHASIL, MAKA REDIRECT KE HALAMAN HOME
+            notify()->success("Anda Berhasil Login", "Sukses", "bottomRight");
             return redirect()->route('beranda');
         }
         //JIKA SALAH, MAKA KEMBALI KE LOGIN DAN TAMPILKAN NOTIFIKASI 

@@ -92,6 +92,7 @@ class ComposerStaticInit7771ef618dd2bc8e9be1e0945ece3427
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
+        '97727b6b0f2834e612425988413c7612' => __DIR__ . '/..' . '/appslabke/lara-izitoast/lara-izitoast/src/helpers.php',
         '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
     );
 
@@ -197,6 +198,7 @@ class ComposerStaticInit7771ef618dd2bc8e9be1e0945ece3427
             'League\\CommonMark\\' => 18,
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
+            'LaraIzitoast\\' => 13,
         ),
         'I' => 
         array (
@@ -491,6 +493,10 @@ class ComposerStaticInit7771ef618dd2bc8e9be1e0945ece3427
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
+        'LaraIzitoast\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/appslabke/lara-izitoast/lara-izitoast/src',
+        ),
         'Illuminate\\Foundation\\Auth\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/ui/auth-backend',
@@ -637,6 +643,7 @@ class ComposerStaticInit7771ef618dd2bc8e9be1e0945ece3427
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Middleware\\akunVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/akunVerified.php',
+        'App\\Http\\Middleware\\staff' => __DIR__ . '/../..' . '/app/Http/Middleware/staff.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -2548,6 +2555,8 @@ class ComposerStaticInit7771ef618dd2bc8e9be1e0945ece3427
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'KerjaSeeder' => __DIR__ . '/../..' . '/database/seeds/KerjaSeeder.php',
+        'LaraIzitoast\\LaraIzitoastServiceProvider' => __DIR__ . '/..' . '/appslabke/lara-izitoast/lara-izitoast/src/LaraIzitoastServiceProvider.php',
+        'LaraIzitoast\\Toaster' => __DIR__ . '/..' . '/appslabke/lara-izitoast/lara-izitoast/src/Toaster.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',

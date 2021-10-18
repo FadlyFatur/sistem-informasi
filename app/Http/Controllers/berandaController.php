@@ -33,9 +33,11 @@ class berandaController extends Controller
                 }
 
                 $data->update();
-                return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
+                notify()->success("Berhasil merubah data", "Sukses", "bottomRight");
+                return Redirect::back()->with(['sukses' => 'Berhasil merubah data kontak']);
             } catch (Exception $e) {
-                return Redirect::back()->with(['gagal' => 'Gagal menambah acara']);
+                notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
+                return Redirect::back()->with(['gagal' => 'Gagal menambah data kontak']);
             }
         } else {
             try {
@@ -50,8 +52,10 @@ class berandaController extends Controller
 
                 $data->status = 1;
                 $data->save();
+                notify()->success("Berhasil merubah data", "Sukses", "bottomRight");
                 return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
             } catch (\Throwable $th) {
+                notify()->error("eksekusi menambah data gagal!", "Gagal", "bottomLeft");
                 return Redirect::back()->with(['gagal' => 'Gagal menambah acara']);
             }
         }
@@ -66,9 +70,11 @@ class berandaController extends Controller
                 $data->misi = $request->misi;
                 $data->visi = $request->visi;
                 $data->update();
+                notify()->success("Berhasil merubah data", "Sukses", "bottomRight");
                 return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
             } catch (Exception $e) {
-                return Redirect::back()->with(['gagal' => 'Gagal menambah acara']);
+                notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
+                return Redirect::back()->with(['gagal' => 'Gagal merubah data']);
             }
         } else {
             try {
@@ -76,9 +82,11 @@ class berandaController extends Controller
                 $data->misi = $request->misi;
                 $data->visi = $request->visi;
                 $data->save();
+                notify()->success("Berhasil merubah data", "Sukses", "bottomRight");
                 return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
             } catch (\Throwable $th) {
-                return Redirect::back()->with(['gagal' => 'Gagal menambah acara']);
+                notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
+                return Redirect::back()->with(['gagal' => 'Gagal merubah data']);
             }
         }
     }
@@ -108,9 +116,11 @@ class berandaController extends Controller
                 // $data->foto = $name;
                 $data->foto_thumb = $url;
                 $data->update();
+                notify()->success("Berhasil menyimpan data", "Sukses", "bottomRight");
                 return Redirect::back()->with(['sukses' => 'Data berhasil diupdate!']);
             }
         }
+        notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
         return Redirect::back()->with(['gagal' => 'Data gagal diupdate!']);
     }
 
@@ -119,8 +129,10 @@ class berandaController extends Controller
         $data = kerjas::find($id);
         try {
             $data->delete();
+            notify()->warning("Berhasil menghapus data", "Sukses", "bottomRight");
             return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
         } catch (\Exception $e) {
+            notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomLeft");
             return Redirect::back()->with('gagal', $e);
         }
     }
@@ -131,9 +143,11 @@ class berandaController extends Controller
             $data = new kerjas();
             $data->nama = $request->nama;
             $data->save();
-            return Redirect::back()->with('sukses', 'Berhasil menghapus data!');;
+            notify()->success("Berhasil menambah data", "Sukses", "bottomRight");
+            return Redirect::back()->with('sukses', 'Berhasil menambah data!');;
         } else {
-            return Redirect::back()->with('gagal', 'Berhasil menghapus data!');
+            notify()->error("Percobaan menambah data gagal!", "Gagal", "bottomLeft");
+            return Redirect::back()->with('gagal', 'gagal menambah data!');
         }
     }
 
@@ -171,8 +185,10 @@ class berandaController extends Controller
         $data = jabatan::find($id);
         try {
             $data->delete();
+            notify()->warning("Berhasil menghapus data", "Sukses", "bottomRight");
             return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
         } catch (\Exception $e) {
+            notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomLeft");
             return Redirect::back()->with('gagal', $e);
         }
     }
@@ -183,9 +199,11 @@ class berandaController extends Controller
             $data = new jabatan();
             $data->nama = $request->nama;
             $data->save();
-            return Redirect::back()->with('sukses', 'Berhasil menghapus data!');;
+            notify()->success("Berhasil menambah data", "Sukses", "bottomRight");
+            return Redirect::back()->with('sukses', 'Berhasil menambah data!');;
         } else {
-            return Redirect::back()->with('gagal', 'Berhasil menghapus data!');
+            notify()->error("Percobaan menambah data gagal!", "Gagal", "bottomLeft");
+            return Redirect::back()->with('gagal', 'Berhasil menambah data!');
         }
     }
 }

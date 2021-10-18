@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{asset('dropzone/min/dropzone.min.css')}}" type="text/css" media="screen" >
   <link rel="stylesheet" href="{{asset('jquery.dataTables.min.css')}}" type="text/css" media="screen" >
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
   @yield('css')
   
   <style>
@@ -79,6 +80,8 @@
   <script src="{{ asset('dist/js/chocolat.js') }}"></script>
   <script src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
   <script src="{{ asset('jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('js/iziToast.js') }}"></script>
+  @include('vendor.lara-izitoast.toast')
   <!-- Page Specific JS File -->
   <script> 
     $.ajaxSetup({

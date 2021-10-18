@@ -20,7 +20,7 @@
         <li><a class="nav-link" href="{{ route('aspirasi') }}"><i class="fas fa-edit"></i> <span>Aspirasi</span></a></li>  
         <hr>
       @if (Auth::check())
-        @if (Auth::user()->role != '1')
+        @if (Auth::user()->verified_at != NULL)
           <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"></i><span>Pengelolaan Data</span></a>
             <ul class="dropdown-menu">
@@ -32,7 +32,8 @@
             </ul>
           </li>
           <hr>
-
+        @endif
+        @if (Auth::user()->role != '1')
           <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Pengelolaan Website</span></a>
             <ul class="dropdown-menu">
