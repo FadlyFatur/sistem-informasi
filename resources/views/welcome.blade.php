@@ -84,12 +84,12 @@
 </div>
 <hr>  
 
+@if(isset($beranda->visi) || isset($beranda->misi))
 <!-- visi dan misi  -->
 <div class="container-fluid">
   <div class="d-flex justify-content-between">
     <h2 class="section-title">Visi dan Misi</h2>
   </div>
-  @if(isset($beranda->visi) || isset($beranda->misi))
   <div class="row text-center">
     <div class="col-md-6 col-sm-12 p-2" id="visi">
       <h3>Visi</h3>
@@ -101,20 +101,9 @@
       <p>{!! $beranda->misi !!}</p>
     </div>
   </div>
-  @else
-  <div class="row text-center">
-    <div class="col p-2" id="visi">
-    <h3>Visi</h3>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima magni a cupiditate modi repudiandae exercitationem odit quos, facilis omnis, quisquam dicta aut? Qui ducimus ut dicta repudiandae, illo minus laudantium?</p>
-    </div>
-    <div class="col p-2" id="misi">
-    <h3>Misi</h3>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui laudantium suscipit magni inventore aliquam molestias, nisi, earum et ea at cupiditate deleniti. Obcaecati, quod! Accusamus vitae eligendi quae minus ab.</p>
-    </div>
-  </div>
-  @endif
 </div>
 <hr>
+@endif
 
 <!-- acara section -->
 <div class="container-fluid">

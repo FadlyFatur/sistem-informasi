@@ -67,7 +67,7 @@
                   </div>
     
                   <div class="form-group row mb-4">
-                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Telefon</label>
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Telepon</label>
                     <div class="col-sm-12 col-md-7">
                       <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor telepon" value="{{ $a['no_hp'] }}" autocomplete="off">
                     </div>

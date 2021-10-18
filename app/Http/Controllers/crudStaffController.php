@@ -21,27 +21,12 @@ class crudStaffController extends Controller
         return view('pencarian.staff', compact('data'));
     }
 
-    public function adminIndex(Request $request)
+    public function adminIndex()
     {
-        // if(!empty(Auth::user()->verified_at)){
-        $cari = $request->cari;
+        $total_data = staff::all()->count();
 
-        if ($cari) {
-            $data = staff::where('nama', 'like', '%' . $request->cari . '%')
-                ->paginate(20);
-            // ->get();
-            $total_data = $data->count();
-        } else {
-            $data = staff::orderBy('nama', 'asc')
-                ->paginate(20);
-            $total_data = $data->count();
-        }
         $jabatan = jabatan::all();
-        return view('manajemen.editStaff', compact('data', 'jabatan'));
-        // }else{
-        //     return redirect('profil')->with(['gagal' => 'Akun belum terverifikasi, Harap hubungi admin untuk verifikasi']);
-        // }
-
+        return view('manajemen.editStaff', compact('total_data', 'jabatan'));
     }
 
     public function tambah(Request $request)
@@ -62,6 +47,7 @@ class crudStaffController extends Controller
                 ->withInput();
         }
 
+        //bug img
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
                 $validator = Validator::make($request->all(), [
@@ -105,9 +91,9 @@ class crudStaffController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $data = staff::find($id);
         try {
+            // bug img 
             if ($request->hasFile('imageUpdate')) {
                 if ($request->imageUpdate->isValid()) {
                     $validator = Validator::make($request->all(), [

@@ -18,7 +18,7 @@
         <button class="close" data-dismiss="alert">
           <span>×</span>
         </button>
-        Data Berhasil Disimpan.
+        {{ Session::get('sukses') }}
       </div>
     </div>
   @endif
@@ -29,7 +29,7 @@
         <button class="close" data-dismiss="alert">
           <span>×</span>
         </button>
-        Gagal disimpan.
+        {{ Session::get('gagal') }}
       </div>
     </div>
   @endif
@@ -54,18 +54,18 @@
         </div>
 
         <div id="collapseZero" class="collapse" aria-labelledby="headingZero" data-parent="#accordionExample">
-        <div class="container mt-5">
-          <form action="{{ route('updateBeranda') }}" method="POST">
-            @csrf
-            <div class="form-group">
-              <label for="intansi" class="col-sm-3 col-form-label">Nama Intansi</label>
-              <input type="text" class="form-control" name="intansi" placeholder="Masukan Nama Intansi" value="{{isset($data['nama_intansi']) ? $data['nama_intansi'] : Null}}">
-            </div>
-            <div class="card-footer d-flex justify-content-center">       
-              <button type="submit" class="btn btn-primary mr-1">Submit</button>
-            </div>
-          </form>
-        </div>
+          <div class="container mt-5">
+            <form action="{{ route('updateBeranda') }}" method="POST">
+              @csrf
+              <div class="form-group">
+                <label for="intansi" class="col-sm-3 col-form-label">Nama Intansi</label>
+                <input type="text" class="form-control" name="intansi" placeholder="Masukan Nama Intansi" value="{{isset($data['nama_intansi']) ? $data['nama_intansi'] : Null}}">
+              </div>
+              <div class="card-footer d-flex justify-content-center">       
+                <button type="submit" class="btn btn-primary mr-1">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       <hr>
@@ -112,16 +112,15 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 
           <div class="card-body text-body">
-          <form action="{{route ('updateMs')}}" method="POST">
+          <form action="{{route ('updateBeranda')}}" method="POST">
           @csrf
+          <input type="hidden" name="vismis">
           <div class="row">
-            
-            
             <div class="col">
             <h3>Visi</h3>
               <div class="form-group">
                 <div class="col">
-                <textarea class="form-control" name="visi" id="visi" placeholder="Masukan visi" style="height: 150px;"></textarea>
+                <textarea class="form-control" name="visi" id="visi" placeholder="Masukan visi" style="height: 150px;">{{ $data['visi'] }}</textarea>
                 </div>
               </div>
             </div>
@@ -129,7 +128,7 @@
               <h3>Misi</h3>
               <div class="form-group">
                 <div class="col">
-                <textarea class="form-control" name="misi" id="misi" placeholder="Masukan misi" style="height: 150px;"></textarea>
+                <textarea class="form-control" name="misi" id="misi" placeholder="Masukan misi" style="height: 150px;">{{ $data['misi'] }}</textarea>
                 </div>
               </div>
             </div>

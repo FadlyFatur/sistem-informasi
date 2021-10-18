@@ -123,7 +123,8 @@
 
     <div class="card-body">
       <!-- Table -->
-      <table class="table table-md table-bordered table-striped table-hover" style="color:black" id="stf-tbl">
+      <table class="table-responsive" style="color:black;" id="stf-tbl">
+        <p class="text-center" style="color:black;">Total Data Staff : <span id="total-record">{{$total_data}}</span></p>
         <thead>
           <tr style="color:black; text-align:center; font-size:13px;"> 
             <th>No Pegawai</th>

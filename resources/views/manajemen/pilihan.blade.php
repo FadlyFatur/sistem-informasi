@@ -18,7 +18,7 @@
             <button class="close" data-dismiss="alert">
             <span>×</span>
             </button>
-            Data Berhasil Disimpan.
+            {{ Session::get('sukses') }}
         </div>
         </div>
     @endif
@@ -29,7 +29,7 @@
             <button class="close" data-dismiss="alert">
             <span>×</span>
             </button>
-            Gagal disimpan.
+            {{ Session::get('gagal') }}
         </div>
         </div>
     @endif
@@ -55,7 +55,7 @@
                   <div class="form-row align-items-center">
                     <div class="col-auto">
                       <label class="sr-only" for="inlineFormInput">Kerja</label>
-                      <input type="text" name="nama" class="form-control mb-2" id="inlineFormInput" placeholder="Kerja">
+                      <input type="text" name="nama" class="form-control mb-2" id="inlineFormInput" placeholder="Masukan Kerja">
                     </div>
                     <div class="col-auto">
                       <button type="submit" class="btn btn-primary mb-2">Tambah</button>
@@ -99,7 +99,7 @@
                   <div class="form-row align-items-center">
                     <div class="col-auto">
                       <label class="sr-only" for="inlineFormInput">Jabatan</label>
-                      <input type="text" name="nama" class="form-control mb-2" id="inlineFormInput" placeholder="Kerja">
+                      <input type="text" name="nama" class="form-control mb-2" id="inlineFormInput" placeholder="Masukan Jabatan">
                     </div>
                     <div class="col-auto">
                       <button type="submit" class="btn btn-primary mb-2">Tambah</button>

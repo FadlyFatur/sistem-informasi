@@ -33,24 +33,12 @@ class beritaController extends Controller
     // menampilkan list berita di halaman admin 
     public function adminIndex(Request $request)
     {
-        // if(!empty(Auth::user()->verified_at)){
-        $cari = $request->cari;
+        $total_data = acara::all()->count();
 
-        if ($cari) {
-            $data = acara::where('judul', 'like', '%' . $request->cari . '%')
-                ->orderBy('created_at', 'desc')
-                ->paginate(50);
-            $total_data = $data->count();
-        } else {
-            $data = acara::orderBy('created_at', 'desc')->paginate(20);
-            $total_data = acara::all()->count();
-        }
-        return view('manajemen.editAcara', compact('data', 'total_data'));
-        // }else{
-        //     return redirect('profil')->with(['gagal' => 'Akun belum terverifikasi, Harap hubungi admin untuk verifikasi']);
-        // }
+        return view('manajemen.editAcara', compact('total_data'));
     }
 
+    // bug img
     public function post(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -100,6 +88,7 @@ class beritaController extends Controller
         }
     }
 
+    // bug img
     public function update(Request $request, $id)
     {
         $data = acara::find($id);
@@ -171,7 +160,6 @@ class beritaController extends Controller
     public function updateIndex($id)
     {
         $data = acara::where('id', $id)->first();
-        // dd($data);
         return view('manajemen.update.acara-update', compact('data'));
     }
 
@@ -191,7 +179,8 @@ class beritaController extends Controller
                 }
             })
             ->editColumn('penulis_id', function ($user) {
-                return $user->penulis->username;
+                // return $user->penulis->username;
+                return $user->penulis['username'];
             })
             ->editColumn('created_at', function ($user) {
                 return date('m/d/Y', strtotime($user->created_at));

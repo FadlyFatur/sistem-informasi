@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\beranda;
 use App\kerjas;
 use App\jabatan;
+use App\staff;
+use App\warga;
 use Exception;
 use Illuminate\Support\Facades\Redirect;
 use DataTables;
@@ -21,11 +23,15 @@ class berandaController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $data = beranda::first();
         if ($data->count() > 0) {
             try {
                 if ($request->has('intansi')) {
                     $data->nama_intansi = $request->intansi;
+                } elseif ($request->has('vismis')) {
+                    $data->misi = $request->misi;
+                    $data->visi = $request->visi;
                 } else {
                     $data->kontak = $request->kontak;
                     $data->email = $request->email;
@@ -44,6 +50,9 @@ class berandaController extends Controller
                 $data = new beranda();
                 if ($request->has('intansi')) {
                     $data->nama_intansi = $request->intansi;
+                } elseif ($request->has('vismis')) {
+                    $data->misi = $request->misi;
+                    $data->visi = $request->visi;
                 } else {
                     $data->kontak = $request->kontak;
                     $data->email = $request->email;
@@ -61,36 +70,7 @@ class berandaController extends Controller
         }
     }
 
-    function updateMs(Request $request)
-    {
-        $data = beranda::all();
-        if ($data->count() > 0) {
-            try {
-                $data = beranda::first();
-                $data->misi = $request->misi;
-                $data->visi = $request->visi;
-                $data->update();
-                notify()->success("Berhasil merubah data", "Sukses", "bottomRight");
-                return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
-            } catch (Exception $e) {
-                notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
-                return Redirect::back()->with(['gagal' => 'Gagal merubah data']);
-            }
-        } else {
-            try {
-                $data = new beranda();
-                $data->misi = $request->misi;
-                $data->visi = $request->visi;
-                $data->save();
-                notify()->success("Berhasil merubah data", "Sukses", "bottomRight");
-                return Redirect::back()->with(['sukses' => 'Berhasil merubah data']);
-            } catch (\Throwable $th) {
-                notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
-                return Redirect::back()->with(['gagal' => 'Gagal merubah data']);
-            }
-        }
-    }
-
+    //bug foto
     public function storeGambar(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -126,8 +106,15 @@ class berandaController extends Controller
 
     public function deleteKerja($id)
     {
-        $data = kerjas::find($id);
+        $warga = warga::where('kerja_id', $id)->get();
+        // dd($staff->count());
+        if ($warga->count() > 0) {
+            notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomLeft");
+            return Redirect::back()->with('gagal', 'Gagal menghapus data');
+        }
+
         try {
+            $data = kerjas::find($id);
             $data->delete();
             notify()->warning("Berhasil menghapus data", "Sukses", "bottomRight");
             return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
@@ -182,9 +169,15 @@ class berandaController extends Controller
 
     public function deleteJabatan($id)
     {
-        $data = jabatan::find($id);
+        $staff = staff::where('jabatan_id', $id)->get();
+        // dd($staff->count());
+        if ($staff->count() > 0) {
+            notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomLeft");
+            return Redirect::back()->with('gagal', 'Gagal menghapus data');
+        }
+
         try {
-            $data->delete();
+            jabatan::find($id)->delete();
             notify()->warning("Berhasil menghapus data", "Sukses", "bottomRight");
             return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
         } catch (\Exception $e) {
