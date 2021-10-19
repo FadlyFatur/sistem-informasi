@@ -20,14 +20,14 @@ class crudWargaController extends Controller
         // validate incoming request
 
         $validator = Validator::make($request->all(), [
-            'nik' => 'required|integer|max:16',
+            'nik' => 'required|max:16',
             'nama_lengkap' => 'required|string|max:150',
             'kelurahan' => 'required|string|max:150',
             'kecamatan' => 'required|string|max:150',
             'kota' => 'required|string|max:150',
             'tempat_lahir' => 'required|string|max:150',
-            'rt' => 'required|integer|max:3',
-            'rw' => 'required|integer|max:3',
+            'rt' => 'required',
+            'rw' => 'required',
             'alamat' => 'required|string|max:200',
         ]);
 
@@ -83,10 +83,11 @@ class crudWargaController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+        $nikHash = Crypt::encryptString($request->nik);
+        // dd($nikHash);
         warga::where('id', $id)
             ->update([
-                'nik' => $request->nik,
+                'nik' => $nikHash,
                 'nama' => $request->nama_lengkap,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,

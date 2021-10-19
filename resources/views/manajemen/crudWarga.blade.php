@@ -96,7 +96,7 @@
           <div class="form-row">
             <div class="form-group col">
                 <label for="nik">Nomer Induk Kependudukan</label>
-                <input type="text" name="nik" id="nik" class="form-control" autocomplete="off" value="{{ old('nik') }}" autofocus required>
+                <input type="number" name="nik" id="nik" class="form-control" autocomplete="off" value="{{ old('nik') }}" autofocus required>
             </div>
 
             <div class="form-group col">
