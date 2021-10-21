@@ -23,7 +23,25 @@ class berandaController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'misi' => 'string|max:2000',
+            'visi' => 'string|max:1000',
+            'kontak' => 'integer|max:13',
+            'email' => 'email',
+            'alamat' => 'string|max:500',
+        ], [
+            'string' => 'kolom :attribute harus berupa huruf.',
+            'integer' => 'kolom :attribute harus berupa angka.',
+            'email' => 'kolom :attribute harus berformat email.',
+            'max' => 'kolom :attribute melebihi batas karakter',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $data = beranda::first();
         if ($data->count() > 0) {
             try {

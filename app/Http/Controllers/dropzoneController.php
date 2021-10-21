@@ -24,6 +24,20 @@ class dropzoneController extends Controller
 
     public function upload(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|image|max:20480',
+        ], [
+            'image' => 'file harus ber-format jpg, jpeg, png',
+            'max' => 'kolom :attribute melebihi ukuran maksimal file (20MB)',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $image = $request->file('file');
 
         $imageName = time() . '.' . $image->extension();
@@ -35,20 +49,6 @@ class dropzoneController extends Controller
         } else {
             return Response::json('error', 400);
         }
-    }
-
-    public function fetchGaleri()
-    {
-
-        // $output = '<div class="gallery gallery-md text-center">';
-        // foreach($images as $image){
-        //     $output .= '
-        //     <div class="gallery-item" data-image="'.asset('images/' . $image->getFilename()).'" data-title="Image 1" href="'.asset('images/' . $image->getFilename()).'" style="background-image: url(&quot;'.asset('images/' . $image->getFilename()).'&quot;);">
-        //     </div>
-        //     ';
-        // }
-        // $output .= '</div>';
-        // echo $output;
     }
 
     function fetch()

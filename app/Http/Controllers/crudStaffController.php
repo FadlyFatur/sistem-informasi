@@ -38,6 +38,13 @@ class crudStaffController extends Controller
             'no_hp' => 'required|integer|max:13',
             'alamat' => 'required|string|max:200',
             'image' => 'image|max:5120',
+        ], [
+            'required' => 'kolo, :attribute harus diisi.',
+            'string' => 'kolom :attribute harus berupa huruf.',
+            'integer' => 'kolom :attribute harus berupa angka.',
+            'max' => 'kolom :attribute melebihi batas karakter',
+            'image.max' => 'Foto melebihi batas ukuran 5MB',
+            'image' => 'file harus berupa format jpg, jpeg, png'
         ]);
 
         if ($validator->fails()) {
@@ -91,43 +98,48 @@ class crudStaffController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'no' => 'required|integer|max:20',
+            'nama' => 'required|string|max:150',
+            'no_hp' => 'required|integer|max:13',
+            'alamat' => 'required|string|max:200',
+            'imageUpdate' => 'image|max:5120',
+        ], [
+            'required' => 'kolom, :attribute harus diisi.',
+            'string' => 'kolom :attribute harus berupa huruf.',
+            'integer' => 'kolom :attribute harus berupa angka.',
+            'max' => 'kolom :attribute melebihi batas karakter',
+            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
+            'image' => 'file harus berupa format jpg, jpeg, png'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $data = staff::find($id);
         try {
-            // bug img 
-            if ($request->hasFile('imageUpdate')) {
-                if ($request->imageUpdate->isValid()) {
-                    $validator = Validator::make($request->all(), [
-                        'imageUpdate' => 'required|mimes:jpeg,png|max:5120',
-                    ]);
-
-                    if ($validator->fails()) {
-                        return Redirect::back()
-                            ->withErrors($validator)
-                            ->withInput();
-                    }
-
-                    Storage::delete($data->url);
-
-                    //upload file ke local storage
-                    $name = date("his_") . $request->imageUpdate->getClientOriginalName();
-                    $url = $request->imageUpdate->storeAs('public', $name);
-
-                    $data->nama = $request->input('nama');
-                    $data->no_pegawai = $request->input('no');
-                    $data->no_hp = $request->input('no_hp');
-                    $data->alamat = $request->input('alamat');
-                    $data->foto = $name;
-                    $data->url = $url;
-                    $data->update();
-                    return Redirect::back()->with(['sukses' => 'Data berhasil diupdate!']);
-                }
-            }
 
             $data->nama = $request->input('nama');
             $data->id_pegawai = $request->input('no');
             $data->no_hp = $request->input('no_hp');
             $data->alamat = $request->input('alamat');
             $data->jabatan_id = $request->jabatan;
+
+            // bug img 
+            if ($request->hasFile('imageUpdate')) {
+                Storage::delete($data->url);
+
+                //upload file ke local storage
+                $name = date("his") . $request->imageUpdate->getClientOriginalName();
+                $url = $request->imageUpdate->storeAs('public', $name);
+
+                $data->foto = $name;
+                $data->url = $url;
+            }
 
             $data->update();
             return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
@@ -142,14 +154,13 @@ class crudStaffController extends Controller
         if ($data->status == '0') {
             $data->status = '1';
             $data->update();
-            return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
+            return Redirect::back()->with('sukses', 'Data berhasil diaktifasi dan bisa dilihat umum!');
         } else {
             $data->status = '0';
             $data->update();
-            return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
+            return Redirect::back()->with('sukses', 'Data berhasil dinon-aktifikan dan tidak bisa dilihat umum!');
         }
-
-        return Redirect::back()->with('gagal', 'Data gagal diupdate!');
+        return Redirect::back()->with('gagal', 'Permintaan gagal di proses!');
     }
 
     public function destroy(request $request, $id)
@@ -161,7 +172,7 @@ class crudStaffController extends Controller
             $data->delete();
             return Redirect::back()->with('sukses', 'Data berhasil dihapus!');
         } catch (\Exception $e) {
-            return Redirect::back()->with('gagal', 'Data berhasil dihapus!');
+            return Redirect::back()->with('gagal', 'Data Gagal dihapus!');
         }
     }
 

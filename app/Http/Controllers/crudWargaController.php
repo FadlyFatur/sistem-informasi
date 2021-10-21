@@ -17,10 +17,8 @@ class crudWargaController extends Controller
 {
     public function tambah(Request $request)
     {
-        // validate incoming request
-
         $validator = Validator::make($request->all(), [
-            'nik' => 'required|max:16',
+            'nik' => 'required|integer|max:16',
             'nama_lengkap' => 'required|string|max:150',
             'kelurahan' => 'required|string|max:150',
             'kecamatan' => 'required|string|max:150',
@@ -29,6 +27,11 @@ class crudWargaController extends Controller
             'rt' => 'required',
             'rw' => 'required',
             'alamat' => 'required|string|max:200',
+        ], [
+            'required' => 'kolom, :attribute harus diisi.',
+            'string' => 'kolom :attribute harus berupa huruf.',
+            'integer' => 'kolom :attribute harus berupa angka.',
+            'max' => 'kolom :attribute melebihi batas karakter',
         ]);
 
         if ($validator->fails()) {
@@ -61,17 +64,7 @@ class crudWargaController extends Controller
     public function Index(Request $request)
     {
         $kerja = kerjas::all();
-        $cari = $request->cari;
-        if ($cari) {
-            $wargas = warga::where('nama', 'like', '%' . $request->cari . '%')
-                ->paginate(50);
-            // $total_data = $wargas->count();
-        } else {
-            $wargas = warga::orderBy('rw', 'asc')->paginate(50);
-            // dd($wargas[0]->kerja['nama']);
-            $total_data = $wargas->count();
-        }
-        return view('manajemen.crudWarga', compact('wargas', 'total_data', 'kerja'));
+        return view('manajemen.crudWarga', compact('kerja'));
     }
 
     public function delete($id)
@@ -83,8 +76,31 @@ class crudWargaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'nik' => 'required|integer|max:16',
+            'nama_lengkap' => 'required|string|max:150',
+            'kelurahan' => 'required|string|max:150',
+            'kecamatan' => 'required|string|max:150',
+            'kota' => 'required|string|max:150',
+            'tempat_lahir' => 'required|string|max:150',
+            'rt' => 'required',
+            'rw' => 'required',
+            'alamat' => 'required|string|max:200',
+        ], [
+            'required' => 'kolom, :attribute harus diisi.',
+            'string' => 'kolom :attribute harus berupa huruf.',
+            'integer' => 'kolom :attribute harus berupa angka.',
+            'max' => 'kolom :attribute melebihi batas karakter',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $nikHash = Crypt::encryptString($request->nik);
-        // dd($nikHash);
         warga::where('id', $id)
             ->update([
                 'nik' => $nikHash,

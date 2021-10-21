@@ -8,38 +8,38 @@
 
 @section('content')
 <div class="card">
-    @if($errors->any())
-<div class="alert alert-danger alert-dismissible show fade">
-  <div class="alert-body">
-    <button class="close" data-dismiss="alert">
-      <span>x</span>
-    </button>
-    {!! implode('', $errors->all('<div>:message</div>')) !!}
+@if($errors->any())
+  <div class="alert alert-danger alert-dismissible show fade">
+    <div class="alert-body">
+      <button class="close" data-dismiss="alert">
+        <span>x</span>
+      </button>
+      {!! implode('', $errors->all('<div>:message</div>')) !!}
+    </div>
   </div>
-</div>
 @endif
 
-  @if ($message = Session::get('sukses'))
-    <div class="alert alert-success alert-dismissible show fade">
-      <div class="alert-body">
-        <button class="close" data-dismiss="alert">
-          <span>×</span>
-        </button>
-        {{ Session::get('sukses') }}
-      </div>
+@if ($message = Session::get('sukses'))
+  <div class="alert alert-success alert-dismissible show fade">
+    <div class="alert-body">
+      <button class="close" data-dismiss="alert">
+        <span>×</span>
+      </button>
+      {{ Session::get('sukses') }}
     </div>
-  @endif
+  </div>
+@endif
 
-  @if ($message = Session::get('gagal'))
-    <div class="alert alert-danger alert-dismissible show fade">
-      <div class="alert-body">
-        <button class="close" data-dismiss="alert">
-          <span>×</span>
-        </button>
-        {{ Session::get('gagal') }}
-      </div>
+@if ($message = Session::get('gagal'))
+  <div class="alert alert-danger alert-dismissible show fade">
+    <div class="alert-body">
+      <button class="close" data-dismiss="alert">
+        <span>×</span>
+      </button>
+      {{ Session::get('gagal') }}
     </div>
-  @endif
+  </div>
+@endif
   
     <div class="card-header">
         <h4>Ruang Aspirasi Masyarakat</h4>

@@ -45,6 +45,13 @@ class beritaController extends Controller
             'judul' => 'string|max:200',
             'deskripsi' => 'string|max:10000',
             'image' => 'required|image|max:10240',
+        ], [
+            'judul.string' => 'kolom :attribute harus berupa huruf.',
+            'deskripsi.string' => 'kolom :attribute harus berupa huruf.',
+            'max' => 'kolom :attribute melebihi batas karakter',
+            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
+            'required' => 'kolom :attribute wajib diisi',
+            'image' => 'file harus berupa format jpg, jpeg, png'
         ]);
 
         if ($validator->fails()) {
@@ -95,11 +102,22 @@ class beritaController extends Controller
         try {
             if ($request->hasFile('imageUpdate')) {
                 if ($request->imageUpdate->isValid()) {
-                    $validator = Validator::make($request->all(), [
-                        'judul' => 'string|max:200',
-                        'deskripsi' => 'string|max:10000',
-                        'imageUpdate' => 'required|mimes:jpg,jpeg,png|max:5500',
-                    ]);
+                    $validator = Validator::make(
+                        $request->all(),
+                        [
+                            'judul' => 'string|max:200',
+                            'deskripsi' => 'string|max:10000',
+                            'imageUpdate' => 'required|image|max:5500',
+                        ],
+                        [
+                            'judul.string' => 'kolom :attribute harus berupa huruf.',
+                            'deskripsi.string' => 'kolom :attribute harus berupa huruf.',
+                            'max' => 'kolom :attribute melebihi batas karakter',
+                            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
+                            'required' => 'kolom :attribute wajib diisi',
+                            'image' => 'file harus berupa format jpg, jpeg, png'
+                        ]
+                    );
 
                     if ($validator->fails()) {
                         return Redirect::back()
@@ -200,10 +218,18 @@ class beritaController extends Controller
             return Redirect::back()->with(['gagal' => 'Admin/User, tidak bisa mengirim aspirasi']);
         }
 
-        $validator = Validator::make($request->all(), [
-            'pengirim' => 'string|max:200',
-            'deskripsi' => 'required|string|max:1000',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'pengirim' => 'string|max:200',
+                'deskripsi' => 'required|max:1000',
+            ],
+            [
+                'string' => 'kolom :attribute harus berupa huruf.',
+                'max' => 'kolom :attribute melebihi batas karakter',
+                'required' => 'kolom :attribute wajib diisi'
+            ]
+        );
 
         if ($validator->fails()) {
             return Redirect::back()
@@ -219,7 +245,6 @@ class beritaController extends Controller
 
                 return Redirect::back()->with(['sukses' => 'Berhasil Mengirim Aspirasi']);
             } catch (Exception $e) {
-                // dd($e);
                 return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
             }
         } else {
@@ -235,7 +260,6 @@ class beritaController extends Controller
                 return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
             }
         }
-        dd($request->all());
     }
 
     public function indexAspirasiAdmin()
