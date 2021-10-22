@@ -12,7 +12,11 @@
 
 <div class="card">
 <div class="card-img-top box-photo p-2">
-  <img  src="{{Storage::url($data['foto']) }}" alt="{{$data['judul']}}">
+  @if ($data->foto != Null)
+    <img src="{{asset('storage/images/acara/'.$data->foto)}}" alt="{{$data['judul']}}">
+    @else
+    <img src="{{ asset('assets/img/news/img01.jpg')}}" alt="{{ $data['judul'] }}">
+  @endif
 </div>
   <hr>
 <div class="card-header text-secondary">

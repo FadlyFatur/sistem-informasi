@@ -23,10 +23,10 @@ class userController extends Controller
         $staff = staff::all();
         $data = staff::where('user_id', Auth::id())
             ->first();
-        // $taut = $data->user_id;
 
         return view('profil.editProfil', compact('staff', 'data'));
     }
+
     public function index()
     {
         $data = user::all();
@@ -161,7 +161,6 @@ class userController extends Controller
 
     public function deleteAkun($id, Request $request)
     {
-        // dd($id);
         Auth::logout();
 
         $request->session()->invalidate();

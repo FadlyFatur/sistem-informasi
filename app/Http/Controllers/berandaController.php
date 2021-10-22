@@ -93,6 +93,11 @@ class berandaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'thumb' => 'required|image|max:15360|dimensions:min_width=900,min_height=300',
+        ], [
+            'required' => 'Anda belum memasukan image yang akan diupload!',
+            'image' => 'format file harus berupa jpg, jpeg, png.',
+            'max' => 'ukuran image melebihi batas maksimal(15MB)',
+            'dimensions' => 'image minimal memiliki ukuran 900x300 pixel.'
         ]);
 
         if ($validator->fails()) {
@@ -100,19 +105,16 @@ class berandaController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        // dd($request->all());
         $data = beranda::first();
         if ($data) {
             if ($request->hasFile('thumb')) {
-                $name = date("his_") . $request->thumb->getClientOriginalName();
-                $url = $request->thumb->storeAs('acara', $name);
 
-                // $name = date("Ymd") . $request->thumb->getClientOriginalName();
-                // $url = $request->thumb->storeAs('public', $name);
+                $file_path = 'public/images/thumbnail';
+                $image = $request->thumb;
+                $image_name = date("his") . $image->getClientOriginalName();
+                $path = $image->storeAs($file_path, $image_name);
 
-                // $data->foto = $name;
-                $data->foto_thumb = $url;
+                $data->foto_thumb = $image_name;
                 $data->update();
                 notify()->success("Berhasil menyimpan data", "Sukses", "bottomRight");
                 return Redirect::back()->with(['sukses' => 'Data berhasil diupdate!']);
@@ -125,7 +127,6 @@ class berandaController extends Controller
     public function deleteKerja($id)
     {
         $warga = warga::where('kerja_id', $id)->get();
-        // dd($staff->count());
         if ($warga->count() > 0) {
             notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomLeft");
             return Redirect::back()->with('gagal', 'Gagal menghapus data');

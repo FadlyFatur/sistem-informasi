@@ -11,8 +11,8 @@
 
 <!-- image slider -->
 <div class="container-fluid jumbo">
-  @if ($beranda->foto_thumb != null )
-  <div class="jumbotron" style="background-image: url('{{ Storage::url($beranda->foto_thumb) }}')">
+  @if ($beranda->foto_thumb != Null)
+  <div class="jumbotron" style="background-image: url('{{ asset('/storage/images/thumbnail/'.$beranda->foto_thumb) }}')">
       
   @else
   <div class="jumbotron" style="background-image: url('img/homepage-thumb.jpg')">
@@ -128,7 +128,11 @@
           <div class="splide__slide">
             <article class="article article-style-c">
               <div class="article-header">
-                <div class="article-image" data-background="{{$r['url']}}"style="background-image: url(&quot;assets/img/news/img03.jpg&quot;);">
+                @if ($r->foto != Null)
+                  <div class="article-image" style="background-image: url('{{ asset('/storage/images/acara/'.$r->foto) }}')">
+                @else
+                  <div class="article-image" data-background="assets/img/news/img03.jpg">
+                @endif
                 </div>
               </div>
               <div class="article-details">

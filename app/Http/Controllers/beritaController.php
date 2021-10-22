@@ -38,20 +38,19 @@ class beritaController extends Controller
         return view('manajemen.editAcara', compact('total_data'));
     }
 
-    // bug img
     public function post(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'judul' => 'string|max:200',
-            'deskripsi' => 'string|max:10000',
-            'image' => 'required|image|max:10240',
+            'judul' => 'required|string|max:200',
+            'deskripsi' => 'required|string|max:10000',
+            'image' => 'required|image|max:10240|dimensions:min_width=300,min_height=300',
         ], [
-            'judul.string' => 'kolom :attribute harus berupa huruf.',
-            'deskripsi.string' => 'kolom :attribute harus berupa huruf.',
+            'string' => 'kolom :attribute harus berupa huruf.',
             'max' => 'kolom :attribute melebihi batas karakter',
-            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
+            'image.max' => 'Foto melebihi batas ukuran 10MB',
             'required' => 'kolom :attribute wajib diisi',
-            'image' => 'file harus berupa format jpg, jpeg, png'
+            'image' => 'file harus berupa format jpg, jpeg, png',
+            'dimensions' => 'image minimal memiliki ukuran 300x300 pixel.'
         ]);
 
         if ($validator->fails()) {
@@ -61,23 +60,23 @@ class beritaController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            if ($request->file('image')->isValid()) {
-                //upload file ke local storage
-                $name = date("his_") . $request->image->getClientOriginalName();
-                $url = $request->image->storeAs('acara', $name);
 
-                // upload db
-                $store = acara::create([
-                    'slug' => Str::slug($request->input('judul')),
-                    'judul' => $request->input('judul'),
-                    'deskripsi' => $request->input('deskripsi'),
-                    'foto' => $name,
-                    'url' => $url,
-                    'penulis' => Auth::user()->id,
-                    'status' => 1
-                ]);
-                return Redirect::back()->with(['sukses' => 'Berhasil menyimpan data']);
-            }
+            $file_path = 'public/images/acara';
+            $image = $request->image;
+            $image_name = date("his") . $image->getClientOriginalName();
+            $path = $image->storeAs($file_path, $image_name);
+
+            acara::create([
+                'slug' => Str::slug($request->input('judul')),
+                'judul' => $request->input('judul'),
+                'deskripsi' => $request->input('deskripsi'),
+                'foto' => $image_name,
+                // 'url' => $path,
+                'penulis_id' => Auth::user()->id,
+                'status' => 1
+            ]);
+            notify()->success("Berhasil menyimpan data", "Sukses", "bottomRight");
+            return Redirect::back()->with(['sukses' => 'Berhasil menyimpan data']);
         }
         abort(500, 'Gagal upload!');
     }
@@ -95,62 +94,57 @@ class beritaController extends Controller
         }
     }
 
-    // bug img
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'judul' => 'required|string|max:200',
+                'deskripsi' => 'required|string|max:10000',
+                'imageUpdate' => 'image|max:5500|dimensions:min_width=300,min_height=300',
+            ],
+            [
+                'string' => 'kolom :attribute harus berupa huruf.',
+                'max' => 'kolom :attribute melebihi batas karakter',
+                'required' => 'kolom :attribute wajib diisi',
+                'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
+                'required' => 'kolom :attribute wajib diisi',
+                'image' => 'file harus berupa format jpg, jpeg, png',
+                'dimensions' => 'image minimal memiliki ukuran 300x300 pixel.'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $data = acara::find($id);
         try {
             if ($request->hasFile('imageUpdate')) {
-                if ($request->imageUpdate->isValid()) {
-                    $validator = Validator::make(
-                        $request->all(),
-                        [
-                            'judul' => 'string|max:200',
-                            'deskripsi' => 'string|max:10000',
-                            'imageUpdate' => 'required|image|max:5500',
-                        ],
-                        [
-                            'judul.string' => 'kolom :attribute harus berupa huruf.',
-                            'deskripsi.string' => 'kolom :attribute harus berupa huruf.',
-                            'max' => 'kolom :attribute melebihi batas karakter',
-                            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
-                            'required' => 'kolom :attribute wajib diisi',
-                            'image' => 'file harus berupa format jpg, jpeg, png'
-                        ]
-                    );
+                $file_path = 'public/images/acara';
+                $image = $request->imageUpdate;
 
-                    if ($validator->fails()) {
-                        return Redirect::back()
-                            ->withErrors($validator)
-                            ->withInput();
-                    }
+                Storage::delete($file_path . '/' . $data->foto);
 
-                    Storage::delete($data->url);
+                //upload file ke local storage
+                $image_name = date("his") . $image->getClientOriginalName();
+                $path = $image->storeAs($file_path, $image_name);
 
-                    //upload file ke local storage
-                    $name = date("his_") . $request->imageUpdate->getClientOriginalName();
-                    $url = $request->imageUpdate->storeAs('acara', $name);
-
-                    $data->slug = Str::slug($request->judul);
-                    $data->judul = $request->judul;
-                    $data->deskripsi = $request->deskripsi;
-                    $data->foto = $name;
-                    $data->url = $url;
-
-                    $data->update();
-                    return Redirect::back()->with(['sukses' => 'Data berhasil diupdate!']);
-                }
+                $data->foto = $image_name;
             }
 
             $slug = Str::slug($request->judul);
             $data->slug = $slug;
             $data->judul = $request->judul;
             $data->deskripsi = $request->deskripsi;
-
+            $data->penulis_id = Auth::user()->id;
             $data->update();
+
             return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
-        } catch (\Throwable $th) {
-            return Redirect::back()->with('gagal', 'Data gagal diupdate!');
+        } catch (Exception $e) {
+            return Redirect::back()->with('gagal', 'Data gagal diupdate! ' . $e);
         }
     }
 

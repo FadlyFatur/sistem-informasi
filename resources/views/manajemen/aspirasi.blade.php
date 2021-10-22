@@ -30,16 +30,15 @@
       <h4>Data User</h4>
     </div>
 
-    <div class="table-responsive" style="color:black;">
+    <div class="container p-3" style="color:black;">
       <p class="text-center" >Total Aspirasi : <span id="total-record">{{ $count }}</span></p>
-
-      <table class="table table-sm" id="asptbl">
-        <thead>
+      <table class="table" id="asptbl">
+        <thead class="text-left">
           <tr>
-            <th class="text-center">Pengirim</th>
-            <th class="text-center">Aspirai</th>
-            <th class="text-center">Tanggal dibuat</th>
-            <th class="text-center">Aksi</th>
+            <th>Pengirim</th>
+            <th>Aspirai</th>
+            <th>Tanggal dibuat</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody></tbody>

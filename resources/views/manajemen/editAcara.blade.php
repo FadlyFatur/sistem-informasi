@@ -132,8 +132,8 @@
       ajax: '{{ route("getAcara") }}',
       columns: [
           {data: 'judul', name: 'judul'},
-          {data: 'penulis_id', name: 'penulis', orderable: false, searchable: false},
-          {data: 'created_at', name: 'tanggal', searchable: false},
+          {data: 'penulis_id', name: 'penulis_id', searchable: false},
+          {data: 'created_at', name: 'created_at', searchable: false},
           {data: 'status_edit', name: 'status'},
           {data: 'action', name: 'action', orderable: false, searchable: false}
       ]
