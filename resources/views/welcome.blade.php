@@ -169,23 +169,30 @@
   </div>
   @else
 
-  <div class="row pb-2">
-    @foreach ($staff as $s)
-      <div class="col-md-3 col-sm-6 p-5">
-        <div class="user-item">
-          @if (isset($s->foto))
-            <img src="{{Storage::url($s['url'])}}" alt="staff-foto">
-          @else
-            <div class="company-header-avatar" style="background-image: url(&quot;assets/img/avatar/avatar-5.png&quot;)">
+  <div class="splide">
+    <div class="splide__track">
+      <div class="splide__list">
+      @foreach ($staff as $s)
+      <div class="card mt-100 splide__slide">
+        <div class="card-content">
+            <div class="card-body">
+                <div class="profile d-flex justify-content-center mb-2"> 
+                  @if (isset($s->foto))
+                    <img src="{{ asset('/storage/images/staff_image/'.$s->foto) }}" alt="staff-foto""> 
+                  @else
+                    <img src="{{ asset('assets/img/avatar/avatar-5.png')}}"> 
+                  @endif
+                </div>
+                <div class="card-title user-details text-center">
+                  <h5 class="user-name">{{ $s['nama'] }}</h5>
+                  <div class="text-job text-muted">{{ $s->jabatan['nama'] }}</div>
+                </div>
             </div>
-          @endif
-          <div class="user-details mt-3 text-center">
-            <h5 class="user-name">{{$s['nama']}}</h5>
-            <div class="text-job text-muted">{{ $s->jabatan['nama']}}</div>
-          </div>  
         </div>
       </div>
-    @endforeach
+      @endforeach
+      </div>
+    </div>
   </div>
   @endif
 </div>
@@ -293,9 +300,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 <script>
   document.querySelectorAll('.splide').forEach(carousel => new Splide( carousel, {
+    // padding: '5rem',
     perPage: 3,
-    rewind : true,
     perMove: 1,
+    rewind : true,
     autoplay: true,
     breakpoints: {
       '640': {
@@ -308,24 +316,6 @@
       },
     }
   }).mount());
-
-
-	// new Splide( '.splide', {
-  //   perPage: 3,
-  //   rewind : true,
-  //   perMove: 1,
-  //   autoplay: true,
-  //   breakpoints: {
-  //     '640': {
-  //       perPage: 2,
-  //       gap    : '1rem',
-  //     },
-  //     '480': {
-  //       perPage: 1,
-  //       gap    : '1rem',
-  //     },
-  //   }
-  // }).mount();
 
 </script>
 @endsection

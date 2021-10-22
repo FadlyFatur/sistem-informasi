@@ -32,14 +32,12 @@ class HomeController extends Controller
     {
         $data = acara::all()->sortByDesc('created_at')->take(10);
         $jmlacara = acara::all()->count();
-        $staff = staff::all()->sortBy('jabatan_id')->take(4);
+        $staff = staff::all()->sortBy('jabatan_id')->take(10);
         $jmlstaff = staff::all()->count();
         $jmlwarga = warga::all()->count();
         $beranda = beranda::all()->first();
         $jmlberanda = beranda::all()->count();
         $berita = $this->beritaApi();
-        // notify()->success("Success notification test", "Success", "topRight");
-        // notify()->info("Info notification test", "Info", "bottomRight");
         return view('welcome', compact('data', 'beranda', 'staff', 'jmlstaff', 'jmlwarga', 'jmlacara', 'jmlberanda', 'berita'));
     }
 

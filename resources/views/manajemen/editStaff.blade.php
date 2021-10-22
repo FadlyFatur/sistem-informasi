@@ -57,7 +57,7 @@
           <div class="form-group row mb-4">
             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomer Pegawai</label>
             <div class="col-sm-12 col-md-7">
-              <input type="number" name="no" id="no" class="form-control" placeholder="Masukan Nomer Pegawai" autocomplete="off" value="{{ old('no') }}">
+              <input type="text" maxlength="20" name="no" id="no" class="form-control" placeholder="Masukan Nomer Pegawai" autocomplete="off" value="{{ old('no') }}">
             </div>
           </div>
 

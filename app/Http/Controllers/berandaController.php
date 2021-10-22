@@ -88,7 +88,6 @@ class berandaController extends Controller
         }
     }
 
-    //bug foto
     public function storeGambar(Request $request)
     {
         $validator = Validator::make($request->all(), [

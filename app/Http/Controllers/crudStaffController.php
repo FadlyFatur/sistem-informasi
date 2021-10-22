@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use DataTables;
+use Exception;
 
 class crudStaffController extends Controller
 {
@@ -33,18 +34,19 @@ class crudStaffController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'no' => 'required|integer|max:20',
+            'no' => 'required|integer',
             'nama' => 'required|string|max:150',
-            'no_hp' => 'required|integer|max:13',
+            'no_hp' => 'required',
             'alamat' => 'required|string|max:200',
-            'image' => 'image|max:5120',
+            'image' => 'image|max:5120|dimensions:min_width=100,min_height=100',
         ], [
             'required' => 'kolo, :attribute harus diisi.',
             'string' => 'kolom :attribute harus berupa huruf.',
             'integer' => 'kolom :attribute harus berupa angka.',
-            'max' => 'kolom :attribute melebihi batas karakter',
-            'image.max' => 'Foto melebihi batas ukuran 5MB',
-            'image' => 'file harus berupa format jpg, jpeg, png'
+            'max' => 'kolom :attribute melebihi batas karakter.',
+            'image.max' => 'Foto melebihi batas ukuran 5MB.',
+            'image' => 'file harus berupa format jpg, jpeg, png',
+            'dimensions' => 'image minimal memiliki ukuran 100x100 pixel.'
         ]);
 
         if ($validator->fails()) {
@@ -54,63 +56,50 @@ class crudStaffController extends Controller
                 ->withInput();
         }
 
-        //bug img
-        if ($request->hasFile('image')) {
-            if ($request->file('image')->isValid()) {
-                $validator = Validator::make($request->all(), [
-                    'image' => 'required|mimes:jpg,jpeg,png|max:5120',
-                ]);
+        try {
+            $data = new staff();
+            $data->nama = $request->nama;
+            $data->id_pegawai = $request->no;
+            $data->no_hp = $request->no_hp;
+            $data->alamat = $request->alamat;
+            $data->jabatan_id = $request->jabatan;
 
-                if ($validator->fails()) {
-                    return Redirect::back()
-                        ->withErrors($validator)
-                        ->withInput();
-                }
+            if ($request->hasFile('image')) {
+                $file_path = 'public/images/staff_image';
+                $image = $request->image;
 
                 //upload file ke local storage
-                $name = date("his_") . $request->image->getClientOriginalName();
-                $url = $request->image->storeAs('public', $name);
+                $image_name = date("his") . $image->getClientOriginalName();
+                $path = $image->storeAs($file_path, $image_name);
 
-                // upload db
-                $store = staff::create([
-                    'nama' => $request->input('nama'),
-                    'no_pegawai' => $request->input('no'),
-                    'no_hp' => $request->input('no_hp'),
-                    'alamat' => $request->input('alamat'),
-                    'jabatan_id' => $request->jabatan,
-                    'foto' => $name,
-                    'url' => $url
-                ]);
-                return Redirect::back()->with(['sukses' => 'Berhasil menambah data!']);
+                $data->foto = $image_name;
+                $data->url = $path;
             }
-            return Redirect::back()->with(['gagal' => 'Berhasil menambah data!']);
-        }
-        $data = new staff();
-        $data->nama = $request->input('nama');
-        $data->no_pegawai = $request->input('no');
-        $data->no_hp = $request->input('no_hp');
-        $data->alamat = $request->input('alamat');
-        $data->jabatan_id = $request->jabatan;
 
-        $data->save();
-        return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
+            $data->save();
+
+            return Redirect::back()->with('sukses', 'Data berhasil ditambah!');
+        } catch (Exception $e) {
+            return Redirect::back()->with('gagal', 'Data gagal diproses!');
+        }
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'no' => 'required|integer|max:20',
+            'no' => 'required|integer',
             'nama' => 'required|string|max:150',
-            'no_hp' => 'required|integer|max:13',
+            'no_hp' => 'required',
             'alamat' => 'required|string|max:200',
-            'imageUpdate' => 'image|max:5120',
+            'imageUpdate' => 'image|max:5120|dimensions:min_width=100,min_height=100',
         ], [
-            'required' => 'kolom, :attribute harus diisi.',
+            'required' => 'kolo, :attribute harus diisi.',
             'string' => 'kolom :attribute harus berupa huruf.',
             'integer' => 'kolom :attribute harus berupa angka.',
-            'max' => 'kolom :attribute melebihi batas karakter',
-            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB',
-            'image' => 'file harus berupa format jpg, jpeg, png'
+            'max' => 'kolom :attribute melebihi batas karakter.',
+            'imageUpdate.max' => 'Foto melebihi batas ukuran 5MB.',
+            'image' => 'file harus berupa format jpg, jpeg, png',
+            'dimensions' => 'image minimal memiliki ukuran 100x100 pixel.'
         ]);
 
         if ($validator->fails()) {
@@ -120,25 +109,27 @@ class crudStaffController extends Controller
                 ->withInput();
         }
 
-        $data = staff::find($id);
-        try {
 
-            $data->nama = $request->input('nama');
-            $data->id_pegawai = $request->input('no');
-            $data->no_hp = $request->input('no_hp');
-            $data->alamat = $request->input('alamat');
+        try {
+            $data = staff::find($id);
+
+            $data->nama = $request->nama;
+            $data->id_pegawai = $request->no;
+            $data->no_hp = $request->no_hp;
+            $data->alamat = $request->alamat;
             $data->jabatan_id = $request->jabatan;
 
-            // bug img 
             if ($request->hasFile('imageUpdate')) {
-                Storage::delete($data->url);
+                $file_path = 'public/images/staff_image';
+                $image = $request->imageUpdate;
+                Storage::delete($file_path . '/' . $data->foto);
 
                 //upload file ke local storage
-                $name = date("his") . $request->imageUpdate->getClientOriginalName();
-                $url = $request->imageUpdate->storeAs('public', $name);
+                $image_name = date("his") . $image->getClientOriginalName();
+                $path = $image->storeAs($file_path, $image_name);
 
-                $data->foto = $name;
-                $data->url = $url;
+                $data->foto = $image_name;
+                $data->url = $path;
             }
 
             $data->update();
