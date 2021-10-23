@@ -2,18 +2,17 @@
 
 namespace App\Exports;
 
-use App\warga;
+use App\staff;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class WargaExport implements ShouldAutoSize, WithHeadings, FromCollection
+class StaffExport implements ShouldAutoSize, WithHeadings, FromCollection
+
 {
     /**
      * @return \Illuminate\Support\Collection
      */
-
     private $data;
 
     public function __construct($data)
@@ -29,20 +28,13 @@ class WargaExport implements ShouldAutoSize, WithHeadings, FromCollection
     public function headings(): array
     {
         return [
-            'NIK',
-            'Nama Lengkap',
-            'Jenis Kelamin',
-            'Tempat Lahir',
-            'Tanggal Lahir',
+            'ID Pegawai',
+            'Nama',
+            'Jabatan',
+            'Nomer Hp',
             'Alamat',
-            'Kelurahan',
-            'Kecamatan',
-            'Kota',
-            'RW',
-            'RT',
-            'Agama',
-            'Pekerjaan',
-            'Perkawinan',
+            'Tanggal Dibuat',
+            'Akun',
         ];
     }
 }

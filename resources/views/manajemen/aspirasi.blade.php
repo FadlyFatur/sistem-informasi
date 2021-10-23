@@ -31,9 +31,10 @@
     </div>
 
     <div class="container p-3" style="color:black;">
-      <p class="text-center" >Total Aspirasi : <span id="total-record">{{ $count }}</span></p>
-      <table class="table" id="asptbl">
-        <thead class="text-left">
+      <table class="table table-md table-bordered table-striped table-hover" style="color:black;" cellSpacing="0" width="100%" id="asptbl">
+        <p class="text-center" >Total Aspirasi : <span id="total-record">{{ $count }}</span></p>
+        <a href="{{ route('exportAspirasi') }}" class="btn btn-success my-3">Export Excel <i class='far fa-file-excel'></i></a>
+        <thead class="text-center">
           <tr>
             <th>Pengirim</th>
             <th>Aspirai</th>
@@ -41,7 +42,7 @@
             <th>Aksi</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody class="text-center"></tbody>
       </table>
 
     </div>

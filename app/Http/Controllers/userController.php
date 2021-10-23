@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use app\user;
 use Auth;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel as Excel;
 
 class userController extends Controller
 {
@@ -38,15 +40,18 @@ class userController extends Controller
     {
         if (Auth::id() != $id) {
             $data = user::find($id);
-            if ($data->status == '1') {
-                $data->status = '2';
-                $data->update();
-                return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
-            } else {
-                $data->status = '1';
-                $data->update();
-                return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
+            if ($data->role != '3') {
+                if ($data->role == '1') {
+                    $data->role = '2';
+                    $data->update();
+                    return Redirect::back()->with('sukses', 'Data hak akses berhasil diupdate!');
+                } else {
+                    $data->role = '1';
+                    $data->update();
+                    return Redirect::back()->with('sukses', 'Data hak akses berhasil diupdate!');
+                }
             }
+            return Redirect::back()->with('gagal', 'Tidak bisa merubah data Superadmin!');
         } else {
             return Redirect::back()->with('gagal', 'Tidak bisa merubah data pribadi!');
         }
@@ -57,6 +62,8 @@ class userController extends Controller
         if (Auth::id() != $id) {
             try {
                 $data = user::find($id);
+                $data->status = '0';
+                $data->update();
                 $data->delete();
                 return Redirect::back()->with('sukses', 'Berhasil menghapus data!');
             } catch (\Exception $e) {
@@ -142,9 +149,7 @@ class userController extends Controller
                 if ($user->role == 3) {
                     return Redirect::back()->with('gagal', 'Tidak bisa mereset data superadmin!');
                 }
-            }
 
-            if (Auth::user()->role != 3) {
                 if (Auth::id() == $id) {
                     return Redirect::back()->with('gagal', 'Tidak bisa mereset data pribadi!');
                 }
@@ -170,5 +175,10 @@ class userController extends Controller
         user::where('id', $id)->delete();
 
         return view('auth.login')->with('sukses', 'Akun berhasil ditutup, anda tidak bisa lagi mengunakanya!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'data_users_' . date('dMY') . '.xlsx');
     }
 }

@@ -32,16 +32,17 @@
 
     <div class="table-responsive" style="color:black;">
       <p class="text-center" >Total Data Acara : <span id="total-record">{{$total_data}}</span></p>
-      <table class="table table-sm">
+      <table class="table table-md table-bordered table-striped table-hover" id="staff-tbl" cellSpacing="0" width="100%">
+        <a href="{{ route('export-user') }}" class="btn btn-success my-3">Export Excel <i class='far fa-file-excel'></i></a>
         <thead>
-          <tr>
-            <th class="text-center">Nomer Pegawai</th>
-            <th class="text-center">Nama</th>
-            <th class="text-center">Username</th>
-            <th class="text-center" data-toggle="tooltip" data-placement="top" title="Mengecek apakah user sudah dihubungkan dengan staff">Integrasi</th>
-            <th class="text-center" data-toggle="tooltip" data-placement="top" title="Anda bisa memverifikasi user yang terdaftar">Verifikasi</th>
-            <th class="text-center" data-toggle="tooltip" data-placement="top" title="Anda bisa mengatur hak akses user yang mendaftar">Level Hak Akses</th>
-            <th class="text-center" data-toggle="tooltip" data-placement="top" title="Anda bisa menghapus data user">Hapus/Reset</th>
+          <tr class="text-center">
+            <th >Nomer Pegawai</th>
+            <th >Nama</th>
+            <th >Username</th>
+            <th data-toggle="tooltip" data-placement="top" title="Mengecek apakah user sudah dihubungkan dengan staff">Integrasi</th>
+            <th data-toggle="tooltip" data-placement="top" title="Anda bisa memverifikasi user yang terdaftar">Verifikasi</th>
+            <th data-toggle="tooltip" data-placement="top" title="Anda bisa mengatur hak akses user yang mendaftar">Level Hak Akses</th>
+            <th data-toggle="tooltip" data-placement="top" title="Anda bisa menghapus data user">Hapus/Reset</th>
           </tr>
         </thead>
         <tbody>
@@ -65,10 +66,12 @@
             <td><div class="badge badge-warning">Terverifikasi <i class="fas fa-check-square"></i></div> </td>
             @endif
 
-            @if ($a['status'] != 2)
+            @if ($a['role'] == 1)
             <td><a href="{{route('levelUser',['id' => $a->id])}}"> <div class="badge badge-light">User</div> </a> </td>
-            @else
+            @elseif ($a['role'] == 2)
             <td><a href="{{route('levelUser',['id' => $a->id])}}"> <div class="badge badge-warning">Admin</div> </a> </td>
+            @else
+            <td><a href="#superadmin"> <div class="badge badge-primary">Super Admin</div> </a> </td>
             @endif
             <td>
               <a href="{{route('deleteUser',['id' => $a->id])}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>

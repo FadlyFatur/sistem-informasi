@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StaffExport;
 use Illuminate\Http\Request;
 use App\staff;
 use Auth;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use DataTables;
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
 
 class crudStaffController extends Controller
 {
@@ -195,5 +197,24 @@ class crudStaffController extends Controller
             })
             ->rawColumns(['status_edit', 'action'])
             ->make(true);
+    }
+
+    public function export()
+    {
+        $staff = staff::all();
+        $data = [];
+        foreach ($staff as $w) {
+            $data[] = [
+                'id' => $w->id_pegawai,
+                'nama' => $w->nama,
+                'jabatan' => $w->jabatan->nama,
+                'no_hp' => $w->no_hp,
+                'alamat' => $w->alamat,
+                'dibuat' => $w->created_at,
+                'akun' => $w->user['username'],
+            ];
+        }
+
+        return Excel::download(new StaffExport($data), 'Data_staff_' . date('dMY') . '_.xlsx');
     }
 }

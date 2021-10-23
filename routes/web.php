@@ -41,6 +41,7 @@ Route::middleware(['auth', 'staffAccess', 'akunVerified'])->group(function () {
             Route::get('/delete/{id}', 'crudStaffController@destroy')->name('deleteStaff');
             Route::get('/aktif/{id}', 'crudStaffController@aktif')->name('aktifStaff');
             Route::get('/get-data-staff', 'crudStaffController@getData')->name('getStaff');
+            Route::get('/export', 'crudStaffController@export')->name('exportStaff');
         });
 
         Route::prefix('/data-acara')->group(function () {
@@ -61,6 +62,7 @@ Route::middleware(['auth', 'staffAccess', 'akunVerified'])->group(function () {
             Route::get('/reject/{id}', 'beritaController@rejectAspirasi')->name('rejectAspirasi');
             Route::get('/', 'beritaController@indexAspirasiAdmin')->name('aspi-admin')->middleware('staffAccess');
             Route::get('/get-data-aspirasi', 'beritaController@getDataAspirasi')->name('getAspirasi');
+            Route::get('/export', 'beritaController@exportAsp')->name('exportAspirasi');
         });
 
         Route::prefix('/galeri')->group(function () {
@@ -81,6 +83,7 @@ Route::middleware(['auth', 'staffAccess', 'akunVerified'])->group(function () {
                 Route::get('/delete/{id}', 'userController@delete')->name('deleteUser');
                 Route::get('/reset/{id}', 'userController@reset')->name('resetUser');
                 Route::get('/re-integrasi/{id}', 'userController@reIntegrasi')->name('reIntegrasi');
+                Route::get('/user/export/', 'userController@export')->name('export-user');
             });
 
             Route::prefix('/data-pilihan')->group(function () {

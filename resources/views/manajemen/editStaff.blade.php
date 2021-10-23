@@ -123,10 +123,11 @@
 
     <div class="card-body">
       <!-- Table -->
-      <table class="table-responsive" style="color:black;" id="stf-tbl">
+      <table class="table table-md table-bordered table-striped table-hover" style="color:black;" id="stf-tbl" cellSpacing="0" width="100%">
         <p class="text-center" style="color:black;">Total Data Staff : <span id="total-record">{{$total_data}}</span></p>
+        <a href="{{ route('exportStaff') }}" class="btn btn-success my-3">Export Excel <i class='far fa-file-excel'></i></a>
         <thead>
-          <tr style="color:black; text-align:center; font-size:13px;"> 
+          <tr style="color:black; text-align:center; font-size:16px;"> 
             <th>No Pegawai</th>
             <th>Nama</th>
             <th>Jabatan</th>

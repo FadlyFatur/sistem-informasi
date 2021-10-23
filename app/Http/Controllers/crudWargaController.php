@@ -138,7 +138,28 @@ class crudWargaController extends Controller
 
     public function export()
     {
-        return Excel::download(new WargaExport, 'Data-warga-RW2.xlsx');
+        $warga = warga::all();
+        $data = [];
+        foreach ($warga as $w) {
+            $data[] = [
+                'nik' => $w->nik,
+                'nama' => $w->nama,
+                'jk' => $w->jk,
+                'tempat_lahir' => $w->tempat_lahir,
+                'tanggal_lahir' => $w->tanggal_lahir,
+                'alamat' => $w->alamat,
+                'kel' => $w->kel,
+                'kec' => $w->kec,
+                'kota' => $w->kota,
+                'rw' => $w->rw,
+                'rt' => $w->rt,
+                'agama' => $w->agama,
+                'kawin' => $w->kawin,
+                'kerja' => $w->kerja->nama,
+            ];
+        }
+
+        return Excel::download(new WargaExport($data), 'Data_warga_' . date('dMY') . '_.xlsx');
     }
 
     public function updateIndex($id)

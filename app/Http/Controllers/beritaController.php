@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\acara;
 use App\Apirasi;
+use App\Exports\AspirasiExport;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use DataTables;
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
 
 class beritaController extends Controller
 {
@@ -305,5 +307,34 @@ class beritaController extends Controller
         } catch (\Throwable $th) {
             return Redirect::back()->with(['gagal' => 'Gagal Mengirim Aspirasi']);
         }
+    }
+
+    public function exportAsp()
+    {
+        $asp = Apirasi::all();
+        $data = [];
+        foreach ($asp as $w) {
+            if ($w->pengirim != NULL) {
+                $nama = $w->pengirim;
+            } else {
+                $nama = "Anonim";
+            }
+
+            if ($w->status == 1) {
+                $st = "Dibaca";
+            } elseif ($w->status == 2) {
+                $st = "Ditolak";
+            } else {
+                $st = "Belum Dibaca";
+            }
+            $data[] = [
+                'pengirim' => $nama,
+                'asp' => $w->aspirasi,
+                'status' => $st,
+                'dikirim' => $w->created_at,
+            ];
+        }
+
+        return Excel::download(new AspirasiExport($data), 'Data_aspirasi_' . date('dMY') . '_.xlsx');
     }
 }

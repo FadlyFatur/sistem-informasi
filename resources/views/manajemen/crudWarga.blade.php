@@ -3,6 +3,7 @@
 @section('halaman','Data Warga')
 
 @section('css')
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
   <link rel="stylesheet" href="{{ URL::asset('css/crudWarga.css') }}">
 @endsection
 
@@ -58,7 +59,7 @@
                 <tr style="color:black; text-align:center; font-size:13px;"> 
                   <th>NIK</th>
                   <th>Nama</th>
-                  <th>Tempat/Tanggal Lahir</th>
+                  <th>TTL</th>
                   <th>Jenis Kelamin</th>
                   <th>Alamat</th>
                   <th>RT/RW</th>
@@ -227,8 +228,10 @@
 @endsection
 
 @section('js')
+  
   <script>
     $('#warga-tbl').DataTable({
+      pageLength: 25,
       processing: true,
       serverSide: true,
       ajax: '{{ route("getWarga") }}',
