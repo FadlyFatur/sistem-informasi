@@ -37,7 +37,7 @@
         <thead class="text-center">
           <tr>
             <th>Pengirim</th>
-            <th>Aspirai</th>
+            <th>Aspirasi</th>
             <th>Tanggal dibuat</th>
             <th>Aksi</th>
           </tr>

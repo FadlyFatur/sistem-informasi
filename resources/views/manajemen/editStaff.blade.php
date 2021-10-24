@@ -131,9 +131,9 @@
             <th>No Pegawai</th>
             <th>Nama</th>
             <th>Jabatan</th>
-            <th>No HP</th>
+            <th>Nomer HP</th>
             <th>Alamat</th>
-            <th>Status</th>
+            <th>Aktivasi</th>
             <th>Aksi</th>
           </tr>
         </thead>

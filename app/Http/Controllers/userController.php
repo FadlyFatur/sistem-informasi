@@ -127,8 +127,18 @@ class userController extends Controller
     {
         if (Auth::id() != $id) {
             try {
-                $defaultPass = '12345';
                 $data = user::find($id);
+                if ($data->role == 3) {
+                    if (Auth::user()->role == 3) {
+                        $defaultPass = '12345';
+                        $data->password = Hash::make($defaultPass);
+                        $data->update();
+                        return Redirect::back()->with('sukses', 'Berhasil mereset Password!');
+                    } else {
+                        return Redirect::back()->with('gagal', 'Tidak bisa mereset password super admin!');
+                    }
+                }
+                $defaultPass = '12345';
                 $data->password = Hash::make($defaultPass);
                 $data->update();
                 return Redirect::back()->with('sukses', 'Berhasil mereset Password!');

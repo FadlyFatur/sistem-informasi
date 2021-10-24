@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: marvincollins
@@ -9,15 +10,15 @@
 return [
     'titleColor' => '',
     'messageColor' => '',
-    'titleSize' => '38',
-    'messageSize' => '38',
-    'titleLineHeight' => '38',
-    'messageLineHeight' => '38',
+    'titleSize' => '16',
+    'messageSize' => '14',
+    'titleLineHeight' => '20',
+    'messageLineHeight' => '20',
     'transitionIn' => 'flipInX',
     'transitionOut' => 'flipOutX',
     'zindex' => null,
     'closeOnClick' => true,
-    'timeout' => 5000,
+    'timeout' => 3000,
     'drag' => true,
     'position' => "bottomRight", //bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter or center.
     'progressBar' => true,

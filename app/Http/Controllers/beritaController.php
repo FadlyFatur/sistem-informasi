@@ -77,7 +77,7 @@ class beritaController extends Controller
                 'penulis_id' => Auth::user()->id,
                 'status' => 1
             ]);
-            notify()->success("Berhasil menyimpan data", "Sukses", "bottomRight");
+            notify()->success("Data berhasil disimpan!", "Sukses", "bottomRight");
             return Redirect::back()->with(['sukses' => 'Berhasil menyimpan data']);
         }
         abort(500, 'Gagal upload!');
@@ -144,6 +144,7 @@ class beritaController extends Controller
             $data->penulis_id = Auth::user()->id;
             $data->update();
 
+            notify()->success("Data Berhasil diupdate!", "Sukses", "topRight");
             return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
         } catch (Exception $e) {
             return Redirect::back()->with('gagal', 'Data gagal diupdate! ' . $e);
@@ -183,11 +184,11 @@ class beritaController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($user) {
-                return '<a href="' . route('show-kegiatan', ['slug' => $user->slug]) . '" target="_blank" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></a> <a href="' . route('upAcara', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info fa fa-edit"> </a> <a href="' . route('deleteAcara', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger fa fa-trash"></a>';
+                return '<a href="' . route('show-kegiatan', ['slug' => $user->slug]) . '" target="_blank" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></a> <a href="' . route('upAcara', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info fa fa-edit"> </a> <a href="' . route('deleteAcara', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger fa fa-trash" onclick="return confirm(`Apakah anda yakin menghapus data ini?`)"></a>';
             })
             ->addColumn('status_edit', function ($user) {
                 if ($user->status != 0) {
-                    return '<a href="' . route('aktifAcara', ['id' => $user->id]) . '"> <div class="badge badge-success">Aktif</div></a>';
+                    return '<a href="' . route('aktifAcara', ['id' => $user->id]) . '"> <div class="badge badge-success" onclick="return confirm(`Apakah anda yakin menonaktifkan acara ini?`)">Aktif</div></a>';
                 } else {
                     return '<a href="' . route('aktifAcara', ['id' => $user->id]) . '"> <div class="badge badge-danger">Non-Aktif</div></a>';
                 }

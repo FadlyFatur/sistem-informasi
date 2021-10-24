@@ -41,10 +41,11 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'username' => 'required|string',
-            //VALIDASI KOLOM USERNAME // TAPI KOLOM INI BISA BERISI EMAIL ATAU USERNAME
-            'password' => 'required|string|min:5',
+        $validator = $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required|min:5',
+        ], [
+            'min' => 'Password minimal memiliki 5 karakter'
         ]);
 
 
@@ -63,6 +64,6 @@ class LoginController extends Controller
             return redirect()->route('beranda');
         }
         //JIKA SALAH, MAKA KEMBALI KE LOGIN DAN TAMPILKAN NOTIFIKASI 
-        return redirect()->route('login')->with(['error' => 'Email/Password salah!']);
+        return redirect()->route('login')->with(['gagal' => 'Email/Password salah!']);
     }
 }

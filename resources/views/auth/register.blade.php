@@ -7,8 +7,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
+                {{-- <div class="card-header">{{ __('Register') }}</div> --}}
+                @if($errors->any())
+                <div class="alert alert-danger alert-dismissible show fade">
+                    <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>x</span>
+                    </button>
+                    {!! implode('', $errors->all('<div>:message</div>')) !!}
+                    </div>
+                </div>
+                @endif
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf

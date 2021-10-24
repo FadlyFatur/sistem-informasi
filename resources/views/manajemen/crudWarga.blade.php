@@ -57,7 +57,7 @@
               <a href="{{ route('exportWarga') }}" class="btn btn-success my-3">Export Excel <i class='far fa-file-excel'></i></a>
               <thead>
                 <tr style="color:black; text-align:center; font-size:13px;"> 
-                  <th>NIK</th>
+                  <th data-toggle="tooltip" data-placement="top" title="NIK tidak akan dibagikan umum">NIK</th>
                   <th>Nama</th>
                   <th>TTL</th>
                   <th>Jenis Kelamin</th>
@@ -66,7 +66,7 @@
                   <th>Agama</th>
                   <th>Perkawinan</th>
                   <th>Pekerjaan</th>
-                  <th>Aktivasi</th>
+                  <th data-toggle="tooltip" data-placement="top" title="Data nonaktif tidak akan dimuculkan untuk umum">Aktivasi</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -97,12 +97,22 @@
           <div class="form-row">
             <div class="form-group col">
                 <label for="nik">Nomer Induk Kependudukan</label>
-                <input type="number" name="nik" id="nik" class="form-control" autocomplete="off" value="{{ old('nik') }}" autofocus required>
+                <input type="number" name="nik" id="nik" class="form-control @error('nik') is-invalid @enderror" autocomplete="off" value="{{ old('nik') }}" autofocus required>
+                @error('nik')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-group col">
                 <label for="nama">Nama Lengkap</label> 
-                <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" value="{{ old('nama_lengkap') }}" autofocus autocomplete="off" required>
+                <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control @error('nama_lengkap') is-invalid @enderror" value="{{ old('nama_lengkap') }}" autofocus autocomplete="off" required>
+                @error('nama_lengkap')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
             </div>
           </div>
 
@@ -113,40 +123,75 @@
                     <option>P</option>
                     <option>L</option>
                 </select>
+                @error('jenis_kelamin')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div> 
 
             <div class="form-group col-md-5">
                 <label for="tempat_lahir">Tempat Lahir</label> 
-                <input type="text"  name="tempat_lahir" class="form-control" id="tempat_lahir" autocomplete="on" value="{{ old('tempat_lahir') }}" required>
+                <input type="text"  name="tempat_lahir" class="form-control @error('tempat_lahir') is-invalid @enderror" id="tempat_lahir" autocomplete="on" value="{{ old('tempat_lahir') }}" required>
+                @error('tempat_lahir')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-group col-md-5">
                 <label for="tanggal_lahir">Tanggal Lahir</label> 
                 <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" required value="{{ old('tanggal_lahir') }}">
             </div>
+            @error('tanggal_lahir')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <hr><br>
 
         <div class="form-row">
             <div class="form-group col">
                 <label for="kelurahan">Kelurahan</label> 
-                <input type="text" name="kelurahan" id="kelurahan" class="form-control" autocomplete="on" autofocus value="{{ old('kelurahan') }}" required>
+                <input type="text" name="kelurahan" id="kelurahan" class="form-control @error('kelurahan') is-invalid @enderror" autocomplete="on" autofocus value="{{ old('kelurahan') }}" required>
+                @error('kelurahan')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-group col">
                 <label for="kecamatan">Kecamatan</label> 
-                <input type="text" name="kecamatan"  id="kecamatan" class="form-control" autocomplete="on" autofocus value="{{ old('kecamatan') }}" required>
+                <input type="text" name="kecamatan"  id="kecamatan" class="form-control @error('kecamatan') is-invalid @enderror" autocomplete="on" autofocus value="{{ old('kecamatan') }}" required>
+                @error('kecamatan')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-group col">
                 <label for="kota">Kota</label> 
-                <input type="text" name="kota" id="kota" class="form-control" autocomplete="on" autofocus value="{{ old('kota') }}" required>
+                <input type="text" name="kota" id="kota" class="form-control @error('kota') is-invalid @enderror" autocomplete="on" autofocus value="{{ old('kota') }}" required>
             </div>
+            @error('kota')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>Alamat</label>
-            <textarea class="form-control" name="alamat" id="alamat" style="height: 50px;" required>{{ old('alamat') }}</textarea>
+            <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" style="height: 50px;" required>{{ old('alamat') }}</textarea>
+            @error('alamat')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <hr><br>
 

@@ -8,6 +8,18 @@
 
 @section('content')
 <div class="card user-card-full p-3">
+
+@if (Auth::user()->verified_at == NULL)
+<div class="alert alert-info alert-dismissible show fade">
+    <div class="alert-body">
+    <button class="close" data-dismiss="alert">
+        <span>×</span>
+    </button>
+    <b>Akun Anda masih dibatasi dan belum memiliki akses penuh, hubungin admin untuk verifikasi manual.</b>
+    </div>
+</div>
+@endif
+
 @if ($message = Session::get('sukses'))
 <div class="alert alert-success alert-dismissible show fade">
   <div class="alert-body">
@@ -116,7 +128,7 @@
         <i class="fas fa-user-times"></i> Tutup/Hapus Akun
     </button>
 
-    @if (!isset($data['user_id']))
+    @if (!isset($data['user_id']) && Auth::user()->verified_at != NULL)
         <button class="btn btn-primary" data-toggle="collapse" href="#taut" role="button" aria-expanded="false" aria-controls="collapseExample" {{isset($data['user_id']) ? 'disabled' : '' }}>
             <i class="fas fa-user"></i> Tautkan Akun
         </button>

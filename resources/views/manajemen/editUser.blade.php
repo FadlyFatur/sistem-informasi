@@ -39,10 +39,10 @@
             <th >Nomer Pegawai</th>
             <th >Nama</th>
             <th >Username</th>
-            <th data-toggle="tooltip" data-placement="top" title="Mengecek apakah user sudah dihubungkan dengan staff">Integrasi</th>
-            <th data-toggle="tooltip" data-placement="top" title="Anda bisa memverifikasi user yang terdaftar">Verifikasi</th>
-            <th data-toggle="tooltip" data-placement="top" title="Anda bisa mengatur hak akses user yang mendaftar">Level Hak Akses</th>
-            <th data-toggle="tooltip" data-placement="top" title="Anda bisa menghapus data user">Hapus/Reset</th>
+            <th data-toggle="tooltip" data-placement="top" title="Integrasi membuat user dapat akses penuh ke data">Integrasi</th>
+            <th data-toggle="tooltip" data-placement="top" title="Verifikasi user yang terdaftar secara manual">Verifikasi</th>
+            <th data-toggle="tooltip" data-placement="top" title="Hak akses user digunakan untuk mengatur akses pada website">Hak Akses</th>
+            <th data-toggle="tooltip" data-placement="top" title="Anda bisa menghapus data user atau mereset password">Hapus/Reset</th>
           </tr>
         </thead>
         <tbody>
@@ -52,29 +52,31 @@
             <td>{{ isset($a->staff['nama']) ? $a->staff['nama'] : '-' }}</td>
             <td>{{ $a['username'] }}</td>
             @if(empty($a->staff['user_id']))
-            <td><a><div class="badge badge-light">Belum Ditautkan<i class="fas fa-times"></i></div></a></td>
+            <td><a><div class="badge badge-warning">Belum Ditautkan<i class="fas fa-times"></i></div></a></td>
             @else
             <td class="list">
-              <a class="badge badge-warning" href="{{route('reIntegrasi',['id' => $a->id])}}">
+              <a class="badge badge-success" href="{{route('reIntegrasi',['id' => $a->id])}}">
                 Ditautkan <i class="fas fa-check-square"></i>
               </a> 
             </td>
             @endif
             @if(empty($a['verified_at']))
-            <td><a href="{{route('verifiedUser',['id' => $a->id])}}"><div class="badge badge-light">Belum Terverifikasi <i class="fas fa-times"></i></div></a></td>
+            <td><a href="{{route('verifiedUser',['id' => $a->id])}}" onclick="return confirm('Apakah anda yakin meverifikasi user ini?')"><div class="badge badge-warning">Belum Terverifikasi <i class="fas fa-times"></i></div></a></td>
             @else
-            <td><div class="badge badge-warning">Terverifikasi <i class="fas fa-check-square"></i></div> </td>
+            <td><div class="badge badge-success">Terverifikasi <i class="fas fa-check-square"></i></div> </td>
             @endif
 
             @if ($a['role'] == 1)
-            <td><a href="{{route('levelUser',['id' => $a->id])}}"> <div class="badge badge-light">User</div> </a> </td>
+            <td><a href="{{route('levelUser',['id' => $a->id])}}" onclick="return confirm('Apakah anda yakin menaikan hak akses?')"> <div class="badge badge-light">User</div> </a> </td>
             @elseif ($a['role'] == 2)
-            <td><a href="{{route('levelUser',['id' => $a->id])}}"> <div class="badge badge-warning">Admin</div> </a> </td>
+            <td><a href="{{route('levelUser',['id' => $a->id])}}" onclick="return confirm('Apakah anda yakin menurunkan hak akses?')"> <div class="badge badge-info">Admin</div> </a> </td>
             @else
             <td><a href="#superadmin"> <div class="badge badge-primary">Super Admin</div> </a> </td>
             @endif
             <td>
-              <a href="{{route('deleteUser',['id' => $a->id])}}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+              @if ($a['role'] != 3)
+              <a href="{{route('deleteUser',['id' => $a->id])}}" onclick="return confirm('Apakah anda yakin mendelete User ini?')" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+              @endif
               <a href="" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#reset-{{$a['id']}}"><i class="fas fa-lock-open"></i></a>
             </td>
           </tr>

@@ -11,6 +11,7 @@ use App\warga;
 use Exception;
 use Illuminate\Support\Facades\Redirect;
 use DataTables;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class berandaController extends Controller
@@ -110,16 +111,18 @@ class berandaController extends Controller
 
                 $file_path = 'public/images/thumbnail';
                 $image = $request->thumb;
+                Storage::delete($file_path . '/' . $data->foto_thumb);
+
                 $image_name = date("his") . $image->getClientOriginalName();
                 $path = $image->storeAs($file_path, $image_name);
-
                 $data->foto_thumb = $image_name;
+
                 $data->update();
-                notify()->success("Berhasil menyimpan data", "Sukses", "bottomRight");
+                notify()->success("Berhasil menyimpan data", "Sukses", "topRight");
                 return Redirect::back()->with(['sukses' => 'Data berhasil diupdate!']);
             }
         }
-        notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomLeft");
+        notify()->error("Percobaan merubah data gagal!", "Gagal", "bottomRight");
         return Redirect::back()->with(['gagal' => 'Data gagal diupdate!']);
     }
 
@@ -127,7 +130,7 @@ class berandaController extends Controller
     {
         $warga = warga::where('kerja_id', $id)->get();
         if ($warga->count() > 0) {
-            notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomLeft");
+            notify()->error("Percobaan menghapus data gagal!", "Gagal", "bottomRight");
             return Redirect::back()->with('gagal', 'Gagal menghapus data');
         }
 
@@ -167,7 +170,7 @@ class berandaController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($d) {
-                return '<a href="' . route('deleteKerja', ['id' => $d->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>';
+                return '<a href="' . route('deleteKerja', ['id' => $d->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash" onclick="return confirm(`Apakah anda yakin menghapus data?`)"></i></a>';
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -179,7 +182,7 @@ class berandaController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($d) {
-                return '<a href="' . route('deleteJabatan', ['id' => $d->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>';
+                return '<a href="' . route('deleteJabatan', ['id' => $d->id]) . '" class="btn btn-sm btn-outline-danger" onclick="return confirm(`Apakah anda yakin menghapus data?`)"><i class="fa fa-trash"></i></a>';
             })
             ->rawColumns(['action'])
             ->make(true);

@@ -10,15 +10,25 @@
                 
             @if ($message = Session::get('gagal'))
             <div class="alert alert-danger alert-dismissible show fade">
-            <div class="alert-body">
-                <button class="close" data-dismiss="alert">
-                <span>×</span>
-                </button>
-                {{ Session::get('gagal') }}
-            </div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                    <span>×</span>
+                    </button>
+                    {{ Session::get('gagal') }}
+                </div>
             </div>
             @endif
-                <div class="card-header">{{ __('Login') }}</div>
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible show fade">
+                    <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>x</span>
+                    </button>
+                    {!! implode('', $errors->all('<div>:message</div>')) !!}
+                    </div>
+                </div>
+            @endif
+                {{-- <div class="card-header">{{ __('Login') }}</div> --}}
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

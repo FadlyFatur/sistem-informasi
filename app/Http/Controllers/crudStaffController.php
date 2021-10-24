@@ -80,6 +80,7 @@ class crudStaffController extends Controller
 
             $data->save();
 
+            notify()->success("Data Berhasil disimpan!", "Sukses", "topRight");
             return Redirect::back()->with('sukses', 'Data berhasil ditambah!');
         } catch (Exception $e) {
             return Redirect::back()->with('gagal', 'Data gagal diproses!');
@@ -111,7 +112,6 @@ class crudStaffController extends Controller
                 ->withInput();
         }
 
-
         try {
             $data = staff::find($id);
 
@@ -124,6 +124,7 @@ class crudStaffController extends Controller
             if ($request->hasFile('imageUpdate')) {
                 $file_path = 'public/images/staff_image';
                 $image = $request->imageUpdate;
+
                 Storage::delete($file_path . '/' . $data->foto);
 
                 //upload file ke local storage
@@ -135,6 +136,7 @@ class crudStaffController extends Controller
             }
 
             $data->update();
+            notify()->success("Data Berhasil diupdate!", "Sukses", "topRight");
             return Redirect::back()->with('sukses', 'Data berhasil diupdate!');
         } catch (\Throwable $th) {
             return Redirect::back()->with('gagal', 'Data gagal diupdate!');
@@ -147,6 +149,7 @@ class crudStaffController extends Controller
         if ($data->status == '0') {
             $data->status = '1';
             $data->update();
+            notify()->success("Data Berhasil diaktivasi!", "Sukses", "topRight");
             return Redirect::back()->with('sukses', 'Data berhasil diaktifasi dan bisa dilihat umum!');
         } else {
             $data->status = '0';
@@ -182,12 +185,12 @@ class crudStaffController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($user) {
-                return '<a href="' . route('deleteStaff', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+                return '<a href="' . route('deleteStaff', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger" onclick="return confirm(`Apakah anda yakin menghapus data ini?`)"><i class="fa fa-trash"></i></a>
                 <a href="' . route('upStaff', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info"><i class="fa fa-edit"></i></a>';
             })
             ->addColumn('status_edit', function ($user) {
                 if ($user->status != 0) {
-                    return '<a href="' . route('aktifStaff', ['id' => $user->id]) . '"> <div class="badge badge-success">Aktif</div></a>';
+                    return '<a href="' . route('aktifStaff', ['id' => $user->id]) . '"> <div class="badge badge-success" onclick="return confirm(`Apakah anda yakin menonaktifkan staff?`)">Aktif</div></a>';
                 } else {
                     return '<a href="' . route('aktifStaff', ['id' => $user->id]) . '"> <div class="badge badge-danger">Non-Aktif</div></a>';
                 }

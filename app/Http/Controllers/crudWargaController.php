@@ -18,7 +18,7 @@ class crudWargaController extends Controller
     public function tambah(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nik' => 'required|integer|max:16',
+            'nik' => 'required|max:16|unique:App\warga',
             'nama_lengkap' => 'required|string|max:150',
             'kelurahan' => 'required|string|max:150',
             'kecamatan' => 'required|string|max:150',
@@ -41,6 +41,7 @@ class crudWargaController extends Controller
                 ->withInput();
         }
 
+
         $warga = new warga;
         $warga->nik = $request->nik;
         $warga->nama = $request->nama_lengkap;
@@ -58,6 +59,7 @@ class crudWargaController extends Controller
         $warga->kawin = $request->kawin;
         $warga->save();
 
+        notify()->success("Data Berhasil disimpan!", "Sukses", "topRight");
         return Redirect::back()->with(['sukses' => 'Data berhasil ditambah']);
     }
 
@@ -176,7 +178,7 @@ class crudWargaController extends Controller
 
         return DataTables::of($warga)
             ->addColumn('action', function ($user) {
-                return '<a href="' . route('upWarga', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info fa fa-edit"> </a> <a href="' . route('deleteWarga', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-danger fa fa-trash"></a>';
+                return '<a href="' . route('upWarga', ['id' => $user->id]) . '" class="btn btn-sm btn-outline-info fa fa-edit"> </a> <a class="btn btn-sm btn-outline-danger fa fa-trash"  onclick="return confirm(`Apakah anda yakin menghapus data?`)" href="' . route('deleteWarga', ['id' => $user->id]) . '"></a>';
             })
             ->addColumn('TTL', function ($user) {
                 return $user->tempat_lahir . ' ' . $user->tanggal_lahir;
@@ -192,7 +194,7 @@ class crudWargaController extends Controller
             })
             ->addColumn('status_edit', function ($user) {
                 if ($user->status != 0) {
-                    return '<a href="' . route('aktifWarga', ['id' => $user->id]) . '"> <div class="badge badge-success">Aktif</div></a>';
+                    return '<a href="' . route('aktifWarga', ['id' => $user->id]) . '"> <div class="badge badge-success" onclick="return confirm(`Apakah anda yakin menonaktifkan warga?`)">Aktif</div></a>';
                 } else {
                     return '<a href="' . route('aktifWarga', ['id' => $user->id]) . '"> <div class="badge badge-danger">Non-Aktif</div></a>';
                 }
