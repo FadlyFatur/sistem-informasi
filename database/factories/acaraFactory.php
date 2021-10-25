@@ -12,6 +12,7 @@ $factory->define(App\acara::class, function (Faker $faker) {
         'slug' => Str::slug($judul),
         'judul' => $judul,
         'deskripsi' => $faker->text($maxNbChars = 1000),
-        'penulis_id' => 1
+        'penulis_id' => 1,
+        'status' => 1
     ];
 });

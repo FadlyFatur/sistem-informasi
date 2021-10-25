@@ -12,5 +12,6 @@ $factory->define(beranda::class, function (Faker $faker) {
         'alamat' => $faker->address,
         'visi' => $faker->sentence($nbWords = 6, $variableNbWords = true),
         'misi' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+        'nama_intansi' => 'Desa Linux'
     ];
 });

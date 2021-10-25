@@ -9,8 +9,9 @@ $factory->define(staff::class, function (Faker $faker) {
     return [
         'id_pegawai' => $faker->unique()->numerify('################'),
         'nama' => $faker->name,
-        'no_hp' => '085xxxxxxxx',
+        'no_hp' => '08512345123',
         'alamat' => $faker->address,
-        'url' => $faker->imageUrl($width = 300, $height = 300)
+        'jabatan_id' => $faker->numberBetween($min = 1, $max = 10)
+        // 'url' => $faker->imageUrl($width = 300, $height = 300)
     ];
 });

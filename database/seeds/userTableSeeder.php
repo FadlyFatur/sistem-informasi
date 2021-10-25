@@ -18,21 +18,21 @@ class userTableSeeder extends Seeder
         $data = [
             [
                 'username'      => 'superadmin',
-                'password'      => bcrypt('super-admin'),
+                'password'      => bcrypt('spr-adm123'),
                 'verified_at'   => Carbon::now()->format('Y-m-d H:i:s'),
                 'role'          => '3',
                 'remember_token' => Str::random(10)
             ],
             [
                 'username'      => 'admin',
-                'password'      => bcrypt('admin'),
+                'password'      => bcrypt('admin123'),
                 'verified_at'   => Carbon::now()->format('Y-m-d H:i:s'),
                 'role'          => '2',
                 'remember_token' => Str::random(10)
             ],
             [
                 'username'      => 'staff',
-                'password'      => bcrypt('staff'),
+                'password'      => bcrypt('staff123'),
                 'verified_at'   => Carbon::now()->format('Y-m-d H:i:s'),
                 'role'          => '1',
                 'remember_token' => Str::random(10)
